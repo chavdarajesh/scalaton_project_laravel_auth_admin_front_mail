@@ -20,6 +20,7 @@ class CreateContactSettingsTable extends Migration
 	        $table->string('phone')->nullable();
 	        $table->string('location')->nullable();
 	        $table->text('map_iframe')->nullable();
+	        $table->text('timing')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();

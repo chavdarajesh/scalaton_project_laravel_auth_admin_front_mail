@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class DashboardController extends Controller
             if (Auth::user()->is_admin == 1) {
                 return redirect()->route('admin.dashboard')->with('message', 'Admin Login Successfully');
             } else {
-                return redirect()->route('front.homepage')->with('error', 'User Not Acees Admin Site..!');
+                return redirect()->route('front.homepage')->with('error', 'User Not Access To Admin Site..!');
             }
         } else {
             return view('admin.auth.login');
@@ -25,32 +26,25 @@ class DashboardController extends Controller
     }
     public function adminloginpost(Request $request)
     {
-        $ValidatedData = Validator::make($request->all(), [
-            'adminpassword' => 'required | min:6',
-            'adminemail' => 'required|email'
+        $request->validate([
+            'adminemail' => 'required|email|exists:users,email',
+            'adminpassword' => 'required| min:6'
         ]);
-        if ($ValidatedData->fails()) {
-            return redirect()->back()->with('error', 'All Fileds are Required..');
-            // return redirect()->back()->withInput()->withErrors($ValidatedData);
-        } else {
-            if (!Auth::check()) {
-                if (Auth::attempt(['email' => $request->adminemail, 'password' => $request->adminpassword, 'is_verified' => 1, 'status' => 1])) {
-                    if (Auth::user()->is_admin == 1) {
-                        return redirect()->route('admin.dashboard')->with('message', 'Admin Login Successfully');
-                        } else {
-                            return redirect()->back()->with('error', 'You have not Admin access');
-                        }
-                    } else {
-                        return redirect()->back()->with('errors', 'Invalid Credantials');
-                    }
-
-            } else {
+        if (!Auth::check()) {
+            if (Auth::attempt(['email' => $request->adminemail, 'password' => $request->adminpassword, 'is_verified' => 1, 'status' => 1])) {
                 if (Auth::user()->is_admin == 1) {
                     return redirect()->route('admin.dashboard')->with('message', 'Admin Login Successfully');
+                } else {
+                    return redirect()->back()->with('error', 'User Not Access To Admin Site');
                 }
-                else{
-                    return redirect()->route('front.homepage')->with('error', 'User Not Acees Admin Site..!');
-                }
+            } else {
+                return redirect()->back()->with('errors', 'Invalid Credantials');
+            }
+        } else {
+            if (Auth::user()->is_admin == 1) {
+                return redirect()->route('admin.dashboard')->with('message', 'Admin Login Successfully');
+            } else {
+                return redirect()->route('front.homepage')->with('error', 'User Not Access To Admin Site..!');
             }
         }
     }
@@ -61,6 +55,12 @@ class DashboardController extends Controller
         $data['Total_Not_Verified_Users'] = User::where('is_admin', 0)->where('is_verified', 0)->count();
         $data['Total_Active_Users'] = User::where('is_admin', 0)->where('status', 1)->count();
         $data['Total_Not_Active_Users'] = User::where('is_admin', 0)->where('status', 0)->count();
+
+        $data['Total_Blogs'] = Blog::count();
+        $data['Total_Active_Blogs'] = Blog::where('status', 1)->count();
+        $data['Total_In_Active_Blogs'] = Blog::where('status', 0)->count();
+
+        $data['Total_All_Blogs'] = Blog::withTrashed()->count();
         return view('admin.dashboard', ['data' => $data]);
     }
     public function adminlogout(Request $request)

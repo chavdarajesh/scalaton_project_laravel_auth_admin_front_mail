@@ -8,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>{{env('APP_NAME', 'Laravel App')}} | Admin Login</title>
+    <title>{{ env('APP_NAME', 'Laravel App') }} | Admin Login</title>
 
     <meta name="description" content="" />
 
@@ -16,7 +16,7 @@
     @include('admin.layouts.head')
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/css/pages/page-auth.css') }}" />
     <style>
-        .app-brand-text.demo{
+        .app-brand-text.demo {
             text-transform: uppercase;
         }
     </style>
@@ -82,20 +82,24 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="app-brand-text demo text-body fw-bolder">{{env('APP_NAME', 'Laravel App')}}</span>
+                                <span
+                                    class="app-brand-text demo text-body fw-bolder">{{ env('APP_NAME', 'Laravel App') }}</span>
                             </a>
                         </div>
                         <!-- /Logo -->
-                        <h4 class="mb-2">Welcome to {{env('APP_NAME', 'Laravel App')}} 👋</h4>
+                        <h4 class="mb-2">Welcome to {{ env('APP_NAME', 'Laravel App') }} 👋</h4>
                         <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
                         <form id="formAuthentication" class="mb-3" action="{{ route('admin.login.post') }}"
                             method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="adminemail" class="form-label">Email or Username</label>
+                                <label for="adminemail" class="form-label">Email</label>
                                 <input type="text" class="form-control" id="adminemail" name="adminemail"
                                     placeholder="Enter your email or username" autofocus />
+                                @error('adminemail')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
@@ -110,12 +114,9 @@
                                         aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                                </div>
+                                @error('adminpassword')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
@@ -124,7 +125,7 @@
 
                         <p class="text-center">
                             <span>Go to Front platform?</span>
-                            <a href="{{ route('front.login') }}">
+                            <a href="{{ route('front.homepage') }}">
                                 <span>Click Here.</span>
                             </a>
                         </p>
@@ -140,8 +141,7 @@
     @include('admin.layouts.footer')
     <!-- Page JS -->
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
 </body>
 
 </html>

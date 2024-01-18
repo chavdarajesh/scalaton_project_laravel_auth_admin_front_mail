@@ -40,21 +40,24 @@ class ProfileController extends Controller
             $User->phone = $request['phone'];
             $User->address = $request['address'];
             $User->dateofbirth = $request['dateofbirth'];
-            if ($request->profilephoto) {
-                $folderPath = public_path('assets/users/profilephoto/' . Auth::user()->id . '/');
+            if ($request->profileimage) {
+                $folderPath = public_path('assets/images/users/profileimage/' . Auth::user()->id . '/');
                 if (!file_exists($folderPath)) {
                     mkdir($folderPath, 0777, true);
                 }
-                $file = $request->file('profilephoto');
+                $file = $request->file('profileimage');
                 $imageoriginalname = str_replace(" ", "-", $file->getClientOriginalName());
-                $imageName = time() . $imageoriginalname;
+                $imageName = rand(1000, 9999) . time() . $imageoriginalname;
                 $file->move($folderPath, $imageName);
-                $User->profileimage = 'assets/users/profilephoto/' . Auth::user()->id . '/' . $imageName;
+                $User->profileimage = 'assets/images/users/profileimage/' . Auth::user()->id . '/' . $imageName;
+                if ($request->old_profileimage && file_exists(public_path($request->old_profileimage))) {
+                    unlink(public_path($request->old_profileimage));
+                }
             }
             $User->save();
 
             if ($User) {
-                return redirect()->route('front.profilepage')->with('message', 'User Update  Sucssesfully..');
+                return redirect()->route('front.profilepage')->with('message', 'Profile Updated Sucssesfully..');
             } else {
                 return redirect()->back()->with('error', 'Somthing Went Wrong..');
             }

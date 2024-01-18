@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@section('title', 'User Page')
+@section('title', 'View User')
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Users /</span> All Users / View User</h4>
@@ -33,13 +33,13 @@
                             <div class="mb-3 col-md-12">
                                 <label for="name" class="form-label">Name</label>
                                 <input class="form-control" type="text" id="name" name="name"
-                                    value="{{ $User->name }}" autofocus readonly />
+                                    value="{{ $User->name }}" disabled />
                             </div>
 
                             <div class="mb-3 col-md-12">
                                 <label for="email" class="form-label">E-mail</label>
                                 <input class="form-control" type="text" id="email" name="email"
-                                    value="{{ $User->email }}" readonly />
+                                    value="{{ $User->email }}" disabled />
                             </div>
 
                             <div class="mb-3 col-md-12">
@@ -47,29 +47,29 @@
                                 <div class="input-group input-group-merge">
                                     <span class="input-group-text">IND (+91)</span>
                                     <input type="text" id="phone" name="phone" class="form-control"
-                                        value="{{ $User->phone }}" readonly />
+                                        value="{{ $User->phone }}" disabled />
                                 </div>
                             </div>
                             <div class="mb-3 col-md-12">
                                 <label for="username" class="form-label">User Name</label>
                                 <input class="form-control" type="text" id="username" name="username"
-                                    value="{{ $User->username }}" autofocus readonly />
+                                    value="{{ $User->username }}" disabled />
                             </div>
                             <div class="mb-3 col-md-12">
                                 <label for="address" class="form-label">Address</label>
-                                <textarea name="address" id="address" rows="3" class="form-control" readonly> {{ $User->address }}</textarea>
+                                <textarea name="address" id="address" rows="3" class="form-control" disabled> {{ $User->address }}</textarea>
                             </div>
                             <div class="mb-3 col-md-12">
                                 <label for="dateofbirth" class="form-label">Date OF Birth</label>
                                 <input class="form-control" type="date" id="dateofbirth" name="dateofbirth"
-                                    value="{{ $User->dateofbirth }}" autofocus readonly />
+                                    value="{{ $User->dateofbirth }}" disabled />
                             </div>
-
-
                         </div>
                         <div class="mt-2">
+                            <a href="{{ route('admin.edit.user', $User->id) }}"><button type="submit"
+                                    class="btn btn-success me-2">Edit</button></a>
                             <a href="{{ route('admin.get.users') }}"><button type="submit"
-                                    class="btn btn-primary me-2">Back</button></a>
+                                    class="btn btn-secondary me-2">Back</button></a>
                         </div>
 
                     </div>
@@ -78,19 +78,4 @@
             </div>
         </div>
     </div>
-@stop
-@section('js')
-    <script>
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.querySelector("#uploadedAvatar").setAttribute("src", e.target.result);
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
 @stop

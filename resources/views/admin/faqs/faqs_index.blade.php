@@ -1,8 +1,8 @@
 @extends('admin.layouts.main')
-@section('title', 'Faqs Page')
+@section('title', 'Faqs List')
 @section('css')
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    <link href="{{ asset('assets/admin/css/bootstrap-toggle.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/dataTables.bootstrap5.min.css') }}">
 @stop
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -14,14 +14,15 @@
 
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="javascript:void(0);"><i class='bx bx-qr me-1' ></i>All Faqs</a>
+                        <a class="nav-link active" href="javascript:void(0);"><i class='bx bx-question-mark  me-1'></i>All
+                            Faqs</a>
                     </li>
 
                 </ul>
                 <div class="card mb-4">
                     <h5 class="card-header justify-content-between d-flex">
                         <div>Faqs Setting </div>
-                        <div><a href="{{route('admin.add.faq')}}" class="btn btn-primary add-btn">Add New Faq</a></div>
+                        <div><a href="{{ route('admin.add.faq') }}" class="btn btn-primary add-btn">Add New Faq</a></div>
                     </h5>
                     <!-- Account -->
 
@@ -35,12 +36,12 @@
                         <table class="table table-hover " id="example">
                             <thead>
                                 <tr>
-                                    <th class="text-center" >ID</th>
-                                    <th class="text-center" >Title</th>
-                                    <th class="text-center" >Descriptions</th>
-                                    <th class="text-center" >Status</th>
-                                    <th class="text-center" >Created At</th>
-                                    <th class="text-center" >Actions</th>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Title</th>
+                                    <th class="text-center">Descriptions</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Created At</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
@@ -49,31 +50,44 @@
                                         <td class="text-center"><i class="fab fa-angular fa-lg text-danger me-3"></i>
                                             <strong>{{ $Faq->id }}</strong>
                                         </td>
-                                        <td class="text-center" >{{ $Faq->title }}</td>
-                                        <td class="text-center" >
-                                            @if (strlen($Faq->description) > 8)
-                                            @php
-                                                echo substr($Faq->description, 0, 8).'..';
-                                            @endphp
-                                        @else
-                                            {{ $Faq->description }}
-                                        @endif
+                                        <td class="text-center" title="{{ $Faq->title }}">
+                                            @if (strlen($Faq->title) > 20)
+                                                @php
+                                                    echo substr($Faq->title, 0, 20) . '..';
+                                                @endphp
+                                            @else
+                                                {{ $Faq->title }}
+                                            @endif
+                                        </td>
+                                        <td class="text-center" title="{{ $Faq->description }}">
+                                            @if (strlen($Faq->description) > 20)
+                                                @php
+                                                    echo substr($Faq->description, 0, 20) . '..';
+                                                @endphp
+                                            @else
+                                                {{ $Faq->description }}
+                                            @endif
                                         </td>
 
-                                        <td class="text-center"> <input data-id="{{ $Faq->id }}" class="toggle-class" type="checkbox"
-                                                data-onstyle="success" data-offstyle="danger" data-toggle="toggle"
-                                                data-on="Active" data-off="InActive"
+                                        <td class="text-center"> <input data-id="{{ $Faq->id }}" class="toggle-class"
+                                                type="checkbox" data-onstyle="success" data-offstyle="danger"
+                                                data-toggle="toggle" data-on="Active" data-off="InActive"
                                                 {{ $Faq->status ? 'checked' : '' }}></td>
                                         <td class="text-center">{{ $Faq->created_at }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('admin.edit.faq', $Faq->id) }}"> <button
-                                                    type="button" class="btn btn-success">Edit</button></a>
-                                                    <a href="{{ route('admin.view.faq', $Faq->id) }}"> <button
-                                                        type="button" class="btn btn-primary">View</button></a>
+                                            <a href="{{ route('admin.view.faq', $Faq->id) }}"> <button type="button"
+                                                    class="btn btn-icon btn-outline-success">
+                                                    <i class='bx bx-show'></i>
+                                                </button></a>
+                                            <a href="{{ route('admin.edit.faq', $Faq->id) }}"> <button type="button"
+                                                    class="btn btn-icon btn-outline-primary">
+                                                    <i class='bx bxs-edit'></i>
+                                                </button></a>
 
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-icon btn-outline-danger"
+                                                data-bs-toggle="modal"
                                                 data-bs-target="#Faq-delete-modal-{{ $Faq->id }}">
-                                                Delete
+                                                <i class="bx bx-trash-alt"></i>
                                             </button>
 
                                             <!-- Modal -->
@@ -84,12 +98,11 @@
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="modalCenterTitle">Delete Item
                                                             </h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form
-                                                                action="{{ route('admin.delete.faq', $Faq->id) }}"
+                                                            <form action="{{ route('admin.delete.faq', $Faq->id) }}"
                                                                 method="post">
                                                                 <h3>Do You Want To Really Delete This Item?</h3>
                                                                 @csrf
@@ -116,14 +129,16 @@
     </div>
 @stop
 @section('js')
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{ asset('assets/admin/js/bootstrap-toggle.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/dataTables.bootstrap5.min.js') }}"></script>
 
     <script>
         $(document).ready(function() {
             $('#example').DataTable({
-                "order": [[ 0, 'desc' ]]
+                "order": [
+                    [0, 'desc']
+                ]
             });
         });
         $(function() {

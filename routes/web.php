@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Admin\FaqsController as AdminFaqsController;
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Front\AuthController;
 use App\Http\Controllers\Front\ContactController;
@@ -58,7 +59,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'is_a
     Route::put('/user/update', [UserController::class, 'user_update'])->name('admin.update.user');
     Route::post('/user_status/update', [UserController::class, 'user_status_update'])->name('admin.update.user.status');
     Route::post('/user_is_verified/update', [UserController::class, 'user_is_verified_update'])->name('admin.update.user.is_verified');
-
+    Route::get('/user_referrals/{id}', [UserController::class, 'get_user_referrals'])->name('admin.get.user_referrals');
 
     Route::get('/contact_msg', [AdminContactController::class, 'get_contact_msg'])->name('admin.get.contact_msg');
     Route::delete('/contact_msg/delete/{id}', [AdminContactController::class, 'contact_msg_delete'])->name('admin.delete.contact_msg');
@@ -77,7 +78,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'is_a
     Route::put('/faqs/update', [AdminFaqsController::class, 'faqs_update'])->name('admin.update.faq');
     Route::post('/faq_status/update', [AdminFaqsController::class, 'faq_status_update'])->name('admin.update.faq.status');
 
-    Route::get('/user_referrals/{id}', [UserController::class, 'get_user_referrals'])->name('admin.get.user_referrals');
+    Route::get('/blogs', [AdminBlogController::class, 'get_blogs'])->name('admin.get.blogs');
+    Route::get('/blog/add', [AdminBlogController::class, 'get_blog_add'])->name('admin.add.blog');
+    Route::post('/blog', [AdminBlogController::class, 'post_blog'])->name('admin.post.blog');
+    Route::delete('/blog/delete/{id}', [AdminBlogController::class, 'blog_delete'])->name('admin.delete.blog');
+    Route::get('/blog/edit/{id}', [AdminBlogController::class, 'blog_edit'])->name('admin.edit.blog');
+    Route::get('/blog/view/{id}', [AdminBlogController::class, 'blog_view'])->name('admin.view.blog');
+    Route::put('/blog/update', [AdminBlogController::class, 'blog_update'])->name('admin.update.blog');
+    Route::post('/blog_status/update', [AdminBlogController::class, 'blog_status_update'])->name('admin.update.blog.status');
 });
 
 
@@ -88,6 +96,8 @@ Route::group(['namespace' => 'Front'], function () {
     Route::get('/', [FrontPagesController::class, 'homepage'])->name('front.homepage');
     Route::get('/about', [FrontPagesController::class, 'aboutpage'])->name('front.aboutpage');
     Route::get('/services', [FrontPagesController::class, 'servicespage'])->name('front.servicespage');
+    Route::get('/blogs', [FrontPagesController::class, 'blogpage'])->name('front.blogpage');
+    Route::get('/blog-details/{id}', [FrontPagesController::class, 'blog_details'])->name('front.blog_details');
     Route::get('/privacy_policy', [FrontPagesController::class, 'privacy_policypage'])->name('front.privacy_policypage');
     Route::get('/term_and_condition', [FrontPagesController::class, 'term_and_conditionpage'])->name('front.term_and_conditionpage');
 
@@ -111,9 +121,7 @@ Route::group(['namespace' => 'Front'], function () {
     Route::get('/faqs', [FrontPagesController::class, 'faqspage'])->name('front.faqspage');
 
     Route::group(['middleware' => 'is_auth'], function () {
-
         Route::post('/logout', [AuthController::class, 'logout'])->name('front.post.logout');
-
         Route::get('/profile', [ProfileController::class, 'profilepage'])->name('front.profilepage');
         Route::post('/profile', [ProfileController::class, 'postprofilepage'])->name('front.post.profilepage');
         Route::post('/profile/changepassword', [ProfileController::class, 'postprofilechangepassword'])->name('front.post.profile.changepassword');

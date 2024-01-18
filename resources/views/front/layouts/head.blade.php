@@ -19,16 +19,22 @@
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('assets/front/css/main.css') }}" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/toastr.min.css') }}">
 
   @yield('css')
   <style>
-    .logout-btn{
-      color: var(--color-secondary);
-    }
-    @media (max-width: 1279px){
-.navbar button:hover, .navbar .active, .navbar .active:focus, .navbar li:hover>button , .logout-btn{
-    color: #fff;
-}
-}
+      .logout-btn {
+          color: var(--color-secondary);
+      }
+
+      @media (max-width: 1279px) {
+
+          .navbar button:hover,
+          .navbar .active,
+          .navbar .active:focus,
+          .navbar li:hover>button,
+          .logout-btn {
+              color: #fff;
+          }
+      }
   </style>

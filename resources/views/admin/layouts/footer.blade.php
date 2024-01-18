@@ -18,8 +18,8 @@
 <script src="{{ asset('assets/admin/js/dashboards-analytics.js') }}"></script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script src="{{ asset('assets/admin/js/toastr.min.js') }}"></script>
 <script>
     @if (Session::has('message'))
         toastr.options = {

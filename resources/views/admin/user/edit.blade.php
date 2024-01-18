@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@section('title', 'User Page')
+@section('title', 'Edit User')
 @section('content')
 
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -18,10 +18,10 @@
                     <h5 class="card-header">Profile Setting</h5>
                     <hr class="my-0" />
                     <div class="card-body">
-                        <form id="formAccountSettings" method="POST" action="{{ route('admin.update.user') }}"
-                            enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.update.user') }}" enctype="multipart/form-data">
                             @csrf @method('PUT')
                             <input type="hidden" name="id" value="{{ $User->id }}">
+                            <input type="hidden" name="old_profileimage" value="{{ $User->profileimage }}">
                             <div class="row mb-3">
                                 <div class="d-flex align-items-start align-items-sm-center gap-4">
                                     <img src="{{ $User->profileimage ? asset($User->profileimage) : asset('assets/admin/img/avatars/1.png') }}"
@@ -33,12 +33,10 @@
                                         <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                             <span class="d-none d-sm-block">Upload new photo</span>
                                             <i class="bx bx-upload d-block d-sm-none"></i>
-                                            <input type="file" id="upload"
-                                                class="account-file-input adminpgrofilephoto" hidden
-                                                accept="image/png, image/jpeg" name="pgrofilephoto"
-                                                onchange="readURL(this)" />
+                                            <input type="file" id="upload" class="account-file-input" hidden
+                                                accept="image/*" name="profileimage" onchange="readURL(this)" />
                                         </label>
-                                        <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                                        <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 4Mb</p>
                                     </div>
                                 </div>
                             </div>
@@ -46,37 +44,61 @@
                             <div class="row">
                                 <div class="mb-3 col-md-12">
                                     <label for="name" class="form-label">Name</label>
-                                    <input class="form-control" type="text" id="name" name="name"
-                                        value="{{ $User->name }}" autofocus />
+                                    <input class="form-control  @error('name') is-invalid @enderror" type="text"
+                                        id="name" name="name" value="{{ old('name') ? old('name') : $User->name }}"
+                                        autofocus />
+                                    @error('name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-12">
                                     <label for="email" class="form-label">E-mail</label>
-                                    <input class="form-control" type="text" id="email" name="email"
-                                        value="{{ $User->email }}" />
+                                    <input class="form-control  @error('email') is-invalid @enderror" type="text"
+                                        id="email" name="email"
+                                        value="{{ old('email') ? old('email') : $User->email }}" />
+                                    @error('email')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-12">
                                     <label class="form-label" for="phone">Phone Number</label>
-                                    <div class="input-group input-group-merge">
+                                    <div
+                                        class="input-group input-group-merge  @error('phone') border border-danger @enderror">
                                         <span class="input-group-text">IND (+91)</span>
-                                        <input type="text" id="phone" name="phone" class="form-control"
-                                            value="{{ $User->phone }}" />
+                                        <input type="text" id="phone" name="phone"
+                                            class="form-control @error('phone') is-invalid @enderror"
+                                            value="{{ old('phone') ? old('phone') : $User->phone }}" />
+                                        @error('phone')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="username" class="form-label">User Name</label>
-                                    <input class="form-control" type="text" id="username" name="username"
-                                        value="{{ $User->username }}" autofocus />
+                                    <input class="form-control @error('username') is-invalid @enderror" type="text"
+                                        id="username" name="username"
+                                        value="{{ old('username') ? old('username') : $User->username }}" />
+                                    @error('username')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="adminname" class="form-label">Address</label>
-                                    <textarea name="address" id="address" rows="3" class="form-control">{{ $User->address }}</textarea>
+                                    <textarea name="address" id="address" rows="3" class="form-control @error('address') is-invalid @enderror">{{ old('address') ? old('address') : $User->address }}</textarea>
+                                    @error('address')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="dateofbirth" class="form-label">Date OF Birth</label>
-                                    <input class="form-control" type="date" id="dateofbirth" name="dateofbirth"
-                                        value="{{ $User->dateofbirth }}" autofocus />
+                                    <input class="form-control @error('dateofbirth') is-invalid @enderror" type="date"
+                                        id="dateofbirth" name="dateofbirth"
+                                        value="{{ old('dateofbirth') ? old('dateofbirth') : $User->dateofbirth }}" />
+                                    @error('dateofbirth')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3 col-md-12 form-password-toggle">
                                     <label for="password" class="form-label"> Password</label>

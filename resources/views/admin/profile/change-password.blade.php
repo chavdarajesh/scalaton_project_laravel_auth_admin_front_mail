@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@section('title', 'Password Setting Page')
+@section('title', 'Password Setting')
 @section('content')
 
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -31,36 +31,47 @@
                                 <div class="mb-3 col-md-12 form-password-toggle">
                                     <label for="adminoldpassword" class="form-label">Old Password</label>
                                     <div class="input-group input-group-merge">
-                                        <input name="adminoldpassword" type="password" class="form-control"
+                                        <input name="adminoldpassword" type="password"
+                                            class="form-control @error('adminoldpassword') is-invalid @enderror"
                                             id="adminoldpassword" placeholder="············"
-                                            aria-describedby="basic-default-password">
+                                            aria-describedby="basic-default-password" value="{{ old('adminoldpassword') }}">
                                         <span class="input-group-text cursor-pointer" id="basic-default-password"><i
                                                 class="bx bx-hide"></i></span>
                                     </div>
+                                    @error('adminoldpassword')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-12 form-password-toggle">
                                     <label for="adminnewpassword" class="form-label">New Password</label>
                                     <div class="input-group input-group-merge">
-                                        <input name="adminnewpassword" type="password" class="form-control"
+                                        <input name="adminnewpassword" type="password"
+                                            class="form-control @error('adminnewpassword') is-invalid @enderror"
                                             id="adminnewpassword" placeholder="············"
-                                            aria-describedby="basic-default-password">
+                                            aria-describedby="basic-default-password" value="{{ old('adminnewpassword') }}">
                                         <span class="input-group-text cursor-pointer" id="basic-default-password"><i
                                                 class="bx bx-hide"></i></span>
                                     </div>
+                                    @error('adminnewpassword')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-
                                 <div class="mb-3 col-md-12 form-password-toggle">
                                     <label class="form-label" for="adminconfirmnewpasswod">Confirm New Password</label>
                                     <div class="input-group input-group-merge">
-                                        <input name="adminconfirmnewpasswod" type="password" class="form-control"
+                                        <input name="adminconfirmnewpasswod" type="password"
+                                            class="form-control @error('adminconfirmnewpasswod') is-invalid @enderror"
                                             id="adminconfirmnewpasswod" placeholder="············"
-                                            aria-describedby="basic-default-password">
+                                            aria-describedby="basic-default-password"
+                                            value="{{ old('adminconfirmnewpasswod') }}">
                                         <span class="input-group-text cursor-pointer" id="basic-default-password"><i
                                                 class="bx bx-hide"></i></span>
                                     </div>
+                                    @error('adminconfirmnewpasswod')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-
                             </div>
                             <div class="mt-2">
                                 <button type="submit" class="btn btn-primary me-2">Save changes</button>

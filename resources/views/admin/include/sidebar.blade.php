@@ -64,11 +64,11 @@
         <li class="menu-item  {{ $current_route_name == 'admin.dashboard' ? 'active' : '' }}">
             <a href="{{ route('admin.dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Dashboard</div>
+                <div>Dashboard</div>
             </a>
         </li>
         <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Users</span>
+            <span class="menu-header-text">Module</span>
         </li>
         <li class="menu-item {{ $current_route_name == 'admin.get.users' || $current_route_name == 'admin.edit.user' || $current_route_name == 'admin.view.user' ? 'open active' : '' }}"
             style="">
@@ -86,10 +86,6 @@
                 </li>
             </ul>
         </li>
-
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Contacts</span>
-        </li>
         <li class="menu-item {{ $current_route_name == 'admin.get.contact_msg' || $current_route_name == 'admin.get.contact_settings' ? 'open active' : '' }}"
             style="">
             <a href="{{ route('admin.get.contact_msg') }}" class="menu-link menu-toggle">
@@ -100,7 +96,7 @@
             <ul class="menu-sub">
                 <li class="menu-item {{ $current_route_name == 'admin.get.contact_msg' ? 'active' : '' }}">
                     <a href="{{ route('admin.get.contact_msg') }}" class="menu-link">
-                        <div data-i18n="Without menu">All Contacts</div>
+                        <div data-i18n="Without menu">Contact Messages</div>
                     </a>
                 </li>
                 <li class="menu-item {{ $current_route_name == 'admin.get.contact_settings' ? 'active' : '' }}">
@@ -110,24 +106,19 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Faqs</span>
-        </li>
-        <li class="menu-item {{ $current_route_name == 'admin.get.faqs' || $current_route_name == 'admin.add.faq' || $current_route_name == 'admin.edit.faq' || $current_route_name == 'admin.view.faq' ? 'open active' : '' }}"
-            style="">
-            <a href="{{ route('admin.get.faqs') }}" class="menu-link menu-toggle">
-                <i class='bx bx-question-mark menu-icon tf-icons'></i>
-                <div data-i18n="Layouts">Faqs</div>
+        <li
+            class="menu-item  {{ $current_route_name == 'admin.get.blogs' || $current_route_name == 'admin.add.blog' || $current_route_name == 'admin.edit.blog' || $current_route_name == 'admin.view.blog' ? 'active' : '' }}">
+            <a href="{{ route('admin.get.blogs') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div>Blogs</div>
             </a>
-
-            <ul class="menu-sub">
-                <li
-                    class="menu-item {{ $current_route_name == 'admin.get.faqs' || $current_route_name == 'admin.add.faq' || $current_route_name == 'admin.edit.faq' || $current_route_name == 'admin.view.faq' ? 'active' : '' }}">
-                    <a href="{{ route('admin.get.faqs') }}" class="menu-link">
-                        <div data-i18n="Without menu">All Faqs</div>
-                    </a>
-                </li>
-            </ul>
+        </li>
+        <li
+            class="menu-item  {{ $current_route_name == 'admin.get.faqs' || $current_route_name == 'admin.add.faq' || $current_route_name == 'admin.edit.faq' || $current_route_name == 'admin.view.faq' ? 'active' : '' }}">
+            <a href="{{ route('admin.get.faqs') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-question-mark"></i>
+                <div>Faqs</div>
+            </a>
         </li>
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Profile</span>

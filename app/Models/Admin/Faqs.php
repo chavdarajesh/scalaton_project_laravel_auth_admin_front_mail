@@ -18,4 +18,9 @@ class Faqs extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    static public function get_all_faqs()
+    {
+        return Faqs::where('status',1)->get();
+    }
 }

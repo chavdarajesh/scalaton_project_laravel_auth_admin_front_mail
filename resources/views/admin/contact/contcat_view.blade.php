@@ -1,18 +1,21 @@
 @extends('admin.layouts.main')
-@section('title', 'User Page')
+@section('title', 'View Conatct Message')
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Users /</span>  Conatct Message / View Conatct Message</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Users /</span> Conatct Message / View Conatct Message
+        </h4>
 
         <div class="row">
             <div class="col-md-12">
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                        <a class="nav-link active" href="javascript:void(0);"><i class='bx bxs-contact me-1' ></i>  Conatct Message
+                        <a class="nav-link active" href="javascript:void(0);"><i class='bx bxs-contact me-1'></i> Conatct
+                            Message
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin.get.contact_settings')}}"><i class='bx bxs-contact me-1' ></i>  Conatct Settings
+                        <a class="nav-link" href="{{ route('admin.get.contact_settings') }}"><i
+                                class='bx bxs-contact me-1'></i> Conatct Settings
                         </a>
                     </li>
 
@@ -27,33 +30,33 @@
                             <div class="mb-3 col-md-12">
                                 <label for="name" class="form-label">Name</label>
                                 <input class="form-control" type="text" id="name" name="name"
-                                    value="{{ $Contact->name }}" autofocus readonly />
+                                    value="{{ $Contact->name }}" disabled />
                             </div>
 
                             <div class="mb-3 col-md-12">
                                 <label for="email" class="form-label">E-mail</label>
                                 <input class="form-control" type="text" id="email" name="email"
-                                    value="{{ $Contact->email }}" readonly />
+                                    value="{{ $Contact->email }}" disabled />
                             </div>
 
                             <div class="mb-3 col-md-12">
                                 <label class="form-label" for="subject">Subject</label>
                                 <div class="input-group input-group-merge">
                                     <input type="text" id="subject" name="subject" class="form-control"
-                                        value="{{ $Contact->subject }}" readonly />
+                                        value="{{ $Contact->subject }}" disabled />
                                 </div>
                             </div>
 
 
                             <div class="mb-3 col-md-12">
                                 <label for="message" class="form-label">Message</label>
-                                <textarea name="message" id="message" rows="3" class="form-control" readonly> {{ $Contact->message }}</textarea>
+                                <textarea name="message" id="message" rows="3" class="form-control" disabled> {{ $Contact->message }}</textarea>
                             </div>
 
                         </div>
                         <div class="mt-2">
                             <a href="{{ route('admin.get.contact_msg') }}"><button type="submit"
-                                    class="btn btn-primary me-2">Back</button></a>
+                                    class="btn btn-secondary me-2">Back</button></a>
                         </div>
 
                     </div>

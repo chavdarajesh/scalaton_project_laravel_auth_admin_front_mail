@@ -16,7 +16,7 @@
     @include('admin.layouts.head')
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/css/pages/page-auth.css') }}" />
     <style>
-        .app-brand-text.demo{
+        .app-brand-text.demo {
             text-transform: uppercase;
         }
     </style>
@@ -82,7 +82,8 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="app-brand-text demo text-body fw-bolder">{{env('APP_NAME', 'Laravel App')}}</span>
+                                <span
+                                    class="app-brand-text demo text-body fw-bolder">{{ env('APP_NAME', 'Laravel App') }}</span>
                             </a>
                         </div>
                         <!-- /Logo -->
@@ -130,8 +131,7 @@
     @include('admin.layouts.footer')
     <!-- Page JS -->
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
 </body>
 
 </html>

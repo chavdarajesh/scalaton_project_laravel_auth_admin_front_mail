@@ -21,7 +21,7 @@
                         class="{{ $current_route_name == 'front.servicespage' ? 'active' : '' }}">Services</a></li>
                 <li><a href="{{ route('front.contactpage') }}"
                         class="{{ $current_route_name == 'front.contactpage' ? 'active' : '' }}">Contact</a></li>
-                <li><a href="#" class="">Blogs</a></li>
+                <li><a href="{{ route('front.blogpage') }}" class="">Blogs</a></li>
 
 
                 <li class="dropdown"><a href="#"

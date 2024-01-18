@@ -6,7 +6,7 @@
          <div class="row gy-4">
              <div class="col-lg-5 col-md-12 footer-info">
                  <a href="{{ route('front.homepage') }}" class="logo d-flex align-items-center">
-                     <span>{{env('APP_NAME', 'Laravel App')}}</span>
+                     <span>{{ env('APP_NAME', 'Laravel App') }}</span>
                  </a>
                  <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies
                      darta donna mare fermentum iaculis eu non diam phasellus.</p>
@@ -21,11 +21,11 @@
              <div class="col-lg-2 col-6 footer-links">
                  <h4>Useful Links</h4>
                  <ul>
-                     <li><a href="{{route('front.faqspage')}}">Faqs</a></li>
-                     <li><a href="{{route('front.aboutpage')}}">About us</a></li>
-                     <li><a href="{{route('front.servicespage')}}">Services</a></li>
-                     <li><a href="{{route('front.term_and_conditionpage')}}">Terms of service</a></li>
-                     <li><a href="{{route('front.privacy_policypage')}}">Privacy policy</a></li>
+                     <li><a href="{{ route('front.faqspage') }}">Faqs</a></li>
+                     <li><a href="{{ route('front.aboutpage') }}">About us</a></li>
+                     <li><a href="{{ route('front.servicespage') }}">Services</a></li>
+                     <li><a href="{{ route('front.term_and_conditionpage') }}">Terms of service</a></li>
+                     <li><a href="{{ route('front.privacy_policypage') }}">Privacy policy</a></li>
                  </ul>
              </div>
 
@@ -43,9 +43,12 @@
              <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
                  <h4>Contact Us</h4>
                  <p>
-                    {{ ContactSetting::get_contact_us_details()->location ? ContactSetting::get_contact_us_details()->location : 'A108 Adam Street, New York, NY 535022' }}<br><br>
-                     <strong>Phone:</strong> <a href="tel:{{ContactSetting::get_contact_us_details()->phone ? ContactSetting::get_contact_us_details()->phone : '+1 5589 55488 55' }}" class="Blondie">{{ ContactSetting::get_contact_us_details()->phone ? ContactSetting::get_contact_us_details()->phone : '+1 5589 55488 55' }}</a><br>
-                     <strong>Email:</strong> <a href="mailto:{{ ContactSetting::get_contact_us_details()->email ? ContactSetting::get_contact_us_details()->email : 'info@example.com' }}">{{ ContactSetting::get_contact_us_details()->email ? ContactSetting::get_contact_us_details()->email : 'info@example.com' }}</a><br>
+                     {{ ContactSetting::get_contact_us_details()->location ? ContactSetting::get_contact_us_details()->location : 'A108 Adam Street, New York, NY 535022' }}<br><br>
+                     <strong>Phone:</strong> <a
+                         href="tel:{{ ContactSetting::get_contact_us_details()->phone ? ContactSetting::get_contact_us_details()->phone : '+1 5589 55488 55' }}"
+                         class="Blondie">{{ ContactSetting::get_contact_us_details()->phone ? ContactSetting::get_contact_us_details()->phone : '+1 5589 55488 55' }}</a><br>
+                     <strong>Email:</strong> <a
+                         href="mailto:{{ ContactSetting::get_contact_us_details()->email ? ContactSetting::get_contact_us_details()->email : 'info@example.com' }}">{{ ContactSetting::get_contact_us_details()->email ? ContactSetting::get_contact_us_details()->email : 'info@example.com' }}</a><br>
                  </p>
 
              </div>
@@ -55,10 +58,11 @@
 
      <div class="container mt-4">
          <div class="copyright">
-           <?php echo date("Y");  ?>  &copy; Copyright <strong><span>{{env('APP_NAME', 'Laravel App')}}</span></strong>. All Rights Reserved
+             <?php echo date('Y'); ?> &copy; Copyright <strong><span>{{ env('APP_NAME', 'Laravel App') }}</span></strong>.
+             All Rights Reserved
          </div>
          <div class="credits">
-             Designed by <a href="javascript:void(0);">{{env('APP_NAME', 'Laravel App')}}</a>
+             Designed by <a href="javascript:void(0);">{{ env('APP_NAME', 'Laravel App') }}</a>
          </div>
      </div>
 

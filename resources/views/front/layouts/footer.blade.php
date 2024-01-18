@@ -10,7 +10,7 @@
 <script src="{{ asset('assets/front/js/main.js') }}"></script>
 <script src="{{ asset('assets/admin/vendor/libs/jquery/jquery.js') }}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="{{ asset('assets/admin/js/toastr.min.js') }}"></script>
 <script>
     @if (Session::has('message'))
         toastr.options = {

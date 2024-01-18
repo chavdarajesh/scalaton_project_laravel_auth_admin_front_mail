@@ -31,7 +31,7 @@ class FaqsController extends Controller
         $Faqs->status = 1;
         $Faqs = $Faqs->save();
         if ($Faqs) {
-            return redirect()->route('admin.get.faqs')->with('message', 'Faqs ADD  Sucssesfully..');
+            return redirect()->route('admin.get.faqs')->with('message', 'Faq Added Sucssesfully..');
         } else {
             return redirect()->back()->with('error', 'Somthing Went Wrong..');
         }
@@ -43,12 +43,12 @@ class FaqsController extends Controller
             $Faqs = Faqs::find($id);
             $Faqs = $Faqs->delete();
             if ($Faqs) {
-                return redirect()->route('admin.get.faqs')->with('message', 'Faqs Delete  Sucssesfully..');
+                return redirect()->route('admin.get.faqs')->with('message', 'Faqs Deleted Sucssesfully..');
             } else {
                 return redirect()->back()->with('error', 'Somthing Went Wrong..!');
             }
         } else {
-            return redirect()->back()->with('error', 'Faqs Not Found..!');
+            return redirect()->back()->with('error', 'Faq Not Found..!');
         }
     }
 
@@ -83,7 +83,7 @@ class FaqsController extends Controller
             $Faqs->description = $request['description'];
             $Faqs = $Faqs->update();
             if ($Faqs) {
-                return redirect()->route('admin.get.faqs')->with('message', 'Faqs Edit  Sucssesfully..');
+                return redirect()->route('admin.get.faqs')->with('message', 'Faqs Updated Sucssesfully..');
             } else {
                 return redirect()->back()->with('error', 'Somthing Went Wrong..');
             }
@@ -98,12 +98,12 @@ class FaqsController extends Controller
             $Faqs->status = $request->status;
             $Faqs = $Faqs->update();
             if ($Faqs) {
-                return response()->json(['success' => 'Status change successfully.']);
+                return response()->json(['success' => 'Status Updated successfully.']);
             } else {
                 return response()->json(['error' => 'Somthing Went Wrong..!']);
             }
         } else {
-            return response()->json(['error' => 'Faqs Not Found..!']);
+            return response()->json(['error' => 'Faq Not Found..!']);
         }
     }
 }

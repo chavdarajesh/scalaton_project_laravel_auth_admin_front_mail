@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@section('title', 'Profile Setting Page')
+@section('title', 'Profile Setting')
 @section('content')
 
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -13,7 +13,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.profile.profilechangepassword') }}"><i class="bx bx-cog me-1"></i> Password Setting</a>
+                        <a class="nav-link" href="{{ route('admin.profile.profilechangepassword') }}"><i
+                                class="bx bx-cog me-1"></i> Password Setting</a>
                     </li>
                 </ul>
                 <div class="card mb-4">
@@ -22,6 +23,7 @@
                     <div class="card-body">
                         <form id="formAccountSettings" method="POST" action="{{ route('admin.profile.setting.post') }}"
                             enctype="multipart/form-data">
+                            <input type="hidden" name="id" value="{{ Auth::user()->id }}">
                             @csrf
                             <div class="row mb-3">
                                 <div class="d-flex align-items-start align-items-sm-center gap-4">
@@ -34,11 +36,10 @@
                                         <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                             <span class="d-none d-sm-block">Upload new photo</span>
                                             <i class="bx bx-upload d-block d-sm-none"></i>
-                                            <input type="file" id="upload" class="account-file-input profilephoto"
-                                                hidden accept="image/png, image/jpeg" name="profilephoto"
-                                                onchange="readURL(this)" />
+                                            <input type="file" id="upload" class="account-file-input" hidden
+                                                accept="image/*" name="profileimage" onchange="readURL(this)" />
                                         </label>
-                                        <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                                        <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 4MbK</p>
                                     </div>
                                 </div>
                             </div>
@@ -46,37 +47,63 @@
                             <div class="row">
                                 <div class="mb-3 col-md-12">
                                     <label for="name" class="form-label">Name</label>
-                                    <input class="form-control" type="text" id="name" name="name"
-                                        value="{{ Auth::user()->name }}" autofocus />
+                                    <input class="form-control @error('name') is-invalid @enderror" type="text"
+                                        id="name" name="name"
+                                        value="{{ Auth::user()->name ? Auth::user()->name : old('name') }}" autofocus />
+                                    @error('name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-12">
                                     <label for="email" class="form-label">E-mail</label>
-                                    <input class="form-control" type="text" id="email" name="email"
-                                        value="{{ Auth::user()->email }}" />
+                                    <input class="form-control @error('email') is-invalid @enderror" type="text"
+                                        id="email" name="email"
+                                        value="{{ Auth::user()->email ? Auth::user()->email : old('email') }}" />
+                                    @error('email')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-12">
-                                    <label class="form-label" for="phone">Phone Number</label>
-                                    <div class="input-group input-group-merge">
-                                        <span class="input-group-text">IND (+91)</span>
-                                        <input type="text" id="phone" name="phone" class="form-control"
-                                            value="{{ Auth::user()->phone }}" />
+                                    <label class="form-label " for="phone">Phone Number</label>
+                                    <div class="input-group input-group-merge ">
+                                        <span class="input-group-text @error('phone') border border-danger @enderror">IND
+                                            (+91)</span>
+                                        <input type="text" id="phone" name="phone"
+                                            class="form-control @error('phone') is-invalid @enderror"
+                                            value="{{ Auth::user()->phone ? Auth::user()->phone : old('phone') }}" />
                                     </div>
+                                    @error('phone')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="username" class="form-label">User Name</label>
-                                    <input class="form-control" type="text" id="username" name="username"
-                                        value="{{ Auth::user()->username }}" autofocus />
+                                    <input class="form-control @error('username') is-invalid @enderror" type="text"
+                                        id="username" name="username"
+                                        value="{{ Auth::user()->username ? Auth::user()->username : old('username') }}"
+                                        autofocus />
+                                    @error('username')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="address" class="form-label">Address</label>
-                                    <textarea class="form-control" name="address" id="address" rows="3">{{ Auth::user()->address }}</textarea>
+                                    <textarea class="form-control @error('address') is-invalid @enderror" name="address" id="address" rows="3">{{ Auth::user()->address ? Auth::user()->address : old('address') }}</textarea>
+                                    @error('address')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="dateofbirth" class="form-label">Date OF Birth</label>
-                                    <input class="form-control" type="date" id="dateofbirth" name="dateofbirth"
-                                        value="{{ Auth::user()->dateofbirth }}" autofocus />
+                                    <input class="form-control @error('dateofbirth') is-invalid @enderror" type="date"
+                                        id="dateofbirth" name="dateofbirth"
+                                        value="{{ Auth::user()->dateofbirth ? Auth::user()->dateofbirth : old('dateofbirth') }}"
+                                        autofocus />
+                                    @error('dateofbirth')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                             </div>

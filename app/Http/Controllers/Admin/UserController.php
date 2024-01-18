@@ -21,9 +21,12 @@ class UserController extends Controller
     {
         if ($id) {
             $User = User::find($id);
+            if ($User->profileimage && file_exists(public_path($User->profileimage))) {
+                unlink(public_path($User->profileimage));
+            }
             $User = $User->delete();
             if ($User) {
-                return redirect()->route('admin.get.users')->with('message', 'User Delete  Sucssesfully..');
+                return redirect()->route('admin.get.users')->with('message', 'User Deleted Sucssesfully..');
             } else {
                 return redirect()->back()->with('error', 'Somthing Went Wrong..!');
             }
@@ -53,17 +56,16 @@ class UserController extends Controller
 
     public function user_update(Request $request)
     {
-        $ValidatedData = Validator::make($request->all(), [
-            'name' => 'required|max:40',
-            'email' => 'required',
-            'phone' => 'required ',
-            'username' => 'required ',
-            'address' => 'required',
-            'dateofbirth' => 'required',
-        ]);
-        if ($ValidatedData->fails()) {
-            return redirect()->back()->with('error', 'All Fileds are Required..');
-        } else {
+        if ($request->id) {
+            $request->validate([
+                'name' => 'required|max:40',
+                'email' => 'required|email|unique:users,email,' . $request->id,
+                'phone' => 'required|unique:users,phone,' . $request->id,
+                'username' => 'required|unique:users,username,' . $request->id,
+                'address' => 'required',
+                'dateofbirth' => 'required',
+            ]);
+
             $User = User::find($request->id);
             $User->name = $request['name'];
             $User->username = $request['username'];
@@ -71,16 +73,19 @@ class UserController extends Controller
             $User->phone = $request['phone'];
             $User->address = $request['address'];
             $User->dateofbirth = $request['dateofbirth'];
-            if ($request->pgrofilephoto) {
-                $folderPath = public_path('assets/users/profilephoto/' . $request->id . '/');
+            if ($request->profileimage) {
+                $folderPath = public_path('assets/images/users/profileimage/' . $request->id . '/');
                 if (!file_exists($folderPath)) {
                     mkdir($folderPath, 0777, true);
                 }
-                $file = $request->file('pgrofilephoto');
+                $file = $request->file('profileimage');
                 $imageoriginalname = str_replace(" ", "-", $file->getClientOriginalName());
-                $imageName = time() . $imageoriginalname;
+                $imageName = rand(1000, 9999) . time() . $imageoriginalname;
                 $file->move($folderPath, $imageName);
-                $User->profileimage = 'assets/users/profilephoto/' . $request->id . '/' . $imageName;
+                $User->profileimage = 'assets/images/users/profileimage/' . $request->id . '/' . $imageName;
+                if ($request->old_profileimage && file_exists(public_path($request->old_profileimage))) {
+                    unlink(public_path($request->old_profileimage));
+                }
             }
             if ($request->password) {
                 $User->password = Hash::make($request->password);
@@ -88,10 +93,12 @@ class UserController extends Controller
             $User->save();
 
             if ($User) {
-                return redirect()->route('admin.get.users')->with('message', 'User Update  Sucssesfully..');
+                return redirect()->route('admin.get.users')->with('message', 'User Update Sucssesfully..');
             } else {
                 return redirect()->back()->with('error', 'Somthing Went Wrong..');
             }
+        } else {
+            return redirect()->back()->with('error', 'Somthing Went Wrong..');
         }
     }
 
@@ -102,7 +109,7 @@ class UserController extends Controller
             $User->status = $request->status;
             $User = $User->update();
             if ($User) {
-                return response()->json(['success' => 'Status change successfully.']);
+                return response()->json(['success' => 'Status Update Successfully.']);
             } else {
                 return response()->json(['error' => 'Somthing Went Wrong..!']);
             }
@@ -118,7 +125,7 @@ class UserController extends Controller
             $User->is_verified = $request->is_verified;
             $User = $User->update();
             if ($User) {
-                return response()->json(['success' => 'Verified Status change successfully.']);
+                return response()->json(['success' => 'Verified Status Update Successfully.']);
             } else {
                 return response()->json(['error' => 'Somthing Went Wrong..!']);
             }

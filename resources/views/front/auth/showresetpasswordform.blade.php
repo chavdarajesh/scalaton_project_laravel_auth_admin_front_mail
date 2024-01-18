@@ -5,6 +5,7 @@
         .open_eye {
             display: none;
         }
+
         .open_eye_c {
             display: none;
         }
@@ -45,7 +46,7 @@
                                 <!-- Logo -->
 
                                 <!-- /Logo -->
-                                <h4 class="mb-2">Welcome to {{env('APP_NAME', 'Laravel App')}} 👋</h4>
+                                <h4 class="mb-2">Welcome to {{ env('APP_NAME', 'Laravel App') }} 👋</h4>
                                 <h4 class="mb-2">Reset Password!</h4>
                                 <p class="mb-4">Enter New Password and Confirm Password to Continue!..</p>
 
@@ -56,31 +57,34 @@
                                     <div class="mb-3 form-password-toggle">
                                         <label for="newpassword" class="form-label">New Password</label>
                                         <div class="input-group input-group-merge">
-                                            <input required type="password" id="newpassword" class="form-control @error('newpassword') is-invalid @enderror" name="newpassword"
+                                            <input type="password" id="newpassword"
+                                                class="form-control @error('newpassword') is-invalid @enderror"
+                                                name="newpassword"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                aria-describedby="password"  value="{{old('newpassword')}}"/>
-                                                <span class="input-group-text toggle_password" id="basic-addon2"><i
+                                                aria-describedby="password" value="{{ old('newpassword') }}" />
+                                            <span class="input-group-text toggle_password" id="basic-addon2"><i
                                                     class="fa fa-eye-slash close_eye" aria-hidden="true"></i><i
                                                     class="fa fa-eye open_eye" aria-hidden="true"></i></span>
                                         </div>
                                         @error('newpassword')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="mb-3 form-password-toggle">
                                         <label for="confirmnewpasswod" class="form-label">New Conform Password</label>
                                         <div class="input-group input-group-merge">
-                                            <input required type="password" id="confirmnewpasswod" class="form-control @error('confirmnewpasswod') is-invalid @enderror"
+                                            <input type="password" id="confirmnewpasswod"
+                                                class="form-control @error('confirmnewpasswod') is-invalid @enderror"
                                                 name="confirmnewpasswod"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                aria-describedby="password"  value="{{old('confirmnewpasswod')}}" />
-                                                <span class="input-group-text toggle_password_c" id="basic-addon2"><i
+                                                aria-describedby="password" value="{{ old('confirmnewpasswod') }}" />
+                                            <span class="input-group-text toggle_password_c" id="basic-addon2"><i
                                                     class="fa fa-eye-slash close_eye_c" aria-hidden="true"></i><i
                                                     class="fa fa-eye open_eye_c" aria-hidden="true"></i></span>
                                         </div>
                                         @error('confirmnewpasswod')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-3">

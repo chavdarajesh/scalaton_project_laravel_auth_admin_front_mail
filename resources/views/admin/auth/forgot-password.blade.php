@@ -8,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>{{env('APP_NAME', 'Laravel App')}} | Admin Forgot Password</title>
+    <title>{{ env('APP_NAME', 'Laravel App') }} | Admin Forgot Password</title>
 
     <meta name="description" content="" />
 
@@ -16,7 +16,7 @@
     @include('admin.layouts.head')
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/css/pages/page-auth.css') }}" />
     <style>
-        .app-brand-text.demo{
+        .app-brand-text.demo {
             text-transform: uppercase;
         }
     </style>
@@ -82,7 +82,8 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="app-brand-text demo text-body fw-bolder">{{env('APP_NAME', 'Laravel App')}}</span>
+                                <span
+                                    class="app-brand-text demo text-body fw-bolder">{{ env('APP_NAME', 'Laravel App') }}</span>
                             </a>
                         </div>
                         <!-- /Logo -->
@@ -94,8 +95,12 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email"
-                                    placeholder="Enter your email" autofocus />
+                                <input type="text" class="form-control  @error('email') is-invalid @enderror"
+                                    id="email" name="email" placeholder="Enter your email"
+                                    value="{{ old('email') }}" autofocus />
+                                @error('email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <button class="btn btn-primary d-grid w-100">Send Reset Link</button>
                         </form>
@@ -118,8 +123,7 @@
     @include('admin.layouts.footer')
     <!-- Page JS -->
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
 </body>
 
 </html>

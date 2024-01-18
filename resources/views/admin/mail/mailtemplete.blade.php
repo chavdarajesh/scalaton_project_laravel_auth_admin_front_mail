@@ -7,7 +7,7 @@
     <title>Finanace App Admin | Reset Password</title>
 </head>
 @php
-$base_url = URL::to('/');
+    $base_url = URL::to('/');
 @endphp
 
 <body

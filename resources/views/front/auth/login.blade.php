@@ -42,7 +42,7 @@
                                 <!-- Logo -->
 
                                 <!-- /Logo -->
-                                <h4 class="mb-2">Welcome to {{env('APP_NAME', 'Laravel App')}} 👋</h4>
+                                <h4 class="mb-2">Welcome to {{ env('APP_NAME', 'Laravel App') }} 👋</h4>
                                 <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
                                 <form id="formAuthentication" class="mb-3" action="{{ route('front.post.login') }}"
@@ -52,8 +52,10 @@
                                         <label for="email" class="form-label">Email or Username<span
                                                 class="text-danger">*</span></label>
                                         <input type="text" value="" class="form-control " id="email"
-                                            name="email" placeholder="Enter your email or username" autofocus required />
-
+                                            name="email" placeholder="Enter your email or username" autofocus />
+                                        @error('email')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="mb-3 form-password-toggle">
                                         <div class="d-flex justify-content-between">
@@ -72,18 +74,9 @@
                                                     class="fa fa-eye-slash close_eye" aria-hidden="true"></i><i
                                                     class="fa fa-eye open_eye" aria-hidden="true"></i></span>
                                         </div>
-
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="accept_t_c"
-                                                name="accept_t_c" required />
-                                            <label class="form-check-label" for="accept_t_c">I agree to the <a
-                                                    target="_blank" href="{{ route('front.term_and_conditionpage') }}">Terms
-                                                    and Conditions</a> and <a target="_blank"
-                                                    href="{{ route('front.privacy_policypage') }}">Privacy Policy</a>.<span
-                                                    class="text-danger">*</span> </label>
-                                        </div>
+                                        @error('password')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="mb-3">
                                         <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>

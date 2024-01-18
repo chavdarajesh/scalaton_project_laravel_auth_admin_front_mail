@@ -20,72 +20,66 @@ class AdminProfileController extends Controller
     //
     public function adminprofileprofilechangepassword()
     {
-        // toastr()->warning('--------');
         return view('admin.profile.change-password');
     }
     public function adminprofilesetting()
     {
-        // toastr()->warning('--------');
         return view('admin.profile.profile-setting');
     }
     public function adminprofilesettingpost(Request $request)
     {
-        $ValidatedData = Validator::make($request->all(), [
-            'name' => 'required|max:20',
-            'phone' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'username' => 'required',
+
+        $request->validate([
+            'name' => 'required|max:40',
+            'email' => 'required|email|unique:users,email,' . Auth::user()->id,
+            'phone' => 'required|unique:users,phone,' . Auth::user()->id,
+            'username' => 'required|unique:users,username,' . Auth::user()->id,
             'address' => 'required',
             'dateofbirth' => 'required',
         ]);
 
-        if ($ValidatedData->fails()) {
-            return redirect()->back()->with('error', 'All Fileds are Required..');
-        } else {
-            $user = Auth::user();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-            $user->username = $request->username;
-            $user->address = $request->address;
-            $user->dateofbirth = $request->dateofbirth;
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->username = $request->username;
+        $user->address = $request->address;
+        $user->dateofbirth = $request->dateofbirth;
 
-            if ($request->profilephoto) {
-                $folderPath = public_path('assets/users/profilephoto/' . $user->id . '/');
-                if (!file_exists($folderPath)) {
-                    mkdir($folderPath, 0777, true);
-                }
-                $file = $request->file('profilephoto');
-                $imageoriginalname = str_replace(" ", "-", $file->getClientOriginalName());
-                $imageName = time() . $imageoriginalname;
-                $file->move($folderPath, $imageName);
-                $user->profileimage = 'assets/users/profilephoto/' . $user->id . '/' . $imageName;
+        if ($request->profileimage) {
+            $folderPath = public_path('assets/images/users/profileimage/' . Auth::user()->id . '/');
+            if (!file_exists($folderPath)) {
+                mkdir($folderPath, 0777, true);
             }
-            $user->save();
-            return redirect()->route('admin.profile.setting')->with('message', 'Profile Updated Succesfully..');
+            $file = $request->file('profileimage');
+            $imageoriginalname = str_replace(" ", "-", $file->getClientOriginalName());
+            $imageName = rand(1000, 9999) . time() . $imageoriginalname;
+            $file->move($folderPath, $imageName);
+            $user->profileimage = 'assets/images/users/profileimage/' . Auth::user()->id . '/' . $imageName;
+            if ($request->old_profileimage && file_exists(public_path($request->old_profileimage))) {
+                unlink(public_path($request->old_profileimage));
+            }
         }
+        $user->save();
+        return redirect()->route('admin.profile.setting')->with('message', 'Profile Updated Succesfully..');
     }
     public function adminprofilsettingchangepasswordepost(Request $request)
     {
-        $ValidatedData = Validator::make($request->all(), [
+        $request->validate([
             'adminoldpassword' => 'required',
             'adminnewpassword' => 'min:6',
             'adminconfirmnewpasswod' => 'required_with:adminnewpassword|same:adminnewpassword|min:6'
         ]);
-        if ($ValidatedData->fails()) {
-            return redirect()->back()->with('error', $ValidatedData->errors());
-        } else {
-            $user = Auth::user();
-            if (!Hash::check($request->adminoldpassword, $user->password)) {
-                return redirect()->back()->with('error', 'Current password does not match!');
-            }
-            $user->password = Hash::make($request->adminnewpassword);
-            $user->save();
-            Auth::logout();
-            $request->session()->flush();
-            return redirect()->route('admin.login')->with('message', 'Password changed Successfully Please Login Again..');;
+
+        $user = Auth::user();
+        if (!Hash::check($request->adminoldpassword, $user->password)) {
+            return redirect()->back()->with('error', 'Current Password Does Not Match!');
         }
+        $user->password = Hash::make($request->adminnewpassword);
+        $user->save();
+        Auth::logout();
+        $request->session()->flush();
+        return redirect()->route('admin.login')->with('message', 'Password Updated Successfully Please Login Again..');;
     }
 
     public function adminforgotpasswordget()
@@ -94,24 +88,20 @@ class AdminProfileController extends Controller
     }
     public function adminforgotpasswordpost(Request $request)
     {
-        $ValidatedData = Validator::make($request->all(), [
+        $request->validate([
             'email' => 'required|email|exists:users'
         ]);
-        if ($ValidatedData->fails()) {
-            return redirect()->back()->with('error', $ValidatedData->errors());
-        } else {
-            $token = Str::random(64);
-            DB::table('password_resets')->insert([
-                'email' => $request->email,
-                'token' => $token,
-                'created_at' => Carbon::now('Asia/Kolkata'),
-            ]);
-            $data = [
-                'token' => $token
-            ];
-            Mail::to($request->email)->send(new ForgotPassword($data));
-            return redirect()->route('admin.login')->with('message', 'Mail send  Successfully Please Chacek MAil..');
-        }
+        $token = Str::random(64);
+        DB::table('password_resets')->insert([
+            'email' => $request->email,
+            'token' => $token,
+            'created_at' => Carbon::now('Asia/Kolkata'),
+        ]);
+        $data = [
+            'token' => $token
+        ];
+        Mail::to($request->email)->send(new ForgotPassword($data));
+        return redirect()->route('admin.login')->with('message', 'Password Reset Link send Successfully To Your Email..');
     }
 
     public function showResetPasswordFormget($token)
@@ -120,21 +110,18 @@ class AdminProfileController extends Controller
     }
     public function submitResetPasswordFormpost(Request $request)
     {
-        $ValidatedData = Validator::make($request->all(), [
-            'adminnewpassword' => 'min:6',
-            'adminconfirmnewpasswod' => 'required_with:adminnewpassword|same:adminnewpassword|min:6'
+        $request->validate([
+            'newpassword' => 'required|min:6',
+            'confirmnewpasswod' => 'required|same:newpassword|min:6'
         ]);
-        if ($ValidatedData->fails()) {
-            return redirect()->back()->with('error', $ValidatedData->errors());
-        } else {
-            $updatePassword = DB::table('password_resets')->where('token', $request->token)->first();
-            if (!$updatePassword) {
-                return back()->withInput()->with('error', 'Invalid token!');
-            }
-            $user = User::where('email', $updatePassword->email)
-                ->update(['password' => Hash::make($request->adminnewpassword)]);
-            DB::table('password_resets')->where(['email' => $updatePassword->email])->delete();
-            return redirect()->route('admin.login')->with('message', 'Your password has been changed!');
+
+        $updatePassword = DB::table('password_resets')->where('token', $request->token)->first();
+        if (!$updatePassword) {
+            return back()->withInput()->with('error', 'Invalid token!');
         }
+        $user = User::where('email', $updatePassword->email)
+            ->update(['password' => Hash::make($request->adminnewpassword)]);
+        DB::table('password_resets')->where(['email' => $updatePassword->email])->delete();
+        return redirect()->route('admin.login')->with('message', 'Your Password Has Been Updated!');
     }
 }

@@ -35,7 +35,7 @@
                                 <!-- Logo -->
 
                                 <!-- /Logo -->
-                                <h4 class="mb-2">Welcome to {{env('APP_NAME', 'Laravel App')}} 👋</h4>
+                                <h4 class="mb-2">Welcome to {{ env('APP_NAME', 'Laravel App') }} 👋</h4>
                                 <h4 class="mb-2">Forgot Password? 🔒</h4>
                                 <p class="mb-4">Enter your email and we'll send you instructions to reset your
                                     password</p>
@@ -45,9 +45,10 @@
                                     @csrf
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input required type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
-                                            placeholder="Enter your email" autofocus value="{{old('email')}}"/>
-                                            @error('email')
+                                        <input type="text" class="form-control @error('email') is-invalid @enderror"
+                                            id="email" name="email" placeholder="Enter your email" autofocus
+                                            value="{{ old('email') }}" />
+                                        @error('email')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>

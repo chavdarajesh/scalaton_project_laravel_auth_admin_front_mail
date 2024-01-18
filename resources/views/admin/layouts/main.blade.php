@@ -12,7 +12,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <title>{{env('APP_NAME', 'Laravel App')}} Admin | @yield('title')</title>
+    <title>{{ env('APP_NAME', 'Laravel App') }} Admin | @yield('title')</title>
     @include('admin.layouts.head')
 
 </head>

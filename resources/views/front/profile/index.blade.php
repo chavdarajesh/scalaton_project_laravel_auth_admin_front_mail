@@ -1,5 +1,5 @@
 @extends('front.layouts.main')
-@section('title', 'Profile Page')
+@section('title', 'Profile And Password Setting')
 @section('css')
     <style>
         .payment-slider {
@@ -108,7 +108,7 @@
                 <div class="container position-relative">
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-6 text-center">
-                            <h2>Profile</h2>
+                            <h2>Profile And Password</h2>
                             <p></p>
                         </div>
                     </div>
@@ -118,7 +118,7 @@
                 <div class="container">
                     <ol>
                         <li><a href="{{ route('front.homepage') }}">Home</a></li>
-                        <li>Profile</li>
+                        <li>Profile And Password</li>
                     </ol>
                 </div>
             </nav>
@@ -127,7 +127,7 @@
         <!-- ======= Contact Section ======= -->
         <section id="contact" class="contact payment-slider">
             <div class="container" data-aos="fade-up">
-                <div class="col-lg-9 my-5 m-auto">
+                <div class="col-lg-9 my-5 m-auto bank-acc-detail-main-div">
                     <div class="card">
                         <div class="card-body">
                             <!-- Logo -->
@@ -135,6 +135,7 @@
                                 enctype="multipart/form-data">
                                 <!-- /Logo -->
                                 @csrf
+                                <input type="hidden" name="old_profileimage" value="{{Auth::user()->profileimage}}">
                                 <div class="row p-3 border-bottom shadow-lg p-3 mb-5 bg-white rounded ">
                                     <div class="col-lg-3 p-2">
                                         <img src="{{ Auth::user()->profileimage ? asset(Auth::user()->profileimage) : asset('assets/admin/img/avatars/1.png') }}"
@@ -146,8 +147,9 @@
                                         <hr>
                                         <a href="javascript:void(0);" class="text-decoration-none copy-click">
                                             <h6 class="text-decoration-none copy-click" data-tooltip-text="Click to copy"
-                                                data-value="{{route('front.register')}}?referral_code={{ Auth::user()->referral_code }}" data-tooltip-text-copied="✔ Copied to clipboard"
-                                                class="mb-2 d-inline">Your Referral Code Is -
+                                                data-value="{{ route('front.register') }}?referral_code={{ Auth::user()->referral_code }}"
+                                                data-tooltip-text-copied="✔ Copied to clipboard" class="mb-2 d-inline">Your
+                                                Referral Code Is -
                                                 {{ Auth::user()->referral_code }}&nbsp;&nbsp;
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
@@ -158,17 +160,18 @@
                                                 <span>(click to copy)</span>
                                             </h6>
                                         </a>
-                                        Total Referral Counts <span class="badge badge-secondary bg-primary">{{ User::get_total_use_referral_user_by_id(Auth::user()->id)}}</span>
+                                        Total Referral Counts <span
+                                            class="badge badge-secondary bg-primary">{{ User::get_total_use_referral_user_by_id(Auth::user()->id) }}</span>
                                         <hr>
                                         <div class="button-wrapper">
                                             <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                                 <span class="d-sm-block">Upload new photo</span>
                                                 <i class="bx bx-upload d-block d-sm-none"></i>
-                                                <input type="file" id="upload" class="account-file-input profilephoto"
-                                                    hidden accept="image/png, image/jpeg" name="profilephoto"
+                                                <input type="file" id="upload" class="account-file-input"
+                                                    hidden accept="image/*" name="profileimage"
                                                     onchange="readURL(this)" />
                                             </label>
-                                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 4Mb</p>
                                         </div>
                                     </div>
                                 </div>
@@ -177,54 +180,49 @@
                                     <h3 class="my-3">Profile Setting</h3>
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Name</label>
-                                        <input required type="text"
-                                            class="form-control @error('name') is-invalid @enderror " id="name"
-                                            value="{{ Auth::user()->name }}" name="name">
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror "
+                                            id="name" value="{{ Auth::user()->name }}" name="name">
                                         @error('name')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Username</label>
-                                        <input required type="text"
-                                            class="form-control @error('username') is-invalid @enderror " id="username"
-                                            value="{{ Auth::user()->username }}" name="username">
+                                        <input type="text" class="form-control @error('username') is-invalid @enderror "
+                                            id="username" value="{{ Auth::user()->username }}" name="username">
                                         @error('username')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input required type="email"
-                                            class="form-control @error('email') is-invalid @enderror " id="email"
-                                            value="{{ Auth::user()->email }}" name="email">
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror "
+                                            id="email" value="{{ Auth::user()->email }}" name="email">
                                         @error('email')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="phone" class="form-label">Phone</label>
-                                        <input required type="tel"
-                                            class="form-control @error('phone') is-invalid @enderror " id="phone"
-                                            maxlength="10" value="{{ Auth::user()->phone }}" name="phone">
+                                        <input type="tel" class="form-control @error('phone') is-invalid @enderror "
+                                            id="phone" maxlength="10" value="{{ Auth::user()->phone }}" name="phone">
                                         @error('phone')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="address" class="form-label">Address</label>
-                                        <textarea required name="address" id="address" class="form-control @error('address') is-invalid @enderror"
-                                            rows="3">{{ Auth::user()->address }}</textarea>
+                                        <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror" rows="3">{{ Auth::user()->address }}</textarea>
                                         @error('address')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="dateofbirth" class="form-label">Date Of Birth</label>
-                                        <input required type="date"
+                                        <input type="date"
                                             class="form-control @error('dateofbirth') is-invalid @enderror "
-                                            value="{{ Auth::user()->dateofbirth }}" id="dateofbirth"
-                                            name="dateofbirth" max="2022-06-16">
+                                            value="{{ Auth::user()->dateofbirth }}" id="dateofbirth" name="dateofbirth"
+                                            max="2022-06-16">
                                         @error('dateofbirth')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -240,7 +238,7 @@
                                     <h3 class="my-3">Password Setting</h3>
                                     <div class="mb-3">
                                         <label for="oldpassword" class="form-label">Old Password</label>
-                                        <input required type="text"
+                                        <input type="text"
                                             class="form-control @error('oldpassword') is-invalid @enderror"
                                             id="oldpassword" value="{{ old('oldpassword') }}" name="oldpassword">
                                         @error('oldpassword')
@@ -249,7 +247,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="newpassword" class="form-label">New Password</label>
-                                        <input required type="text"
+                                        <input type="text"
                                             class="form-control @error('newpassword') is-invalid @enderror"
                                             id="newpassword" value="{{ old('newpassword') }}" name="newpassword">
                                         @error('newpassword')
@@ -258,7 +256,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="confirmnewpasswod" class="form-label">Confirm New Password</label>
-                                        <input required type="text"
+                                        <input type="text"
                                             class="form-control @error('confirmnewpasswod') is-invalid @enderror"
                                             id="confirmnewpasswod" value="{{ old('confirmnewpasswod') }}"
                                             name="confirmnewpasswod">

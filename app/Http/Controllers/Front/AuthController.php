@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Front\ForgotPassword;
 use App\Mail\Front\OTPVerification;
-use App\Models\Front\Payment;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -49,12 +48,9 @@ class AuthController extends Controller
             'address' => 'required',
             'dateofbirth' => 'required',
             'accept_t_c' => 'required',
+            'referral_code' => 'exists:users',
         ]);
-        if ($request['referral_code']) {
-            $request->validate([
-                'referral_code' => 'exists:users',
-            ]);
-        }
+
         $user = new User();
         $user->name = $request['name'];
         $user->username = $request['username'];
@@ -105,7 +101,7 @@ class AuthController extends Controller
                 User::where('id', '=', $request->user_id)->where('email', '=', $request->email)->update(['otp' => null]);
                 User::where('id', '=', $request->user_id)->where('email', '=', $request->email)->update(['is_verified' => 1]);
                 User::where('id', '=', $request->user_id)->where('email', '=', $request->email)->update(['email_verified_at' =>  Carbon::now('Asia/Kolkata')]);
-                if (Auth::attempt(['email' => $request->email, 'password' => $request->otp,'is_verified' => 1, 'status' => 1])) {
+                if (Auth::attempt(['email' => $request->email, 'password' => $request->otp, 'is_verified' => 1, 'status' => 1])) {
                     return redirect()->route('front.homepage')->with('message', 'Account Created Successfully..');
                 } else {
                     return redirect()->back()->with('error', 'Somthing Went Wrong11..');
@@ -120,25 +116,29 @@ class AuthController extends Controller
 
     public function postlogin(Request $request)
     {
-        $ValidatedData = Validator::make($request->all(), [
-            'email' => 'required',
-            'password' => 'required',
-            'accept_t_c' => 'required',
+        $request->validate([
+            'email' => [
+                'required',
+                Rule::exists('users')->where(function ($query) use ($request) {
+                    $query->where('email', $request->input('email'))
+                        ->orWhere('username', $request->input('email'));
+                }),
+            ],
+            'password' => 'required|min:6',
+        ], [
+            'email.required' => 'The email or username field is required.',
+            'email.exists' => 'The provided email or username does not exist.',
         ]);
-        if ($ValidatedData->fails()) {
-            return redirect()->back()->with('error', 'All Filed Require..!');
-        } else {
-            if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_verified' => 1, 'status' => 1]) || Auth::attempt(['username' => $request->email, 'password' => $request->password, 'is_verified' => 1, 'status' => 1])) {
-                if (Auth::user()->email_verified_at != null && Auth::user()->otp == null) {
-                    return redirect()->route('front.homepage')->with('message', 'User Login Successfully');
-                } else {
-                    Auth::logout();
-                    $request->session()->flush();
-                    return redirect()->back()->with('error', 'User Not Verified...');
-                }
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_verified' => 1, 'status' => 1]) || Auth::attempt(['username' => $request->email, 'password' => $request->password, 'is_verified' => 1, 'status' => 1])) {
+            if (Auth::user()->email_verified_at != null && Auth::user()->otp == null) {
+                return redirect()->route('front.homepage')->with('message', 'User Login Successfully');
             } else {
-                return redirect()->back()->with('error', 'Invalid Credantials');
+                Auth::logout();
+                $request->session()->flush();
+                return redirect()->back()->with('error', 'User Not Verified...');
             }
+        } else {
+            return redirect()->back()->with('error', 'Invalid Credantials');
         }
     }
     public function logout(Request $request)

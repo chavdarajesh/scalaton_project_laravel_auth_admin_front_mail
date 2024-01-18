@@ -3,7 +3,7 @@
 
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>{{env('APP_NAME', 'Laravel App')}} | Reset Password </title>
+    <title>{{ env('APP_NAME', 'Laravel App') }} | Reset Password </title>
     <meta name="description" content="Reset Password Email Template.">
     <style type="text/css">
         a:hover {
@@ -12,7 +12,7 @@
     </style>
 </head>
 @php
-$base_url = URL::to('/');
+    $base_url = URL::to('/');
 @endphp
 
 <body marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #f2f3f8;" leftmargin="0">
@@ -29,7 +29,7 @@ $base_url = URL::to('/');
                     <tr>
                         <td style="text-align:center;">
                             <a href="{{ $base_url }}" target="_blank" title="logo" target="_blank">
-                                {{env('APP_NAME', 'Laravel App')}}
+                                {{ env('APP_NAME', 'Laravel App') }}
                             </a>
                         </td>
                     </tr>
@@ -74,7 +74,7 @@ $base_url = URL::to('/');
                         <td style="text-align:center;">
                             <p
                                 style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">
-                                &copy; <strong>{{env('APP_URL', 'http://localhost')}}</strong></p>
+                                &copy; <strong>{{ env('APP_URL', 'http://localhost') }}</strong></p>
                         </td>
                     </tr>
                     <tr>

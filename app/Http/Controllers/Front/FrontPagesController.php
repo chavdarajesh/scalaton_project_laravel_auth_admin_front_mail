@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Faqs;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 
 class FrontPagesController extends Controller
@@ -34,5 +35,24 @@ class FrontPagesController extends Controller
     {
         $Faqs=Faqs::where('status',1)->get();
         return view('front.faqs.faqs_view',['Faqs'=>$Faqs]);
+    }
+    public function blogpage()
+    {
+        $Blogs=Blog::where('status',1)->get();
+        return view('front.blogs.blogs_list',['Blogs'=>$Blogs]);
+    }
+
+    public function blog_details($id)
+    {
+        if ($id) {
+            $Blog = Blog::find($id);
+            if ($Blog) {
+                return view('front.blogs.blog_details',['Blog'=>$Blog]);
+            } else {
+                return redirect()->back()->with('error', 'Somthing Went Wrong..!');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Blog Not Found..!');
+        }
     }
 }

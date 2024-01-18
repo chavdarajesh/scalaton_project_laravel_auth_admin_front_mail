@@ -1,22 +1,23 @@
 @extends('admin.layouts.main')
-@section('title', 'Contact Message Page')
+@section('title', 'Contact Messages')
 @section('css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/dataTables.bootstrap5.min.css') }}">
 @stop
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Contact /</span>  Contact Message</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Contact /</span> Contact Messages</h4>
 
         <div class="row">
             <div class="col-md-12">
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                        <a class="nav-link active " href="javascript:void(0);"><i class='bx bxs-contact me-1' ></i>
-                             Contact Message
+                        <a class="nav-link active " href="javascript:void(0);"><i class='bx bxs-contact me-1'></i>
+                            Contact Messages
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin.get.contact_settings')}}"><i class='bx bxs-contact me-1' ></i>  Conatct Settings
+                        <a class="nav-link" href="{{ route('admin.get.contact_settings') }}"><i
+                                class='bx bxs-contact me-1'></i> Conatct Settings
                         </a>
                     </li>
 
@@ -45,10 +46,10 @@
                                         <td class="text-center">{{ $Contact->name }}</td>
                                         <td class="text-center">{{ $Contact->email }}</td>
                                         <td class="text-center">{{ $Contact->subject }}</td>
-                                        <td class="text-center">
-                                            @if (strlen($Contact->message) > 8)
+                                        <td class="text-center" title="{{ $Contact->message }}">
+                                            @if (strlen($Contact->message) > 20)
                                                 @php
-                                                    echo substr($Contact->message, 0, 8).'..';
+                                                    echo substr($Contact->message, 0, 20) . '..';
                                                 @endphp
                                             @else
                                                 {{ $Contact->message }}
@@ -57,9 +58,9 @@
 
                                         <td class="text-center">
                                             <a href="{{ route('admin.view.contcat_msg', $Contact->id) }}">
-                                            <button type="button" class="btn btn-icon btn-outline-success">
-                                                <i class='bx bx-show'></i>
-                                            </button>
+                                                <button type="button" class="btn btn-icon btn-outline-success">
+                                                    <i class='bx bx-show'></i>
+                                                </button>
                                             </a>
 
                                             <button type="button" class="btn btn-icon btn-outline-danger"
@@ -80,7 +81,8 @@
                                                                 aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form action="{{ route('admin.delete.contact_msg', $Contact->id) }}"
+                                                            <form
+                                                                action="{{ route('admin.delete.contact_msg', $Contact->id) }}"
                                                                 method="post">
                                                                 <h3>Do You Want To Really Delete This Item?</h3>
                                                                 @csrf
@@ -107,8 +109,8 @@
     </div>
 @stop
 @section('js')
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{ asset('assets/admin/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/dataTables.bootstrap5.min.js') }}"></script>
 
     <script>
         $(document).ready(function() {

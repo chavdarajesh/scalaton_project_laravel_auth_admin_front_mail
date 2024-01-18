@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@section('title', 'Contact Settings Page')
+@section('title', 'Contact Settings')
 @section('content')
 
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -10,7 +10,7 @@
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.get.contact_msg') }}"><i class='bx bxs-contact me-1'></i>
-                            Contact Message
+                            Contact Messages
                         </a>
                     </li>
 
@@ -26,10 +26,9 @@
 
                     <hr class="my-0" />
                     <div class="card-body">
-                        <form id="formAccountSettings" method="POST" action="">
+                        <form method="POST" action="">
                             @csrf
-                            <input type="hidden" name="id"
-                                value="{{ $ContactSetting ? $ContactSetting['id'] : 1 }}">
+                            <input type="hidden" name="id" value="{{ $ContactSetting ? $ContactSetting['id'] : 1 }}">
                             <div class="row">
                                 <div class="mb-3 col-md-12">
                                     <label for="map_iframe" class="form-label">Map IFrame</label>
@@ -41,8 +40,7 @@
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="location" class="form-label">Location</label>
-                                    <textarea class="form-control @error('location') is-invalid @enderror" type="text" id="location" name="location"
-                                        autofocus>{{ $ContactSetting ? $ContactSetting['location'] : old('location') }}</textarea>
+                                    <textarea class="form-control @error('location') is-invalid @enderror" type="text" id="location" name="location">{{ $ContactSetting ? $ContactSetting['location'] : old('location') }}</textarea>
                                     @error('location')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -51,8 +49,7 @@
                                     <label for="phone" class="form-label">Phone</label>
                                     <input class="form-control @error('phone') is-invalid @enderror" type="text"
                                         id="phone" name="phone"
-                                        value="{{ $ContactSetting ? $ContactSetting['phone'] : old('phone') }}"
-                                        autofocus />
+                                        value="{{ $ContactSetting ? $ContactSetting['phone'] : old('phone') }}" />
                                     @error('phone')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -61,16 +58,22 @@
                                     <label for="email" class="form-label">Email</label>
                                     <input class="form-control @error('email') is-invalid @enderror" type="text"
                                         id="email" name="email"
-                                        value="{{ $ContactSetting ? $ContactSetting['email'] : old('email') }}"
-                                        autofocus />
+                                        value="{{ $ContactSetting ? $ContactSetting['email'] : old('email') }}" />
                                     @error('email')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <label for="timing" class="form-label">Timing</label>
+                                    <textarea rows="5" class="form-control @error('timing') is-invalid @enderror" type="text" id="timing"
+                                        name="timing" autofocus>{{ $ContactSetting ? $ContactSetting['timing'] : old('timing') }}</textarea>
+                                    @error('timing')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
                             <div class="mt-2">
                                 <button type="submit" class="btn btn-primary me-2">Save</button>
-                                <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                             </div>
                         </form>
                     </div>
