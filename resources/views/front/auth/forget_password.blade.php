@@ -40,7 +40,7 @@
                                 <p class="mb-4">Enter your email and we'll send you instructions to reset your
                                     password</p>
 
-                                <form id="formAuthentication" class="mb-3"
+                                <form id="form" class="mb-3"
                                     action="{{ route('front.post.forgotpassword') }}" method="POST">
                                     @csrf
                                     <div class="mb-3">

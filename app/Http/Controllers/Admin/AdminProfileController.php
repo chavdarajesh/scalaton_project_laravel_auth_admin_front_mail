@@ -32,10 +32,11 @@ class AdminProfileController extends Controller
         $request->validate([
             'name' => 'required|max:40',
             'email' => 'required|email|unique:users,email,' . Auth::user()->id,
-            'phone' => 'required|unique:users,phone,' . Auth::user()->id,
+            'phone' => 'required|min:10|unique:users,phone,' . Auth::user()->id,
             'username' => 'required|unique:users,username,' . Auth::user()->id,
             'address' => 'required',
             'dateofbirth' => 'required',
+            'profileimage'=>'file|image|mimes:jpeg,png,jpg,gif|max:5000'
         ]);
 
         $user = Auth::user();
@@ -61,13 +62,17 @@ class AdminProfileController extends Controller
             }
         }
         $user->save();
-        return redirect()->route('admin.profile.setting')->with('message', 'Profile Updated Succesfully..');
+        if ($user) {
+            return redirect()->route('admin.profile.setting')->with('message', 'Profile Updated Succesfully..');
+        } else {
+            return redirect()->back()->with('error', 'Somthing Went Wrong..');
+        }
     }
     public function adminprofilsettingchangepasswordepost(Request $request)
     {
         $request->validate([
-            'adminoldpassword' => 'required',
-            'adminnewpassword' => 'min:6',
+            'adminoldpassword' => 'required|min:6',
+            'adminnewpassword' => 'required|min:6',
             'adminconfirmnewpasswod' => 'required_with:adminnewpassword|same:adminnewpassword|min:6'
         ]);
 
@@ -89,7 +94,7 @@ class AdminProfileController extends Controller
     public function adminforgotpasswordpost(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users'
+            'email' => 'required|email|exists:users,email,is_admin,1,status,1,is_verified,1'
         ]);
         $token = Str::random(64);
         DB::table('password_resets')->insert([
@@ -100,13 +105,17 @@ class AdminProfileController extends Controller
         $data = [
             'token' => $token
         ];
-        Mail::to($request->email)->send(new ForgotPassword($data));
+        $mail = Mail::to($request->email)->send(new ForgotPassword($data));
         return redirect()->route('admin.login')->with('message', 'Password Reset Link send Successfully To Your Email..');
     }
 
     public function showResetPasswordFormget($token)
     {
-        return view('admin.mail.showresetpasswordform', ['token' => $token]);
+        if (isset($token) && $token != '') {
+            return view('admin.mail.showresetpasswordform', ['token' => $token]);
+        } else {
+            return redirect()->back()->with('error', 'Somthing Went Wrong..');
+        }
     }
     public function submitResetPasswordFormpost(Request $request)
     {
@@ -114,6 +123,9 @@ class AdminProfileController extends Controller
             'newpassword' => 'required|min:6',
             'confirmnewpasswod' => 'required|same:newpassword|min:6'
         ]);
+        if (!isset($request->token) || $request->token == '') {
+            return redirect()->back()->with('error', 'Somthing Went Wrong..');
+        }
 
         $updatePassword = DB::table('password_resets')->where('token', $request->token)->first();
         if (!$updatePassword) {
@@ -122,6 +134,10 @@ class AdminProfileController extends Controller
         $user = User::where('email', $updatePassword->email)
             ->update(['password' => Hash::make($request->adminnewpassword)]);
         DB::table('password_resets')->where(['email' => $updatePassword->email])->delete();
-        return redirect()->route('admin.login')->with('message', 'Your Password Has Been Updated!');
+        if ($user) {
+            return redirect()->route('admin.login')->with('message', 'Your Password Has Been Updated!');
+        } else {
+            return redirect()->back()->with('error', 'Somthing Went Wrong..');
+        }
     }
 }

@@ -19,19 +19,13 @@
                     </li>
 
                 </ul>
-                <div class="card mb-4">
-                    <h5 class="card-header justify-content-between d-flex">
-                        <div>Faqs Setting </div>
-                        <div><a href="{{ route('admin.add.faq') }}" class="btn btn-primary add-btn">Add New Faq</a></div>
-                    </h5>
-                    <!-- Account -->
-
-                    <hr class="my-0" />
-
-                    <!-- /Account -->
-                </div>
                 <div class="card">
-                    <h5 class="card-header">All Faqs</h5>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-header">All Faqs</h5>
+                        <div class="card-header d-flex align-items-center">
+                            <a href="{{ route('admin.add.faq') }}" class="btn btn-primary add-btn">Add New Faq</a>
+                        </div>
+                    </div>
                     <div class="table-responsive text-nowrap p-3">
                         <table class="table table-hover " id="example">
                             <thead>

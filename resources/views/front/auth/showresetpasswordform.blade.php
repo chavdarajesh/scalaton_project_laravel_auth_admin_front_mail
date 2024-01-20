@@ -50,7 +50,7 @@
                                 <h4 class="mb-2">Reset Password!</h4>
                                 <p class="mb-4">Enter New Password and Confirm Password to Continue!..</p>
 
-                                <form id="formAuthentication" class="mb-3"
+                                <form id="form" class="mb-3"
                                     action="{{ route('front.reset.password.post') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="token" value="{{ $token }}">

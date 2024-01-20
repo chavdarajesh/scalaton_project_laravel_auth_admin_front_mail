@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default"
     data-assets-path="{{ asset('assets/admin/') }}" data-template="vertical-menu-template-free">
 
@@ -90,7 +89,7 @@
                         <h4 class="mb-2">Forgot Password? 🔒</h4>
                         <p class="mb-4">Enter your email and we'll send you instructions to reset your
                             password</p>
-                        <form id="formAuthentication" class="mb-3" action="{{ route('admin.forgotpassword.post') }}"
+                        <form id="form" class="mb-3" action="{{ route('admin.forgotpassword.post') }}"
                             method="POST">
                             @csrf
                             <div class="mb-3">
@@ -98,9 +97,10 @@
                                 <input type="text" class="form-control  @error('email') is-invalid @enderror"
                                     id="email" name="email" placeholder="Enter your email"
                                     value="{{ old('email') }}" autofocus />
-                                @error('email')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <div id="email_error" class="text-danger"> @error('email')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                             <button class="btn btn-primary d-grid w-100">Send Reset Link</button>
                         </form>
@@ -123,7 +123,39 @@
     @include('admin.layouts.footer')
     <!-- Page JS -->
 
+    <script src="{{ asset('assets/admin/js/jquery.validate.min.js') }}"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('#form').validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true,
+                    }
+                },
+                messages: {
+                    email: {
+                        required: 'This field is required',
+                        email: 'Enter a valid email',
+                    },
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    $('#' + element.attr('name') + '_error').html(error)
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

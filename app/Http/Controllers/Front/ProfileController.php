@@ -29,6 +29,7 @@ class ProfileController extends Controller
             'username' => 'required ',
             'address' => 'required',
             'dateofbirth' => 'required',
+            'profileimage'=>'file|image|mimes:jpeg,png,jpg,gif|max:5000'
         ]);
         if ($ValidatedData->fails()) {
             return redirect()->back()->with('error', 'All Fileds are Required..');
@@ -67,8 +68,8 @@ class ProfileController extends Controller
     public function postprofilechangepassword(Request $request)
     {
         $ValidatedData = Validator::make($request->all(), [
-            'oldpassword' => 'required',
-            'newpassword' => 'min:6',
+            'oldpassword' => 'required|min:6',
+            'newpassword' => 'required|min:6',
             'confirmnewpasswod' => 'required_with:newpassword|same:newpassword|min:6'
         ]);
         if ($ValidatedData->fails()) {

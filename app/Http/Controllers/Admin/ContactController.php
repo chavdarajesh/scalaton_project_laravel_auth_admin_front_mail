@@ -50,11 +50,8 @@ class ContactController extends Controller
     public function post_contact_settings(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
-            'phone' => 'required',
-            'location' => 'required',
-            'map_iframe' => 'required',
-            'timing' => 'required',
+            'email' => 'email',
+            'phone' => 'min:10',
         ]);
 
         $ContactSetting = ContactSetting::find($request->id);

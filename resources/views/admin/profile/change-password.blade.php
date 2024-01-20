@@ -24,7 +24,7 @@
 
                     <hr class="my-0" />
                     <div class="card-body">
-                        <form id="formAccountSettings" method="POST"
+                        <form id="form" method="POST"
                             action="{{ route('admin.profile.setting.changepassword.post') }}">
                             @csrf
                             <div class="row">
@@ -38,9 +38,10 @@
                                         <span class="input-group-text cursor-pointer" id="basic-default-password"><i
                                                 class="bx bx-hide"></i></span>
                                     </div>
-                                    @error('adminoldpassword')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div id="adminoldpassword_error" class="text-danger"> @error('adminoldpassword')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
 
                                 <div class="mb-3 col-md-12 form-password-toggle">
@@ -53,9 +54,10 @@
                                         <span class="input-group-text cursor-pointer" id="basic-default-password"><i
                                                 class="bx bx-hide"></i></span>
                                     </div>
-                                    @error('adminnewpassword')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div id="adminnewpassword_error" class="text-danger"> @error('adminnewpassword')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="mb-3 col-md-12 form-password-toggle">
                                     <label class="form-label" for="adminconfirmnewpasswod">Confirm New Password</label>
@@ -68,9 +70,12 @@
                                         <span class="input-group-text cursor-pointer" id="basic-default-password"><i
                                                 class="bx bx-hide"></i></span>
                                     </div>
-                                    @error('adminconfirmnewpasswod')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div id="adminconfirmnewpasswod_error" class="text-danger">
+                                        @error('adminconfirmnewpasswod')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="mt-2">
@@ -84,4 +89,57 @@
             </div>
         </div>
     </div>
+@stop
+@section('js')
+    <script src="{{ asset('assets/admin/js/jquery.validate.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#form').validate({
+                rules: {
+                    adminoldpassword: {
+                        required: true,
+                        minlength: 6,
+                    },
+                    adminnewpassword: {
+                        required: true,
+                        minlength: 6,
+                    },
+                    adminconfirmnewpasswod: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#adminnewpassword"
+                    }
+                },
+                messages: {
+                    adminpassword: {
+                        required: 'This field is required',
+                        minlength: 'Old Password must be at least 6 characters long'
+                    },
+                    adminnewpassword: {
+                        required: 'This field is required',
+                        minlength: 'New Password must be at least 6 characters long'
+                    },
+                    adminconfirmnewpasswod: {
+                        required: 'This field is required',
+                        minlength: 'Confirm Password must be at least 6 characters long',
+                        equalTo: 'Confirm password and New Password is not same'
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    $('#' + element.attr('name') + '_error').html(error)
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
 @stop

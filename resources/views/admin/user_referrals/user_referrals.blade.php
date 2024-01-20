@@ -16,7 +16,6 @@
 @stop
 @section('content')
     @php
-        use App\Models\Front\Payment;
         use App\Models\User;
     @endphp
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -40,7 +39,6 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">ID</th>
-                                    <th class="text-center">Installment</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Email </th>
                                     <th class="text-center">Status</th>
@@ -54,12 +52,9 @@
                                         <td class="text-center"><i class="fab fa-angular fa-lg text-danger me-3"></i>
                                             <strong>{{ $User->id }}</strong>
                                         </td>
-                                        <td class="text-center"><span
-                                                class="badge badge-center bg-primary">{{ count(@Payment::get_total_payment_by_user_id($User->id)) ? count(@Payment::get_total_payment_by_user_id($User->id)) : 0 }}</span>
-                                        </td>
 
                                         <td class="text-center"><a
-                                                href="{{ route('admin.get.user_payment', $User->id) }}">{{ $User->name }}</a>
+                                                href="{{ route('admin.view.user', $User->id) }}">{{ $User->name }}</a>
                                         </td>
                                         <td class="text-center">{{ $User->email }}</td>
                                         <td class="text-center"> <input data-id="{{ $User->id }}" class="user_status"

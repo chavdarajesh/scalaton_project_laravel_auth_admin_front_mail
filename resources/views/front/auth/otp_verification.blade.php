@@ -40,7 +40,7 @@
                                 <h4 class="mb-2">OTP Verification 🔒</h4>
                                 <p class="mb-4">Please Enter OTP Code Send To Your Email Address To Continue.</p>
 
-                                <form id="formAuthentication" class="mb-3"
+                                <form id="form" class="mb-3"
                                     action="{{ route('front.post.otp_verification') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="user_id" value="{{ $user_id ? $user_id : '' }}">

@@ -43,7 +43,7 @@
                                 <h4 class="mb-2">Welcome to {{ env('APP_NAME', 'Laravel App') }} 👋</h4>
                                 <p class="mb-4">Please sign-up to your account and start the adventure</p>
 
-                                <form id="formAuthentication" class="mb-3" action="{{ route('front.post.register') }}"
+                                <form id="form" class="mb-3" action="{{ route('front.post.register') }}"
                                     method="POST">
                                     @csrf
                                     <div class="mb-3">

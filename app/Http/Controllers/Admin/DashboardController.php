@@ -27,7 +27,7 @@ class DashboardController extends Controller
     public function adminloginpost(Request $request)
     {
         $request->validate([
-            'adminemail' => 'required|email|exists:users,email',
+            'adminemail' => 'required|email|exists:users,email,is_admin,1,status,1,is_verified,1',
             'adminpassword' => 'required| min:6'
         ]);
         if (!Auth::check()) {

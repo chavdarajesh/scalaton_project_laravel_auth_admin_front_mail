@@ -16,7 +16,6 @@
 @stop
 @section('content')
     @php
-        use App\Models\Front\Payment;
         use App\Models\User;
     @endphp
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -33,7 +32,12 @@
 
                 </ul>
                 <div class="card">
-                    <h5 class="card-header">All Users</h5>
+                    <div class="d-flex justify-content-between">
+                        <h5 class="card-header">All Users</h5>
+                        <div class="card-header d-flex align-items-center">
+                            <a href="{{ route('admin.add.user') }}" class="btn btn-primary add-btn">Add New User</a>
+                        </div>
+                    </div>
                     <div class="table-responsive text-nowrap p-3">
                         <table class="table table-hover " id="example">
                             <thead>

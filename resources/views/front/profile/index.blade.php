@@ -2,7 +2,7 @@
 @section('title', 'Profile And Password Setting')
 @section('css')
     <style>
-        .payment-slider {
+        .contact-slider {
             background-color: #f3f6fc;
         }
 
@@ -125,7 +125,7 @@
         </div><!-- End Breadcrumbs -->
 
         <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact payment-slider">
+        <section id="contact" class="contact contact-slider">
             <div class="container" data-aos="fade-up">
                 <div class="col-lg-9 my-5 m-auto bank-acc-detail-main-div">
                     <div class="card">

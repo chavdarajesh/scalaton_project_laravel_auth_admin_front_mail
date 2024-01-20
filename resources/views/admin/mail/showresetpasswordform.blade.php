@@ -82,36 +82,48 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span
-                                    class="app-brand-text demo text-body fw-bolder">{{ env('APP_NAME', 'Laravel App') }}</span>
+                                <span class="app-brand-text demo text-body fw-bolder">FINANCIAL ADVISOR</span>
                             </a>
                         </div>
                         <!-- /Logo -->
                         <h4 class="mb-2">Reset Password!</h4>
                         <p class="mb-4">Enter New Password and Confirm Password to Continue!..</p>
 
-                        <form id="formAuthentication" class="mb-3" action="{{ route('admin.reset.password.post') }}"
+                        <form id="form" class="mb-3" action="{{ route('admin.reset.password.post') }}"
                             method="POST">
                             @csrf
                             <input type="hidden" name="token" value="{{ $token }}">
                             <div class="mb-3 form-password-toggle">
-                                <label for="adminnewpassword" class="form-label">New Password</label>
+                                <label for="newpassword" class="form-label">New Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="adminnewpassword" class="form-control"
-                                        name="adminnewpassword"
+                                    <input type="password" id="newpassword"
+                                        class="form-control  @error('newpassword') is-invalid @enderror"
+                                        name="newpassword"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
+                                        aria-describedby="password" value="{{ old('newpassword') }}" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
+                                <div id="newpassword_error" class="text-danger">
+                                    @error('newpassword')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
+
                             </div>
                             <div class="mb-3 form-password-toggle">
-                                <label for="adminconfirmnewpasswod" class="form-label">New Conform Password</label>
+                                <label for="confirmnewpasswod" class="form-label">New Conform Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="adminconfirmnewpasswod" class="form-control"
-                                        name="adminconfirmnewpasswod"
+                                    <input type="password" id="confirmnewpasswod"
+                                        class="form-control  @error('confirmnewpasswod') is-invalid @enderror"
+                                        name="confirmnewpasswod"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
+                                        aria-describedby="password" value="{{ old('confirmnewpasswod') }}" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                </div>
+                                <div id="confirmnewpasswod_error" class="text-danger">
+                                    @error('confirmnewpasswod')
+                                        {{ $message }}
+                                    @enderror
                                 </div>
                             </div>
 
@@ -131,6 +143,50 @@
     @include('admin.layouts.footer')
     <!-- Page JS -->
 
+
+    <script src="{{ asset('assets/admin/js/jquery.validate.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#form').validate({
+                rules: {
+                    newpassword: {
+                        required: true,
+                        minlength: 6,
+                    },
+                    confirmnewpasswod: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#newpassword"
+                    }
+                },
+                messages: {
+                    newpassword: {
+                        required: 'This field is required',
+                        minlength: 'Password must be at least 6 characters long'
+                    },
+                    confirmnewpasswod: {
+                        required: 'This field is required',
+                        minlength: 'Confirm password must be at least 6 characters long',
+                        equalTo: 'Confirm password and Password is not same'
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    $('#' + element.attr('name') + '_error').html(error)
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
 
 </body>
 

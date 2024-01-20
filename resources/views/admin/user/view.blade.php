@@ -64,6 +64,11 @@
                                 <input class="form-control" type="date" id="dateofbirth" name="dateofbirth"
                                     value="{{ $User->dateofbirth }}" disabled />
                             </div>
+                            <div class="mb-3 col-md-12">
+                                <label for="referral_code" class="form-label">Referral Code</label>
+                                <input class="form-control" type="text" id="referral_code" name="referral_code"
+                                    value="{{ $User->other_referral_code }}" disabled />
+                            </div>
                         </div>
                         <div class="mt-2">
                             <a href="{{ route('admin.edit.user', $User->id) }}"><button type="submit"

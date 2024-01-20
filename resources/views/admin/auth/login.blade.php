@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default"
     data-assets-path="{{ asset('assets/admin/') }}" data-template="vertical-menu-template-free">
 
@@ -90,16 +89,17 @@
                         <h4 class="mb-2">Welcome to {{ env('APP_NAME', 'Laravel App') }} 👋</h4>
                         <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
-                        <form id="formAuthentication" class="mb-3" action="{{ route('admin.login.post') }}"
-                            method="POST">
+                        <form id="form" class="mb-3" action="{{ route('admin.login.post') }}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label for="adminemail" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="adminemail" name="adminemail"
-                                    placeholder="Enter your email or username" autofocus />
-                                @error('adminemail')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <input type="text" class="form-control  @error('adminemail') is-invalid @enderror" id="adminemail" name="adminemail"
+                                    placeholder="Enter your email" autofocus />
+                                <div id="adminemail_error" class="text-danger">
+                                    @error('adminemail')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
@@ -109,14 +109,15 @@
                                     </a>
                                 </div>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="adminpassword" class="form-control" name="adminpassword"
+                                    <input type="password" id="adminpassword" class="form-control  @error('adminpassword') is-invalid @enderror" name="adminpassword"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                         aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
-                                @error('adminpassword')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <div id="adminpassword_error" class="text-danger"> @error('adminpassword')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
@@ -140,6 +141,48 @@
 
     @include('admin.layouts.footer')
     <!-- Page JS -->
+
+    <script src="{{ asset('assets/admin/js/jquery.validate.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#form').validate({
+                rules: {
+                    adminemail: {
+                        required: true,
+                        email: true,
+                    },
+                    adminpassword: {
+                        required: true,
+                        minlength: 6,
+                    }
+                },
+                messages: {
+                    adminemail: {
+                        required: 'This field is required',
+                        email: 'Enter a valid email',
+                    },
+                    adminpassword: {
+                        required: 'This field is required',
+                        minlength: 'Password must be at least 6 characters long'
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    $('#' + element.attr('name') + '_error').html(error)
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
 
 
 </body>

@@ -18,7 +18,8 @@
                     <h5 class="card-header">Profile Setting</h5>
                     <hr class="my-0" />
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.update.user') }}" enctype="multipart/form-data">
+                        <form id="form" method="POST" action="{{ route('admin.update.user') }}"
+                            enctype="multipart/form-data">
                             @csrf @method('PUT')
                             <input type="hidden" name="id" value="{{ $User->id }}">
                             <input type="hidden" name="old_profileimage" value="{{ $User->profileimage }}">
@@ -39,6 +40,10 @@
                                         <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 4Mb</p>
                                     </div>
                                 </div>
+                                <div id="profileimage_error" class="text-danger"> @error('profileimage')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="row">
@@ -47,9 +52,10 @@
                                     <input class="form-control  @error('name') is-invalid @enderror" type="text"
                                         id="name" name="name" value="{{ old('name') ? old('name') : $User->name }}"
                                         autofocus />
-                                    @error('name')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div id="name_error" class="text-danger"> @error('name')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
 
                                 <div class="mb-3 col-md-12">
@@ -57,9 +63,10 @@
                                     <input class="form-control  @error('email') is-invalid @enderror" type="text"
                                         id="email" name="email"
                                         value="{{ old('email') ? old('email') : $User->email }}" />
-                                    @error('email')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div id="email_error" class="text-danger"> @error('email')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
 
                                 <div class="mb-3 col-md-12">
@@ -70,9 +77,10 @@
                                         <input type="text" id="phone" name="phone"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             value="{{ old('phone') ? old('phone') : $User->phone }}" />
-                                        @error('phone')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="phone_error" class="text-danger"> @error('phone')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="mb-3 col-md-12">
@@ -80,25 +88,28 @@
                                     <input class="form-control @error('username') is-invalid @enderror" type="text"
                                         id="username" name="username"
                                         value="{{ old('username') ? old('username') : $User->username }}" />
-                                    @error('username')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div id="username_error" class="text-danger"> @error('username')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="adminname" class="form-label">Address</label>
                                     <textarea name="address" id="address" rows="3" class="form-control @error('address') is-invalid @enderror">{{ old('address') ? old('address') : $User->address }}</textarea>
-                                    @error('address')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div id="address_error" class="text-danger"> @error('address')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="dateofbirth" class="form-label">Date OF Birth</label>
                                     <input class="form-control @error('dateofbirth') is-invalid @enderror" type="date"
                                         id="dateofbirth" name="dateofbirth"
                                         value="{{ old('dateofbirth') ? old('dateofbirth') : $User->dateofbirth }}" />
-                                    @error('dateofbirth')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div id="dateofbirth_error" class="text-danger"> @error('dateofbirth')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="mb-3 col-md-12 form-password-toggle">
                                     <label for="password" class="form-label"> Password</label>
@@ -107,6 +118,37 @@
                                             placeholder="············" aria-describedby="basic-default-password">
                                         <span class="input-group-text cursor-pointer" id="basic-default-password"><i
                                                 class="bx bx-hide"></i></span>
+                                    </div>
+                                    <div id="password_error" class="text-danger">
+                                        @error('password')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-12 form-password-toggle">
+                                    <label for="confirmpassword" class="form-label">Conform Password</label>
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" id="confirmpassword"
+                                            class="form-control  @error('confirmpassword') is-invalid @enderror"
+                                            name="confirmpassword"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                            aria-describedby="password" value="{{ old('confirmpassword') }}" />
+                                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                    </div>
+                                    <div id="confirmpassword_error" class="text-danger">
+                                        @error('confirmpassword')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <label for="referral_code" class="form-label">Referral Code</label>
+                                    <input class="form-control @error('referral_code') is-invalid @enderror"
+                                        type="text" id="referral_code" name="referral_code"
+                                        value="{{ old('referral_code') ? old('referral_code') : $User->other_referral_code }}" />
+                                    <div id="referral_code_error" class="text-danger"> @error('referral_code')
+                                            {{ $message }}
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -125,17 +167,100 @@
     </div>
 @stop
 @section('js')
+    <script src="{{ asset('assets/admin/js/jquery.validate.min.js') }}"></script>
     <script>
         function readURL(input) {
             if (input.files && input.files[0]) {
-
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.querySelector("#uploadedAvatar").setAttribute("src", e.target.result);
-                };
-
-                reader.readAsDataURL(input.files[0]);
+                if (input.files[0].type.startsWith('image/')) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector("#uploadedAvatar").setAttribute("src", e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    $('#profileimage_error').html('Allowed JPG, GIF or PNG.')
+                    $('#upload').val('');
+                }
             }
         }
+        dateofbirth.max = new Date().toISOString().split("T")[0];
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#form').validate({
+                rules: {
+                    name: {
+                        required: true,
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    phone: {
+                        required: true,
+                        minlength: 10,
+                    },
+                    username: {
+                        required: true,
+                    },
+                    address: {
+                        required: true,
+                    },
+                    dateofbirth: {
+                        required: true,
+                    },
+                    password: {
+                        minlength: 6,
+                    },
+                    confirmpassword: {
+                        minlength: 6,
+                        equalTo: "#password"
+                    }
+                },
+                messages: {
+                    name: {
+                        required: 'This field is required',
+                    },
+                    email: {
+                        required: 'This field is required',
+                        email: 'Enter a valid email',
+                    },
+                    phone: {
+                        required: 'This field is required',
+                        minlength: 'Phone must be at least 10 characters long'
+                    },
+                    username: {
+                        required: 'This field is required',
+                    },
+                    address: {
+                        required: 'This field is required',
+                    },
+                    dateofbirth: {
+                        required: 'This field is required',
+                    },
+                    password: {
+                        minlength: 'Password must be at least 6 characters long'
+                    },
+                    confirmpassword: {
+                        minlength: 'Confirm password must be at least 6 characters long',
+                        equalTo: 'Confirm password and Password is not same'
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    $('#' + element.attr('name') + '_error').html(error)
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
     </script>
 @stop

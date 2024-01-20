@@ -25,6 +25,7 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'image' => 'file|image|mimes:jpeg,png,jpg,gif|max:5000'
         ]);
         $Blog = new Blog();
         $Blog->title = $request['title'];
@@ -96,6 +97,7 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'image' => 'file|image|mimes:jpeg,png,jpg,gif|max:5000'
         ]);
         $Blog = Blog::find($request->id);
         if ($Blog) {
@@ -103,7 +105,6 @@ class BlogController extends Controller
             $Blog->description = $request['description'];
             $Blog->author = $request['author'] ?  $request['author'] : Auth::user()->name;
             $Blog->published_date = $request['published_date'] ? $request['published_date'] : date('Y-m-d');
-            $Blog->status = 1;
             if ($request->image) {
                 $folderPath = public_path('assets/images/blogs/images/');
                 if (!file_exists($folderPath)) {
@@ -118,7 +119,6 @@ class BlogController extends Controller
                     unlink(public_path($request->old_image));
                 }
             }
-            $Blog->status = 1;
             $Blog = $Blog->update();
             if ($Blog) {
                 return redirect()->route('admin.get.blogs')->with('message', 'Blog Updated Sucssesfully..');

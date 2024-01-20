@@ -53,6 +53,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'is_a
     Route::post('/profilesetting/changepassword', [AdminProfileController::class, 'adminprofilsettingchangepasswordepost'])->name('admin.profile.setting.changepassword.post');
 
     Route::get('/users', [UserController::class, 'get_users'])->name('admin.get.users');
+    Route::get('/user/add', [UserController::class, 'get_user_add'])->name('admin.add.user');
+    Route::post('/user', [UserController::class, 'post_user'])->name('admin.post.user');
     Route::delete('/user/delete/{id}', [UserController::class, 'user_delete'])->name('admin.delete.user');
     Route::get('/user/edit/{id}', [UserController::class, 'user_edit'])->name('admin.edit.user');
     Route::get('/user/view/{id}', [UserController::class, 'user_view'])->name('admin.view.user');
