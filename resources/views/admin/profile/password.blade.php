@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.profile.setting') }}"><i class="bx bx-user me-1"></i>
+                        <a class="nav-link" href="{{ route('admin.profile.setting.index') }}"><i class="bx bx-user me-1"></i>
                             Profile Setting
                         </a>
                     </li>
@@ -25,7 +25,7 @@
                     <hr class="my-0" />
                     <div class="card-body">
                         <form id="form" method="POST"
-                            action="{{ route('admin.profile.setting.changepassword.post') }}">
+                            action="{{ route('admin.profile.settings.password.save') }}">
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-12 form-password-toggle">
@@ -80,7 +80,6 @@
                             </div>
                             <div class="mt-2">
                                 <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                                <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                             </div>
                         </form>
                     </div>

@@ -9,7 +9,7 @@
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.get.faqs') }}"><i
+                        <a class="nav-link active" href="{{ route('admin.faqs.index') }}"><i
                                 class='bx bx-question-mark  me-1'></i> All Faqs</a>
                     </li>
 
@@ -31,8 +31,8 @@
                                     value="">{{ $Faq['description'] }}</textarea>
                             </div>
                             <div class="mt-2">
-                                <a href="{{ route('admin.edit.faq', $Faq->id) }}" class="btn btn-success">Edit</a>
-                                <a href="{{ route('admin.get.faqs') }}" class="btn btn-secondary">Back</a>
+                                <a href="{{ route('admin.faqs.edit', $Faq->id) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('admin.faqs.index') }}" class="btn btn-secondary">Back</a>
                             </div>
                         </div>
                     </div>

@@ -71,9 +71,9 @@
                             </div>
                         </div>
                         <div class="mt-2">
-                            <a href="{{ route('admin.edit.user', $User->id) }}"><button type="submit"
-                                    class="btn btn-success me-2">Edit</button></a>
-                            <a href="{{ route('admin.get.users') }}"><button type="submit"
+                            <a href="{{ route('admin.users.edit', $User->id) }}"><button type="submit"
+                                    class="btn btn-warning">Edit</button></a>
+                            <a href="{{ route('admin.users.index') }}"><button type="submit"
                                     class="btn btn-secondary me-2">Back</button></a>
                         </div>
 

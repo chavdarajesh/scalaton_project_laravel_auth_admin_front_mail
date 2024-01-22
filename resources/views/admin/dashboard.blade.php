@@ -19,7 +19,7 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                    <a class="dropdown-item" href="{{ route('admin.get.users') }}">View
+                                    <a class="dropdown-item" href="{{ route('admin.users.index') }}">View
                                         More</a>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                                         class="badge bg-label-success">{{ $data['Total_All_Blogs'] }}</span> blogs..!
                                 </p>
 
-                                <a href="{{ route('admin.get.blogs') }}" class="btn btn-sm btn-outline-primary">View
+                                <a href="{{ route('admin.blogs.index') }}" class="btn btn-sm btn-outline-primary">View
                                     Blogs</a>
                             </div>
                         </div>

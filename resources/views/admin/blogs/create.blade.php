@@ -1,25 +1,25 @@
 @extends('admin.layouts.main')
-@section('title', 'Add Blog')
+@section('title', 'Create Blog')
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Blogs /</span> All Blogs /</span> Add New Blog</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Blogs /</span> All Blogs /</span> Create Blog</h4>
 
         <div class="row">
             <div class="col-md-12">
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.get.blogs') }}"><i class='bx bx-list-ul me-1'></i> All
+                        <a class="nav-link active" href="{{ route('admin.blogs.index') }}"><i class='bx bx-list-ul me-1'></i> All
                             Blogs</a>
                     </li>
 
                 </ul>
                 <div class="card mb-4">
-                    <h5 class="card-header">Add New Blog </h5>
+                    <h5 class="card-header">Create Blog </h5>
                     <!-- Account -->
                     <hr class="my-0" />
                     <div class="card-body">
-                        <form id="form" method="POST" action="{{ route('admin.post.blog') }}"
+                        <form id="form" method="POST" action="{{ route('admin.blogs.save') }}"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
@@ -85,8 +85,8 @@
                                 </div>
 
                                 <div class="mt-2">
-                                    <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                                    <a href="{{ route('admin.get.blogs') }}" class="btn btn-secondary">Back</a>
+                                    <button type="submit" class="btn btn-primary me-2">Save</button>
+                                    <a href="{{ route('admin.blogs.index') }}" class="btn btn-secondary">Back</a>
                                 </div>
                             </div>
                         </form>

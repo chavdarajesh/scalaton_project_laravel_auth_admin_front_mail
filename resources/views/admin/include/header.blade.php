@@ -49,13 +49,13 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('admin.profile.profilechangepassword') }}">
+                        <a class="dropdown-item" href="{{ route('admin.profile.settings.password.index') }}">
                             <i class="bx bx-user me-2"></i>
                             <span class="align-middle">Profile Setting</span>
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('admin.profile.setting') }}">
+                        <a class="dropdown-item" href="{{ route('admin.profile.setting.index') }}">
                             <i class="bx bx-cog me-2"></i>
                             <span class="align-middle">Password Settings</span>
                         </a>

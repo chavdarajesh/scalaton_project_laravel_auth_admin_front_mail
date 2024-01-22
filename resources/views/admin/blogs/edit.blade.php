@@ -9,7 +9,7 @@
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.get.blogs') }}"><i class='bx bx-list-ul me-1'></i> All
+                        <a class="nav-link active" href="{{ route('admin.blogs.index') }}"><i class='bx bx-list-ul me-1'></i> All
                             Blogs</a>
                     </li>
 
@@ -19,7 +19,7 @@
                     <!-- Account -->
                     <hr class="my-0" />
                     <div class="card-body">
-                        <form id="form" method="POST" action="{{ route('admin.update.blog') }}"
+                        <form id="form" method="POST" action="{{ route('admin.blogs.update') }}"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="mt-2">
                                     <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                                    <a href="{{ route('admin.get.blogs') }}" class="btn btn-secondary">Back</a>
+                                    <a href="{{ route('admin.blogs.index') }}" class="btn btn-secondary">Back</a>
                                 </div>
                             </div>
                         </form>

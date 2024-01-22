@@ -18,7 +18,7 @@
                     <h5 class="card-header">Profile Setting</h5>
                     <hr class="my-0" />
                     <div class="card-body">
-                        <form id="form" method="POST" action="{{ route('admin.update.user') }}"
+                        <form id="form" method="POST" action="{{ route('admin.users.update') }}"
                             enctype="multipart/form-data">
                             @csrf @method('PUT')
                             <input type="hidden" name="id" value="{{ $User->id }}">
@@ -77,11 +77,11 @@
                                         <input type="text" id="phone" name="phone"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             value="{{ old('phone') ? old('phone') : $User->phone }}" />
+                                        </div>
                                         <div id="phone_error" class="text-danger"> @error('phone')
                                                 {{ $message }}
                                             @enderror
                                         </div>
-                                    </div>
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="username" class="form-label">User Name</label>
@@ -155,7 +155,7 @@
                             </div>
                             <div class="mt-2">
                                 <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                                <a href="{{ route('admin.get.users') }}" class="btn btn-outline-secondary">Cancel</a>
+                                <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Back</a>
                             </div>
 
                         </form>

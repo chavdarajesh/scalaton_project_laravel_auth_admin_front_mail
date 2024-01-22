@@ -9,7 +9,7 @@
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.get.blogs') }}"><i class='bx bx-list-ul me-1'></i> All
+                        <a class="nav-link active" href="{{ route('admin.blogs.index') }}"><i class='bx bx-list-ul me-1'></i> All
                             Blogs</a>
                     </li>
 
@@ -50,8 +50,8 @@
                                 </div>
                             </div>
                             <div class="mt-2">
-                                <a href="{{ route('admin.edit.blog', $Blog->id) }}" class="btn btn-success">Edit</a>
-                                <a href="{{ route('admin.get.blogs') }}" class="btn btn-secondary">Back</a>
+                                <a href="{{ route('admin.blogs.edit', $Blog->id) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('admin.blogs.index') }}" class="btn btn-secondary">Back</a>
                             </div>
                         </div>
                     </div>

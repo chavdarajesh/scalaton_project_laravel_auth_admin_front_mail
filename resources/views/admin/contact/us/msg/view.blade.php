@@ -14,7 +14,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.get.contact_settings') }}"><i
+                        <a class="nav-link" href="{{ route('admin.contact.settings.index') }}"><i
                                 class='bx bxs-contact me-1'></i> Conatct Settings
                         </a>
                     </li>
@@ -55,7 +55,7 @@
 
                         </div>
                         <div class="mt-2">
-                            <a href="{{ route('admin.get.contact_msg') }}"><button type="submit"
+                            <a href="{{ route('admin.contact.us.msg.index') }}"><button type="submit"
                                     class="btn btn-secondary me-2">Back</button></a>
                         </div>
 

@@ -48,7 +48,7 @@ class DashboardController extends Controller
             }
         }
     }
-    public function admindashboard()
+    public function dashboard()
     {
         $data['Total_Users'] = User::where('is_admin', 0)->count();
         $data['Total_Verified_Users'] = User::where('is_admin', 0)->where('is_verified', 1)->count();
@@ -63,7 +63,7 @@ class DashboardController extends Controller
         $data['Total_All_Blogs'] = Blog::withTrashed()->count();
         return view('admin.dashboard', ['data' => $data]);
     }
-    public function adminlogout(Request $request)
+    public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->flush();

@@ -9,7 +9,8 @@
             <div class="col-md-12">
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.get.contact_msg') }}"><i class='bx bxs-contact me-1'></i>
+                        <a class="nav-link" href="{{ route('admin.contact.us.msg.index') }}"><i
+                                class='bx bxs-contact me-1'></i>
                             Contact Messages
                         </a>
                     </li>
@@ -26,8 +27,7 @@
 
                     <hr class="my-0" />
                     <div class="card-body">
-                        <form id="form" method="POST"
-                            action=""action="{{ route('admin.post.contact_settings') }}">
+                        <form id="form" method="POST" action="{{ route('admin.contact.settings.save') }}">
                             @csrf
                             <input type="hidden" name="id" value="{{ $ContactSetting ? $ContactSetting['id'] : 1 }}">
                             <div class="row">
@@ -87,7 +87,7 @@
                                 </div>
                             </div>
                             <div class="mt-2">
-                                <button type="submit" class="btn btn-primary me-2">Save</button>
+                                <button type="submit" class="btn btn-primary me-2">Save changes</button>
                             </div>
                         </form>
                     </div>

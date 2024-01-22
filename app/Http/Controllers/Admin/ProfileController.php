@@ -15,18 +15,37 @@ use App\Models\User;
 use Mail;
 
 
-class AdminProfileController extends Controller
+class ProfileController extends Controller
 {
-    //
-    public function adminprofileprofilechangepassword()
+    public function profileSettingsPasswordIndex()
     {
-        return view('admin.profile.change-password');
+        return view('admin.profile.password');
     }
-    public function adminprofilesetting()
+    public function profileSettingsPasswordSave(Request $request)
     {
-        return view('admin.profile.profile-setting');
+        $request->validate([
+            'adminoldpassword' => 'required|min:6',
+            'adminnewpassword' => 'required|min:6',
+            'adminconfirmnewpasswod' => 'required_with:adminnewpassword|same:adminnewpassword|min:6'
+        ]);
+
+        $user = Auth::user();
+        if (!Hash::check($request->adminoldpassword, $user->password)) {
+            return redirect()->back()->with('error', 'Current Password Does Not Match!');
+        }
+        $user->password = Hash::make($request->adminnewpassword);
+        $user->save();
+        Auth::logout();
+        $request->session()->flush();
+        return redirect()->route('admin.login')->with('message', 'Password Updated Successfully Please Login Again..');;
     }
-    public function adminprofilesettingpost(Request $request)
+
+    public function profileSettingIndex()
+    {
+        return view('admin.profile.setting');
+    }
+
+    public function profileSettingSave(Request $request)
     {
 
         $request->validate([
@@ -36,7 +55,7 @@ class AdminProfileController extends Controller
             'username' => 'required|unique:users,username,' . Auth::user()->id,
             'address' => 'required',
             'dateofbirth' => 'required',
-            'profileimage'=>'file|image|mimes:jpeg,png,jpg,gif|max:5000'
+            'profileimage' => 'file|image|mimes:jpeg,png,jpg,gif|max:5000'
         ]);
 
         $user = Auth::user();
@@ -63,28 +82,10 @@ class AdminProfileController extends Controller
         }
         $user->save();
         if ($user) {
-            return redirect()->route('admin.profile.setting')->with('message', 'Profile Updated Succesfully..');
+            return redirect()->route('admin.profile.setting.index')->with('message', 'Profile Updated Succesfully..');
         } else {
             return redirect()->back()->with('error', 'Somthing Went Wrong..');
         }
-    }
-    public function adminprofilsettingchangepasswordepost(Request $request)
-    {
-        $request->validate([
-            'adminoldpassword' => 'required|min:6',
-            'adminnewpassword' => 'required|min:6',
-            'adminconfirmnewpasswod' => 'required_with:adminnewpassword|same:adminnewpassword|min:6'
-        ]);
-
-        $user = Auth::user();
-        if (!Hash::check($request->adminoldpassword, $user->password)) {
-            return redirect()->back()->with('error', 'Current Password Does Not Match!');
-        }
-        $user->password = Hash::make($request->adminnewpassword);
-        $user->save();
-        Auth::logout();
-        $request->session()->flush();
-        return redirect()->route('admin.login')->with('message', 'Password Updated Successfully Please Login Again..');;
     }
 
     public function adminforgotpasswordget()
@@ -112,7 +113,7 @@ class AdminProfileController extends Controller
     public function showResetPasswordFormget($token)
     {
         if (isset($token) && $token != '') {
-            return view('admin.mail.showresetpasswordform', ['token' => $token]);
+            return view('admin.auth.showresetpasswordform', ['token' => $token]);
         } else {
             return redirect()->back()->with('error', 'Somthing Went Wrong..');
         }

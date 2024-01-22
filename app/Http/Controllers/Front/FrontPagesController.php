@@ -34,7 +34,7 @@ class FrontPagesController extends Controller
     public function faqspage()
     {
         $Faqs=Faqs::where('status',1)->get();
-        return view('front.faqs.faqs_view',['Faqs'=>$Faqs]);
+        return view('front.faqs.view',['Faqs'=>$Faqs]);
     }
     public function blogpage()
     {

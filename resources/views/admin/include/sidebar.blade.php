@@ -70,52 +70,52 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Module</span>
         </li>
-        <li class="menu-item {{ $current_route_name == 'admin.get.users' || $current_route_name == 'admin.edit.user' || $current_route_name == 'admin.view.user' ? 'open active' : '' }}"
+        <li class="menu-item {{ $current_route_name == 'admin.users.index' || $current_route_name == 'admin.users.edit' || $current_route_name == 'admin.users.view' ? 'open active' : '' }}"
             style="">
-            <a href="{{ route('admin.get.users') }}" class="menu-link menu-toggle">
+            <a href="{{ route('admin.users.index') }}" class="menu-link menu-toggle">
                 <i class='menu-icon tf-icons bx bxs-user'></i>
                 <div data-i18n="Layouts">Users</div>
             </a>
 
             <ul class="menu-sub">
                 <li
-                    class="menu-item {{ $current_route_name == 'admin.get.users' || $current_route_name == 'admin.edit.user' || $current_route_name == 'admin.view.user' ? 'active' : '' }}">
-                    <a href="{{ route('admin.get.users') }}" class="menu-link">
+                    class="menu-item {{ $current_route_name == 'admin.users.index' || $current_route_name == 'admin.users.edit' || $current_route_name == 'admin.users.view' ? 'active' : '' }}">
+                    <a href="{{ route('admin.users.index') }}" class="menu-link">
                         <div data-i18n="Without menu">All Users</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <li class="menu-item {{ $current_route_name == 'admin.get.contact_msg' || $current_route_name == 'admin.get.contact_settings' ? 'open active' : '' }}"
+        <li class="menu-item {{ $current_route_name == 'admin.contact.us.msg.index' || $current_route_name == 'admin.contact.settings.index' || $current_route_name == 'admin.contact.us.msg.view' ? 'open active' : '' }}"
             style="">
-            <a href="{{ route('admin.get.contact_msg') }}" class="menu-link menu-toggle">
+            <a href="{{ route('admin.contact.us.msg.index') }}" class="menu-link menu-toggle">
                 <i class='menu-icon tf-icons bx bxs-contact'></i>
                 <div data-i18n="Layouts">Contacts</div>
             </a>
 
             <ul class="menu-sub">
-                <li class="menu-item {{ $current_route_name == 'admin.get.contact_msg' ? 'active' : '' }}">
-                    <a href="{{ route('admin.get.contact_msg') }}" class="menu-link">
+                <li class="menu-item {{ $current_route_name == 'admin.contact.us.msg.index' || $current_route_name == 'admin.contact.us.msg.view' ? 'active' : '' }}">
+                    <a href="{{ route('admin.contact.us.msg.index') }}" class="menu-link">
                         <div data-i18n="Without menu">Contact Messages</div>
                     </a>
                 </li>
-                <li class="menu-item {{ $current_route_name == 'admin.get.contact_settings' ? 'active' : '' }}">
-                    <a href="{{ route('admin.get.contact_settings') }}" class="menu-link">
+                <li class="menu-item {{ $current_route_name == 'admin.contact.settings.index' ? 'active' : '' }}">
+                    <a href="{{ route('admin.contact.settings.index') }}" class="menu-link">
                         <div data-i18n="Without menu">Contact Settings</div>
                     </a>
                 </li>
             </ul>
         </li>
         <li
-            class="menu-item  {{ $current_route_name == 'admin.get.blogs' || $current_route_name == 'admin.add.blog' || $current_route_name == 'admin.edit.blog' || $current_route_name == 'admin.view.blog' ? 'active' : '' }}">
-            <a href="{{ route('admin.get.blogs') }}" class="menu-link">
+            class="menu-item  {{ $current_route_name == 'admin.blogs.index' || $current_route_name == 'admin.blogs.create' || $current_route_name == 'admin.blogs.edit' || $current_route_name == 'admin.blogs.view' ? 'active' : '' }}">
+            <a href="{{ route('admin.blogs.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-list-ul"></i>
                 <div>Blogs</div>
             </a>
         </li>
         <li
-            class="menu-item  {{ $current_route_name == 'admin.get.faqs' || $current_route_name == 'admin.add.faq' || $current_route_name == 'admin.edit.faq' || $current_route_name == 'admin.view.faq' ? 'active' : '' }}">
-            <a href="{{ route('admin.get.faqs') }}" class="menu-link">
+            class="menu-item  {{ $current_route_name == 'admin.faqs.index' || $current_route_name == 'admin.add.faq' || $current_route_name == 'admin.faqs.edit' || $current_route_name == 'admin.faqs.view' ? 'active' : '' }}">
+            <a href="{{ route('admin.faqs.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-question-mark"></i>
                 <div>Faqs</div>
             </a>
@@ -123,22 +123,22 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Profile</span>
         </li>
-        <li class="menu-item {{ $current_route_name == 'admin.profile.profilechangepassword' || $current_route_name == 'admin.profile.setting' ? 'open active' : '' }}"
+        <li class="menu-item {{ $current_route_name == 'admin.profile.settings.password.index' || $current_route_name == 'admin.profile.setting.index' ? 'open active' : '' }}"
             style="">
-            <a href="{{ route('admin.profile.profilechangepassword') }}" class="menu-link menu-toggle">
+            <a href="{{ route('admin.profile.settings.password.index') }}" class="menu-link menu-toggle">
                 <i class='menu-icon tf-icons bx bxs-user-account'></i>
                 <div data-i18n="Layouts">Admin Profile</div>
             </a>
 
             <ul class="menu-sub">
-                <li class="menu-item {{ $current_route_name == 'admin.profile.setting' ? 'active' : '' }}">
-                    <a href="{{ route('admin.profile.setting') }}" class="menu-link">
+                <li class="menu-item {{ $current_route_name == 'admin.profile.setting.index' ? 'active' : '' }}">
+                    <a href="{{ route('admin.profile.setting.index') }}" class="menu-link">
                         <div data-i18n="Without menu">Profile Setting</div>
                     </a>
                 </li>
                 <li
-                    class="menu-item {{ $current_route_name == 'admin.profile.profilechangepassword' ? 'active' : '' }}">
-                    <a href="{{ route('admin.profile.profilechangepassword') }}" class="menu-link ">
+                    class="menu-item {{ $current_route_name == 'admin.profile.settings.password.index' ? 'active' : '' }}">
+                    <a href="{{ route('admin.profile.settings.password.index') }}" class="menu-link ">
                         <div data-i18n="Without menu">Password Setiing</div>
                     </a>
                 </li>
