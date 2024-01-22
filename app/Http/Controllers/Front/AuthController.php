@@ -49,6 +49,8 @@ class AuthController extends Controller
             'dateofbirth' => 'required',
             'accept_t_c' => 'required',
             'referral_code' => 'exists:users',
+            'password' => 'required|min:6',
+            'confirmpasswod' => 'required|same:password|min:6'
         ]);
 
         $user = new User();
@@ -61,7 +63,7 @@ class AuthController extends Controller
         $user->referral_code = Str::slug($request['username'], "-");
         $user->other_referral_code = $request['referral_code'] ? $request['referral_code'] : '';
         $random_pass = rand(100000, 999999);
-        $user->password = Hash::make($random_pass);
+        $user->password = Hash::make($request['password']);
         $user->otp = $random_pass;
         $user->save();
 
@@ -95,17 +97,17 @@ class AuthController extends Controller
 
         $user_email_check  = User::where([['email', '=', $request->email]])->first();
         if ($user_email_check) {
-
-            $user  = User::where([['id', '=', $request->user_id], ['otp', '=', $request->otp], ['email', '=', $request->email]])->first();
+            $user  = User::where('id', $request->user_id)->where('email', $request->email)->where('otp', $request->otp)->first();
             if ($user) {
                 User::where('id', '=', $request->user_id)->where('email', '=', $request->email)->update(['otp' => null]);
                 User::where('id', '=', $request->user_id)->where('email', '=', $request->email)->update(['is_verified' => 1]);
                 User::where('id', '=', $request->user_id)->where('email', '=', $request->email)->update(['email_verified_at' =>  Carbon::now('Asia/Kolkata')]);
-                if (Auth::attempt(['email' => $request->email, 'password' => $request->otp, 'is_verified' => 1, 'status' => 1])) {
-                    return redirect()->route('front.homepage')->with('message', 'Account Created Successfully..');
-                } else {
-                    return redirect()->back()->with('error', 'Somthing Went Wrong11..');
-                }
+                // if (Auth::attempt(['email' => $request->email, 'password' => $request->otp, 'is_verified' => 1, 'status' => 1])) {
+                //     return redirect()->route('front.homepage')->with('message', 'Account Created Successfully..');
+                // } else {
+                //     return redirect()->back()->with('error', 'Somthing Went Wrong..');
+                // }
+                return redirect()->route('front.login')->with('message', 'Your account is verified Please login..');
             } else {
                 return redirect()->back()->with('error', 'OTP Is Invalid..!');
             }

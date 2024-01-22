@@ -1,5 +1,13 @@
 @extends('front.layouts.main')
 @section('title', 'Register')
+@section('css')
+    <style>
+        .open_eye,
+        .open_eye_c {
+            display: none;
+        }
+    </style>
+@stop
 @section('content')
     @php
         $referral_code = @$_GET['referral_code'] ? @$_GET['referral_code'] : '';
@@ -73,6 +81,38 @@
                                             id="email" value="{{ old('email') }}" name="email"
                                             placeholder="Enter your Email" />
                                         @error('email')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 form-password-toggle">
+                                        <label class="form-label" for="password">Password<span
+                                                class="text-danger">*</span></label>
+                                        <div class="input-group  input-group-merge">
+                                            <input type="password" id="password" value="{{ old('password') }}"
+                                                class="form-control " name="password"
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                aria-describedby="password">
+                                            <span class="input-group-text toggle_password" id="basic-addon2"><i
+                                                    class="fa fa-eye-slash close_eye" aria-hidden="true"></i><i
+                                                    class="fa fa-eye open_eye" aria-hidden="true"></i></span>
+                                        </div>
+                                        @error('password')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 form-password-toggle">
+                                        <label class="form-label" for="confirmpasswod">Confirm Password<span
+                                                class="text-danger">*</span></label>
+                                        <div class="input-group  input-group-merge">
+                                            <input type="password" id="confirmpasswod" value="{{ old('confirmpasswod') }}"
+                                                class="form-control " name="confirmpasswod"
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                aria-describedby="password">
+                                            <span class="input-group-text toggle_password_c" id="basic-addon2"><i
+                                                    class="fa fa-eye-slash close_eye_c" aria-hidden="true"></i><i
+                                                    class="fa fa-eye open_eye_c" aria-hidden="true"></i></span>
+                                        </div>
+                                        @error('confirmpasswod')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -158,5 +198,19 @@
 @section('js')
     <script>
         dateofbirth.max = new Date().toISOString().split("T")[0];
+        $('.toggle_password').click(function() {
+            $('#password').attr('type', function(index, attr) {
+                return attr == 'password' ? 'text' : 'password';
+            });
+            $('.open_eye').toggle();
+            $('.close_eye').toggle();
+        })
+        $('.toggle_password_c').click(function() {
+            $('#confirmpasswod').attr('type', function(index, attr) {
+                return attr == 'password' ? 'text' : 'password';
+            });
+            $('.open_eye_c').toggle();
+            $('.close_eye_c').toggle();
+        })
     </script>
 @stop
