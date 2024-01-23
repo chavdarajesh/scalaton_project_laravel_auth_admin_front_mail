@@ -3,16 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use App\Mail\Admin\ForgotPassword;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use App\Models\User;
-use Mail;
 
 
 class ProfileController extends Controller
@@ -83,60 +76,6 @@ class ProfileController extends Controller
         $user->save();
         if ($user) {
             return redirect()->route('admin.profile.setting.index')->with('message', 'Profile Updated Succesfully..');
-        } else {
-            return redirect()->back()->with('error', 'Somthing Went Wrong..');
-        }
-    }
-
-    public function forgotPasswordGet()
-    {
-        return view('admin.auth.forgot-password');
-    }
-    public function forgotPasswordPost(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email|exists:users,email,is_admin,1,status,1,is_verified,1'
-        ]);
-        $token = Str::random(64);
-        DB::table('password_resets')->insert([
-            'email' => $request->email,
-            'token' => $token,
-            'created_at' => Carbon::now('Asia/Kolkata'),
-        ]);
-        $data = [
-            'token' => $token
-        ];
-        $mail = Mail::to($request->email)->send(new ForgotPassword($data));
-        return redirect()->route('admin.login.get')->with('message', 'Password Reset Link send Successfully To Your Email..');
-    }
-
-    public function ResetPasswordGet($token)
-    {
-        if (isset($token) && $token != '') {
-            return view('admin.auth.showresetpasswordform', ['token' => $token]);
-        } else {
-            return redirect()->back()->with('error', 'Somthing Went Wrong..');
-        }
-    }
-    public function ResetPasswordPost(Request $request)
-    {
-        $request->validate([
-            'newpassword' => 'required|min:6',
-            'confirmnewpasswod' => 'required|same:newpassword|min:6'
-        ]);
-        if (!isset($request->token) || $request->token == '') {
-            return redirect()->back()->with('error', 'Somthing Went Wrong..');
-        }
-
-        $updatePassword = DB::table('password_resets')->where('token', $request->token)->first();
-        if (!$updatePassword) {
-            return back()->withInput()->with('error', 'Invalid token!');
-        }
-        $user = User::where('email', $updatePassword->email)
-            ->update(['password' => Hash::make($request->newpasswod)]);
-        DB::table('password_resets')->where(['email' => $updatePassword->email])->delete();
-        if ($user) {
-            return redirect()->route('admin.login.get')->with('message', 'Your Password Has Been Updated!');
         } else {
             return redirect()->back()->with('error', 'Somthing Went Wrong..');
         }

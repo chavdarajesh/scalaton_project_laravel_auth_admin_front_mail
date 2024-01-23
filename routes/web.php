@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 
 use App\Http\Controllers\Front\AuthController as FrontAuthController;
 use App\Http\Controllers\Front\ContactController as FrontContactController;
@@ -32,14 +33,14 @@ Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Admin Auth Route start
-Route::get('/admin.login.get', [AdminDashboardController::class, 'loginGet'])->name('admin.login.get');
-Route::post('/admin.login.get/save', [AdminDashboardController::class, 'loginPost'])->name('admin.login.post');
+Route::get('/admin.login.get', [AdminAuthController::class, 'loginGet'])->name('admin.login.get');
+Route::post('/admin.login.get/save', [AdminAuthController::class, 'loginPost'])->name('admin.login.post');
 
-Route::get('/admin.forgot.password.get', [AdminProfileController::class, 'forgotPasswordGet'])->name('admin.forgot.password.get');
-Route::post('admin.forgot.password.get/save', [AdminProfileController::class, 'forgotPasswordPost'])->name('admin.forgot.password.get.post');
+Route::get('/admin.forgot.password.get', [AdminAuthController::class, 'forgotPasswordGet'])->name('admin.forgot.password.get');
+Route::post('admin.forgot.password.get/save', [AdminAuthController::class, 'forgotPasswordPost'])->name('admin.forgot.password.get.post');
 
-Route::get('/admin/reset-password/{token}', [AdminProfileController::class, 'ResetPasswordGet'])->name('admin.reset.password.get');
-Route::post('/admin/reset-password/save', [AdminProfileController::class, 'ResetPasswordPost'])->name('admin.reset.password.post');
+Route::get('/admin/reset-password/{token}', [AdminAuthController::class, 'ResetPasswordGet'])->name('admin.reset.password.get');
+Route::post('/admin/reset-password/save', [AdminAuthController::class, 'ResetPasswordPost'])->name('admin.reset.password.post');
 // Admin Auth Route end
 
 // Admin route start
@@ -50,7 +51,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'is_a
         return redirect()->route('admin.dashboard');
     });
     Route::get('/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
-    Route::post('/logout', [AdminDashboardController::class, 'logout'])->name('admin.logout');
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
     // dashboard route end
 
     // profile setting Modlue start
