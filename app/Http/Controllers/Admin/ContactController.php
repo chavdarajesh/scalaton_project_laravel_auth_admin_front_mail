@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Front\Contact;
+use App\Models\Front\ContactMessage;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\AssignOp\Concat;
 use App\Models\Admin\ContactSetting;
@@ -29,9 +29,9 @@ class ContactController extends Controller
             $searchValue = $search_arr['value']; // Search value
 
             // Total records
-            $totalRecords = Contact::select('count(*) as allcount')->count();
+            $totalRecords = ContactMessage::select('count(*) as allcount')->count();
             $totalRecordswithFilter =
-                Contact::select('count(*) as allcount')
+                ContactMessage::select('count(*) as allcount')
                 ->where('id', 'like', '%' . $searchValue . '%')
                 ->orWhere('name', 'like', '%' . $searchValue . '%')
                 ->orWhere('email', 'like', '%' . $searchValue . '%')
@@ -40,7 +40,7 @@ class ContactController extends Controller
                 ->count();
 
             // Get records, also we have included search filter as well
-            $records = Contact::where('id', 'like', '%' . $searchValue . '%')
+            $records = ContactMessage::where('id', 'like', '%' . $searchValue . '%')
                 ->orWhere('name', 'like', '%' . $searchValue . '%')
                 ->orWhere('email', 'like', '%' . $searchValue . '%')
                 ->orWhere('subject', 'like', '%' . $searchValue . '%')
@@ -55,7 +55,7 @@ class ContactController extends Controller
             $data_arr = array();
 
             foreach ($records as $row) {
-                $html = '<a href="' . route("admin.contact.us.msg.view", $row->id) . '"> <button type="button"
+                $html = '<a href="' . route("admin.contact.messages.view", $row->id) . '"> <button type="button"
                             class="btn btn-icon btn-outline-info">
                             <i class="bx bx-show"></i>
                         </button></a>
@@ -67,7 +67,7 @@ class ContactController extends Controller
                     <div class="modal fade" id="delete-modal-' . $row->id . '"
                         tabindex="-1" style="display: none;" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
-                        <form action="' . route("admin.contact.us.msg.delete", $row->id) . '"
+                        <form action="' . route("admin.contact.messages.delete", $row->id) . '"
                             method="post">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -90,7 +90,7 @@ class ContactController extends Controller
                         </div>
                     </div>';
                 $data_arr[] = array(
-                    "id" => '<strong>'.$row->id .'</strong>',
+                    "id" => '<strong>' . $row->id . '</strong>',
                     "name" => $row->name,
                     "email" => $row->email,
                     "subject" => strlen($row->subject) > 25 ? substr($row->subject, 0, 25) . '..' : $row->subject,
@@ -108,17 +108,17 @@ class ContactController extends Controller
 
             echo json_encode($response);
         } else {
-            return view('admin.contact.us.msg.index');
+            return view('admin.contact.messages.index');
         }
     }
 
     public function delete($id)
     {
         if ($id) {
-            $Contact = Contact::find($id);
-            $Contact = $Contact->delete();
-            if ($Contact) {
-                return redirect()->route('admin.contact.us.msg.index')->with('message', 'Contact Message Deleted Sucssesfully..');
+            $ContactMessage = ContactMessage::find($id);
+            $ContactMessage = $ContactMessage->delete();
+            if ($ContactMessage) {
+                return redirect()->route('admin.contact.messages.index')->with('message', 'Contact Message Deleted Sucssesfully..');
             } else {
                 return redirect()->back()->with('error', 'Somthing Went Wrong..!');
             }
@@ -129,9 +129,9 @@ class ContactController extends Controller
 
     public function view($id)
     {
-        $Contact = Contact::find($id);
-        if ($Contact) {
-            return view('admin.contact.us.msg.view', ['Contact' => $Contact]);
+        $ContactMessage = ContactMessage::find($id);
+        if ($ContactMessage) {
+            return view('admin.contact.messages.view', ['ContactMessage' => $ContactMessage]);
         } else {
             return redirect()->back()->with('error', 'Contact Message Not Found..!');
         }

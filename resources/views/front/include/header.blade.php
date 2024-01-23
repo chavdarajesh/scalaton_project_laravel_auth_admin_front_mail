@@ -30,8 +30,8 @@
                     <ul>
                         @if (Auth::check())
                             @if (Auth::check() && Auth::user()->is_admin == 1)
-                                <li><a target="_blank" href="{{ route('admin.login') }}"
-                                        class="{{ $current_route_name == 'admin.login' ? 'active' : '' }}">Admin
+                                <li><a target="_blank" href="{{ route('admin.login.get') }}"
+                                        class="{{ $current_route_name == 'admin.login.get' ? 'active' : '' }}">Admin
                                         Panel</a></li>
                             @endif
                             <li><a href="{{ route('front.profilepage') }}" class="active">Profile</a></li>

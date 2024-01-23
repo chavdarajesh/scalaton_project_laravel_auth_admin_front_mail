@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
-use App\Models\Front\Contact;
+use App\Models\Front\ContactMessage;
 use Illuminate\Http\Request;
 use App\Models\Admin\ContactSetting;
 
@@ -23,14 +23,14 @@ class ContactController extends Controller
             'message' => 'required',
         ]);
 
-        $Contact = new Contact();
-        $Contact->name = $request['name'];
-        $Contact->email = $request['email'];
-        $Contact->subject = $request['subject'];
-        $Contact->message = $request['message'];
-        $Contact->save();
+        $ContactMessage = new ContactMessage();
+        $ContactMessage->name = $request['name'];
+        $ContactMessage->email = $request['email'];
+        $ContactMessage->subject = $request['subject'];
+        $ContactMessage->message = $request['message'];
+        $ContactMessage->save();
 
-        if ($Contact) {
+        if ($ContactMessage) {
                 return redirect()->route('front.contactpage')->with('message', 'Your message has been sent. Thank you!..');
         } else {
             return redirect()->back()->with('error', 'Somthing Went Wrong..');

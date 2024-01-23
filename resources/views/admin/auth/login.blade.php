@@ -92,29 +92,29 @@
                         <form id="form" class="mb-3" action="{{ route('admin.login.post') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="adminemail" class="form-label">Email</label>
-                                <input type="text" class="form-control  @error('adminemail') is-invalid @enderror" id="adminemail" name="adminemail"
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" class="form-control  @error('email') is-invalid @enderror" id="email" name="email"
                                     placeholder="Enter your email" autofocus />
-                                <div id="adminemail_error" class="text-danger">
-                                    @error('adminemail')
+                                <div id="email_error" class="text-danger">
+                                    @error('email')
                                         {{ $message }}
                                     @enderror
                                 </div>
                             </div>
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
-                                    <label class="form-label" for="adminpassword">Password</label>
-                                    <a href="{{ route('admin.forgotpassword') }}">
+                                    <label class="form-label" for="password">Password</label>
+                                    <a href="{{ route('admin.forgot.password.get') }}">
                                         <small>Forgot Password?</small>
                                     </a>
                                 </div>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="adminpassword" class="form-control  @error('adminpassword') is-invalid @enderror" name="adminpassword"
+                                    <input type="password" id="password" class="form-control  @error('password') is-invalid @enderror" name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                         aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
-                                <div id="adminpassword_error" class="text-danger"> @error('adminpassword')
+                                <div id="password_error" class="text-danger"> @error('password')
                                         {{ $message }}
                                     @enderror
                                 </div>
@@ -148,21 +148,21 @@
         $(document).ready(function() {
             $('#form').validate({
                 rules: {
-                    adminemail: {
+                    email: {
                         required: true,
                         email: true,
                     },
-                    adminpassword: {
+                    password: {
                         required: true,
                         minlength: 6,
                     }
                 },
                 messages: {
-                    adminemail: {
+                    email: {
                         required: 'This field is required',
                         email: 'Enter a valid email',
                     },
-                    adminpassword: {
+                    password: {
                         required: 'This field is required',
                         minlength: 'Password must be at least 6 characters long'
                     }

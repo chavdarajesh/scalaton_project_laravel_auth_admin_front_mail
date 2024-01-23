@@ -24,20 +24,20 @@ class ProfileController extends Controller
     public function profileSettingsPasswordSave(Request $request)
     {
         $request->validate([
-            'adminoldpassword' => 'required|min:6',
-            'adminnewpassword' => 'required|min:6',
-            'adminconfirmnewpasswod' => 'required_with:adminnewpassword|same:adminnewpassword|min:6'
+            'oldpassword' => 'required|min:6',
+            'newpasswod' => 'required|min:6',
+            'confirmnewpasswod' => 'required_with:newpasswod|same:newpasswod|min:6'
         ]);
 
         $user = Auth::user();
-        if (!Hash::check($request->adminoldpassword, $user->password)) {
+        if (!Hash::check($request->oldpassword, $user->password)) {
             return redirect()->back()->with('error', 'Current Password Does Not Match!');
         }
-        $user->password = Hash::make($request->adminnewpassword);
+        $user->password = Hash::make($request->newpasswod);
         $user->save();
         Auth::logout();
         $request->session()->flush();
-        return redirect()->route('admin.login')->with('message', 'Password Updated Successfully Please Login Again..');;
+        return redirect()->route('admin.login.get')->with('message', 'Password Updated Successfully Please Login Again..');;
     }
 
     public function profileSettingIndex()
@@ -88,11 +88,11 @@ class ProfileController extends Controller
         }
     }
 
-    public function adminforgotpasswordget()
+    public function forgotPasswordGet()
     {
         return view('admin.auth.forgot-password');
     }
-    public function adminforgotpasswordpost(Request $request)
+    public function forgotPasswordPost(Request $request)
     {
         $request->validate([
             'email' => 'required|email|exists:users,email,is_admin,1,status,1,is_verified,1'
@@ -107,10 +107,10 @@ class ProfileController extends Controller
             'token' => $token
         ];
         $mail = Mail::to($request->email)->send(new ForgotPassword($data));
-        return redirect()->route('admin.login')->with('message', 'Password Reset Link send Successfully To Your Email..');
+        return redirect()->route('admin.login.get')->with('message', 'Password Reset Link send Successfully To Your Email..');
     }
 
-    public function showResetPasswordFormget($token)
+    public function ResetPasswordGet($token)
     {
         if (isset($token) && $token != '') {
             return view('admin.auth.showresetpasswordform', ['token' => $token]);
@@ -118,7 +118,7 @@ class ProfileController extends Controller
             return redirect()->back()->with('error', 'Somthing Went Wrong..');
         }
     }
-    public function submitResetPasswordFormpost(Request $request)
+    public function ResetPasswordPost(Request $request)
     {
         $request->validate([
             'newpassword' => 'required|min:6',
@@ -133,10 +133,10 @@ class ProfileController extends Controller
             return back()->withInput()->with('error', 'Invalid token!');
         }
         $user = User::where('email', $updatePassword->email)
-            ->update(['password' => Hash::make($request->adminnewpassword)]);
+            ->update(['password' => Hash::make($request->newpasswod)]);
         DB::table('password_resets')->where(['email' => $updatePassword->email])->delete();
         if ($user) {
-            return redirect()->route('admin.login')->with('message', 'Your Password Has Been Updated!');
+            return redirect()->route('admin.login.get')->with('message', 'Your Password Has Been Updated!');
         } else {
             return redirect()->back()->with('error', 'Somthing Went Wrong..');
         }

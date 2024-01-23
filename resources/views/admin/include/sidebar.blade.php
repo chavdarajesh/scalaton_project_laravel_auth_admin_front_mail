@@ -86,16 +86,16 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item {{ $current_route_name == 'admin.contact.us.msg.index' || $current_route_name == 'admin.contact.settings.index' || $current_route_name == 'admin.contact.us.msg.view' ? 'open active' : '' }}"
+        <li class="menu-item {{ $current_route_name == 'admin.contact.messages.index' || $current_route_name == 'admin.contact.settings.index' || $current_route_name == 'admin.contact.messages.view' ? 'open active' : '' }}"
             style="">
-            <a href="{{ route('admin.contact.us.msg.index') }}" class="menu-link menu-toggle">
+            <a href="{{ route('admin.contact.messages.index') }}" class="menu-link menu-toggle">
                 <i class='menu-icon tf-icons bx bxs-contact'></i>
                 <div data-i18n="Layouts">Contacts</div>
             </a>
 
             <ul class="menu-sub">
-                <li class="menu-item {{ $current_route_name == 'admin.contact.us.msg.index' || $current_route_name == 'admin.contact.us.msg.view' ? 'active' : '' }}">
-                    <a href="{{ route('admin.contact.us.msg.index') }}" class="menu-link">
+                <li class="menu-item {{ $current_route_name == 'admin.contact.messages.index' || $current_route_name == 'admin.contact.messages.view' ? 'active' : '' }}">
+                    <a href="{{ route('admin.contact.messages.index') }}" class="menu-link">
                         <div data-i18n="Without menu">Contact Messages</div>
                     </a>
                 </li>

@@ -20,7 +20,7 @@ class IsAdmin
         if (Auth::check() && Auth::user()->is_admin == 1) {
             return $next($request);
         }
-        return redirect()->route('admin.login')->with('error', 'Please Login to Access Admin Panel');
+        return redirect()->route('admin.login.get')->with('error', 'Please Login to Access Admin Panel');
         return $next($request);
     }
 }

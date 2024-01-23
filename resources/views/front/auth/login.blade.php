@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="mb-3 form-password-toggle">
                                         <div class="d-flex justify-content-between">
-                                            <label class="form-label" for="adminpassword">Password<span
+                                            <label class="form-label" for="password">Password<span
                                                     class="text-danger">*</span></label>
                                             <a href="{{ route('front.forgotpassword') }}">
                                                 <small>Forgot Password?</small>

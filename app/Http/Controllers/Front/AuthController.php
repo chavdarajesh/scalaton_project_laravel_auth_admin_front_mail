@@ -180,12 +180,12 @@ class AuthController extends Controller
         }
     }
 
-    public function showResetPasswordFormget($token)
+    public function ResetPasswordGet($token)
     {
         return view('front.auth.showresetpasswordform', ['token' => $token]);
     }
 
-    public function submitResetPasswordFormpost(Request $request)
+    public function ResetPasswordPost(Request $request)
     {
         $request->validate([
             'newpassword' => 'required|min:6',

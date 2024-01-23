@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.contact.us.msg.index') }}"><i
+                        <a class="nav-link" href="{{ route('admin.contact.messages.index') }}"><i
                                 class='bx bxs-contact me-1'></i>
                             Contact Messages
                         </a>

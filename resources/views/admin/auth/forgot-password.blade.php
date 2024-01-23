@@ -89,7 +89,7 @@
                         <h4 class="mb-2">Forgot Password? 🔒</h4>
                         <p class="mb-4">Enter your email and we'll send you instructions to reset your
                             password</p>
-                        <form id="form" class="mb-3" action="{{ route('admin.forgotpassword.post') }}"
+                        <form id="form" class="mb-3" action="{{ route('admin.forgot.password.get.post') }}"
                             method="POST">
                             @csrf
                             <div class="mb-3">
@@ -105,7 +105,7 @@
                             <button class="btn btn-primary d-grid w-100">Send Reset Link</button>
                         </form>
                         <div class="text-center">
-                            <a href="{{ route('admin.login') }}"
+                            <a href="{{ route('admin.login.get') }}"
                                 class="d-flex align-items-center justify-content-center">
                                 <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
                                 Back to login

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class DashboardController extends Controller
 {
     //
-    public function adminloginget()
+    public function loginGet()
     {
         if (Auth::check()) {
             if (Auth::user()->is_admin == 1) {
@@ -24,14 +24,14 @@ class DashboardController extends Controller
             return view('admin.auth.login');
         }
     }
-    public function adminloginpost(Request $request)
+    public function loginPost(Request $request)
     {
         $request->validate([
-            'adminemail' => 'required|email|exists:users,email,is_admin,1,status,1,is_verified,1',
-            'adminpassword' => 'required| min:6'
+            'email' => 'required|email|exists:users,email,is_admin,1,status,1,is_verified,1',
+            'password' => 'required| min:6'
         ]);
         if (!Auth::check()) {
-            if (Auth::attempt(['email' => $request->adminemail, 'password' => $request->adminpassword, 'is_verified' => 1, 'status' => 1])) {
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_verified' => 1, 'status' => 1])) {
                 if (Auth::user()->is_admin == 1) {
                     return redirect()->route('admin.dashboard')->with('message', 'Admin Login Successfully');
                 } else {
@@ -67,6 +67,6 @@ class DashboardController extends Controller
     {
         Auth::logout();
         $request->session()->flush();
-        return redirect()->route('admin.login')->with('message', 'Admin Logout Successfully');;
+        return redirect()->route('admin.login.get')->with('message', 'Admin Logout Successfully');;
     }
 }

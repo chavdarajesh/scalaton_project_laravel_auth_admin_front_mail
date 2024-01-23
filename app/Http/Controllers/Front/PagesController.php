@@ -7,7 +7,7 @@ use App\Models\Admin\Faqs;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 
-class FrontPagesController extends Controller
+class PagesController extends Controller
 {
     //
 

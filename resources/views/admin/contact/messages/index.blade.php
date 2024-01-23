@@ -60,7 +60,7 @@
                 order: [0, 'DESC'],
                 pageLength: 10,
                 searching: true,
-                ajax: "{{ route('admin.contact.us.msg.index') }}",
+                ajax: "{{ route('admin.contact.messages.index') }}",
                 columns: [{
                         data: 'id',
                         className: "text-center",
