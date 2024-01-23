@@ -2,7 +2,7 @@
 @section('title', 'About')
 @section('content')
     @php
-        use App\Models\Admin\Faqs;
+        use App\Models\Faqs;
         $Faqs = Faqs::get_all_faqs();
     @endphp
     <main id="main">
@@ -25,7 +25,7 @@
             <nav>
                 <div class="container">
                     <ol>
-                        <li><a href="{{ route('front.homepage') }}">Home</a></li>
+                        <li><a href="{{ route('front.home') }}">Home</a></li>
                         <li>About</li>
                     </ol>
                 </div>

@@ -30,7 +30,7 @@
             <nav>
                 <div class="container">
                     <ol>
-                        <li><a href="{{ route('front.homepage') }}">Home</a></li>
+                        <li><a href="{{ route('front.home') }}">Home</a></li>
                         <li>Register</li>
                     </ol>
                 </div>
@@ -60,9 +60,10 @@
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             value="{{ old('name') }}" id="name" name="name"
                                             placeholder="Enter your Name" autofocus />
-                                        @error('name')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="name_error" class="text-danger"> @error('name')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Username<span
@@ -70,9 +71,10 @@
                                         <input type="username" class="form-control @error('username') is-invalid @enderror"
                                             value="{{ old('username') }}" id="username" name="username"
                                             placeholder="Enter your Username" />
-                                        @error('username')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="username_error" class="text-danger"> @error('username')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email<span
@@ -80,9 +82,10 @@
                                         <input type="email" class="form-control @error('email') is-invalid @enderror"
                                             id="email" value="{{ old('email') }}" name="email"
                                             placeholder="Enter your Email" />
-                                        @error('email')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="email_error" class="text-danger"> @error('email')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3 form-password-toggle">
                                         <label class="form-label" for="password">Password<span
@@ -96,25 +99,30 @@
                                                     class="fa fa-eye-slash close_eye" aria-hidden="true"></i><i
                                                     class="fa fa-eye open_eye" aria-hidden="true"></i></span>
                                         </div>
-                                        @error('password')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="password_error" class="text-danger">
+                                            @error('password')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3 form-password-toggle">
-                                        <label class="form-label" for="confirmpasswod">Confirm Password<span
+                                        <label class="form-label" for="confirmpassword">Confirm Password<span
                                                 class="text-danger">*</span></label>
                                         <div class="input-group  input-group-merge">
-                                            <input type="password" id="confirmpasswod" value="{{ old('confirmpasswod') }}"
-                                                class="form-control " name="confirmpasswod"
+                                            <input type="password" id="confirmpassword"
+                                                value="{{ old('confirmpassword') }}" class="form-control "
+                                                name="confirmpassword"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                 aria-describedby="password">
                                             <span class="input-group-text toggle_password_c" id="basic-addon2"><i
                                                     class="fa fa-eye-slash close_eye_c" aria-hidden="true"></i><i
                                                     class="fa fa-eye open_eye_c" aria-hidden="true"></i></span>
                                         </div>
-                                        @error('confirmpasswod')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="confirmpassword_error" class="text-danger">
+                                            @error('confirmpassword')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="phone" class="form-label">Phone<span
@@ -122,18 +130,20 @@
                                         <input type="tel" class="form-control @error('phone') is-invalid @enderror"
                                             value="{{ old('phone') }}" id="phone" name="phone"
                                             placeholder="Enter your Phone" />
-                                        @error('phone')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="phone_error" class="text-danger"> @error('phone')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="address" class="form-label">Address<span
                                                 class="text-danger">*</span></label>
                                         <textarea name="address" class="form-control @error('address') is-invalid @enderror" name="address" id="address"
                                             rows="2" placeholder="Enter Your Address">{{ old('address') }}</textarea>
-                                        @error('address')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="address_error" class="text-danger"> @error('address')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="dateofbirth" class="form-label">Date Of Birth<span
@@ -141,9 +151,10 @@
                                         <input type="date"
                                             class="form-control @error('dateofbirth') is-invalid @enderror"
                                             value="{{ old('dateofbirth') }}" id="dateofbirth" name="dateofbirth" />
-                                        @error('dateofbirth')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="dateofbirth_error" class="text-danger"> @error('dateofbirth')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="referral_code" class="form-label">Referral Code</label>
@@ -151,9 +162,10 @@
                                             class="form-control @error('referral_code') is-invalid @enderror"
                                             value="{{ $referral_code ? $referral_code : old('referral_code') }}"
                                             id="referral_code" name="referral_code" placeholder="Enter Referral code" />
-                                        @error('referral_code')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="referral_code_error" class="text-danger"> @error('referral_code')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <div class="form-check">
@@ -161,11 +173,15 @@
                                                 @if (old('accept_t_c')) {{ 'checked' }} @endif
                                                 type="checkbox" id="accept_t_c" name="accept_t_c" />
                                             <label class="form-check-label" for="accept_t_c">I agree to the <a
-                                                    target="_blank"
-                                                    href="{{ route('front.term_and_conditionpage') }}">Terms and
+                                                    target="_blank" href="{{ route('front.term_and_condition') }}">Terms
+                                                    and
                                                     Conditions</a> and <a target="_blank"
-                                                    href="{{ route('front.privacy_policypage') }}">Privacy
+                                                    href="{{ route('front.privacy_policy') }}">Privacy
                                                     Policy</a>.<span class="text-danger">*</span> </label>
+                                        </div>
+                                        <div id="accept_t_c_error" class="text-danger"> @error('accept_t_c')
+                                                {{ $message }}
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -196,6 +212,8 @@
     </main>
 @stop
 @section('js')
+    <script src="{{ asset('assets/front/js/jquery.validate.min.js') }}"></script>
+
     <script>
         dateofbirth.max = new Date().toISOString().split("T")[0];
         $('.toggle_password').click(function() {
@@ -206,11 +224,99 @@
             $('.close_eye').toggle();
         })
         $('.toggle_password_c').click(function() {
-            $('#confirmpasswod').attr('type', function(index, attr) {
+            $('#confirmpassword').attr('type', function(index, attr) {
                 return attr == 'password' ? 'text' : 'password';
             });
             $('.open_eye_c').toggle();
             $('.close_eye_c').toggle();
         })
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#form').validate({
+                rules: {
+                    name: {
+                        required: true,
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    phone: {
+                        required: true,
+                        minlength: 10,
+                    },
+                    username: {
+                        required: true,
+                    },
+                    address: {
+                        required: true,
+                    },
+                    dateofbirth: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6,
+                    },
+                    confirmpassword: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#password"
+                    },
+                    accept_t_c: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    name: {
+                        required: 'This field is required',
+                    },
+                    email: {
+                        required: 'This field is required',
+                        email: 'Enter a valid email',
+                    },
+                    phone: {
+                        required: 'This field is required',
+                        minlength: 'Phone must be at least 10 characters long'
+                    },
+                    username: {
+                        required: 'This field is required',
+                    },
+                    address: {
+                        required: 'This field is required',
+                    },
+                    dateofbirth: {
+                        required: 'This field is required',
+                    },
+                    password: {
+                        required: 'This field is required',
+                        minlength: 'Password must be at least 6 characters long'
+                    },
+                    confirmpassword: {
+                        required: 'This field is required',
+                        minlength: 'Confirm password must be at least 6 characters long',
+                        equalTo: 'Confirm password and Password is not same'
+                    },
+                    accept_t_c: {
+                        required: 'This field is required',
+                    },
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    $('#' + element.attr('name') + '_error').html(error)
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
     </script>
 @stop

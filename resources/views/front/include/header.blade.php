@@ -3,7 +3,7 @@
 <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-        <a href="{{ route('front.homepage') }}" class="logo d-flex align-items-center">
+        <a href="{{ route('front.home') }}" class="logo d-flex align-items-center">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="{{ asset('assets/front/img/logo.png') }}" alt=""> -->
             <h1>{{ env('APP_NAME', 'Laravel App') }}</h1>
@@ -13,15 +13,15 @@
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a href="{{ route('front.homepage') }}"
-                        class="{{ $current_route_name == 'front.homepage' ? 'active' : '' }}">Home</a></li>
-                <li><a href="{{ route('front.aboutpage') }}"
-                        class="{{ $current_route_name == 'front.aboutpage' ? 'active' : '' }}">About</a></li>
-                <li><a href="{{ route('front.servicespage') }}"
-                        class="{{ $current_route_name == 'front.servicespage' ? 'active' : '' }}">Services</a></li>
-                <li><a href="{{ route('front.contactpage') }}"
-                        class="{{ $current_route_name == 'front.contactpage' ? 'active' : '' }}">Contact</a></li>
-                <li><a href="{{ route('front.blogpage') }}" class="">Blogs</a></li>
+                <li><a href="{{ route('front.home') }}"
+                        class="{{ $current_route_name == 'front.home' ? 'active' : '' }}">Home</a></li>
+                <li><a href="{{ route('front.about') }}"
+                        class="{{ $current_route_name == 'front.about' ? 'active' : '' }}">About</a></li>
+                <li><a href="{{ route('front.services') }}"
+                        class="{{ $current_route_name == 'front.services' ? 'active' : '' }}">Services</a></li>
+                <li><a href="{{ route('front.contact') }}"
+                        class="{{ $current_route_name == 'front.contact' ? 'active' : '' }}">Contact</a></li>
+                <li><a href="{{ route('front.blog') }}" class="">Blogs</a></li>
 
 
                 <li class="dropdown"><a href="#"

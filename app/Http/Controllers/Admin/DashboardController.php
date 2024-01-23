@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     //
-    
+
     public function dashboard()
     {
         $data['Total_Users'] = User::where('is_admin', 0)->count();
@@ -27,5 +27,4 @@ class DashboardController extends Controller
         $data['Total_All_Blogs'] = Blog::withTrashed()->count();
         return view('admin.dashboard', ['data' => $data]);
     }
-   
 }

@@ -33,14 +33,14 @@ Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Admin Auth Route start
-Route::get('/admin.login.get', [AdminAuthController::class, 'loginGet'])->name('admin.login.get');
-Route::post('/admin.login.get/save', [AdminAuthController::class, 'loginPost'])->name('admin.login.post');
+Route::get('/admin/login/get', [AdminAuthController::class, 'loginGet'])->name('admin.login.get');
+Route::post('/admin/login/save', [AdminAuthController::class, 'loginSave'])->name('admin.login.save');
 
-Route::get('/admin.forgot.password.get', [AdminAuthController::class, 'forgotPasswordGet'])->name('admin.forgot.password.get');
-Route::post('admin.forgot.password.get/save', [AdminAuthController::class, 'forgotPasswordPost'])->name('admin.forgot.password.get.post');
+Route::get('/admin/password/forgot/get', [AdminAuthController::class, 'passwordForgotGet'])->name('admin.password.forgot.get');
+Route::post('admin/password/forgot/save', [AdminAuthController::class, 'passwordForgotSave'])->name('admin.password.forgot.save');
 
-Route::get('/admin/reset-password/{token}', [AdminAuthController::class, 'ResetPasswordGet'])->name('admin.reset.password.get');
-Route::post('/admin/reset-password/save', [AdminAuthController::class, 'ResetPasswordPost'])->name('admin.reset.password.post');
+Route::get('/admin/password/reset/{token}', [AdminAuthController::class, 'passwordResetGet'])->name('admin.password.reset.get');
+Route::post('/admin/password/reset/save', [AdminAuthController::class, 'passwordResetSave'])->name('admin.password.reset.save');
 // Admin Auth Route end
 
 // Admin route start
@@ -113,37 +113,37 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'is_a
 // front route start
 Route::group(['namespace' => 'Front'], function () {
 
-    Route::get('/', [FrontPagesController::class, 'homepage'])->name('front.homepage');
-    Route::get('/about', [FrontPagesController::class, 'aboutpage'])->name('front.aboutpage');
-    Route::get('/services', [FrontPagesController::class, 'servicespage'])->name('front.servicespage');
-    Route::get('/blogs', [FrontPagesController::class, 'blogpage'])->name('front.blogpage');
+    Route::get('/', [FrontPagesController::class, 'homepage'])->name('front.home');
+    Route::get('/about', [FrontPagesController::class, 'about'])->name('front.about');
+    Route::get('/services', [FrontPagesController::class, 'services'])->name('front.services');
+    Route::get('/blogs', [FrontPagesController::class, 'blog'])->name('front.blog');
     Route::get('/blog-details/{id}', [FrontPagesController::class, 'blog_details'])->name('front.blog_details');
-    Route::get('/privacy_policy', [FrontPagesController::class, 'privacy_policypage'])->name('front.privacy_policypage');
-    Route::get('/term_and_condition', [FrontPagesController::class, 'term_and_conditionpage'])->name('front.term_and_conditionpage');
-    Route::get('/faqs', [FrontPagesController::class, 'faqspage'])->name('front.faqspage');
+    Route::get('/privacy_policy', [FrontPagesController::class, 'privacy_policy'])->name('front.privacy_policy');
+    Route::get('/term_and_condition', [FrontPagesController::class, 'term_and_condition'])->name('front.term_and_condition');
+    Route::get('/faqs', [FrontPagesController::class, 'faqs'])->name('front.faqs');
 
-    Route::get('/contact', [FrontContactController::class, 'contactpage'])->name('front.contactpage');
-    Route::post('/contact', [FrontContactController::class, 'postcontact'])->name('front.post.contact');
+    Route::get('/contact', [FrontContactController::class, 'contact'])->name('front.contact');
+    Route::post('/contact/message/save', [FrontContactController::class, 'contactMessageSave'])->name('front.contact.message.save');
 
     Route::get('/login', [FrontAuthController::class, 'login'])->name('front.login');
     Route::get('/register', [FrontAuthController::class, 'register'])->name('front.register');
-    Route::get('/forgotpassword', [FrontAuthController::class, 'forgotpasswordget'])->name('front.forgotpassword');
-    Route::get('/reset-password/{token}', [FrontAuthController::class, 'ResetPasswordGet'])->name('front.reset.password.get');
-    Route::get('/otp_verification/{id}', [FrontAuthController::class, 'showotp_verificationFormget'])->name('front.otp_verification.get');
+    Route::get('/password/forgot', [FrontAuthController::class, 'passwordForgotGet'])->name('front.password.forgot.get');
+    Route::get('/password/reset/{token}', [FrontAuthController::class, 'passwordResetGet'])->name('front.reset.password.get');
+    Route::get('/otp/verification/{id}', [FrontAuthController::class, 'otpVerificationGet'])->name('front.otp.verification.get');
 
 
     Route::post('/login', [FrontAuthController::class, 'postlogin'])->name('front.post.login');
     Route::post('/register', [FrontAuthController::class, 'postregister'])->name('front.post.register');
-    Route::post('/otp_verification', [FrontAuthController::class, 'postotp_verification'])->name('front.post.otp_verification');
-    Route::post('/forgotpassword', [FrontAuthController::class, 'postforgotpassword'])->name('front.post.forgotpassword');
-    Route::post('/reset-password', [FrontAuthController::class, 'ResetPasswordPost'])->name('front.reset.password.post');
+    Route::post('/otp/verification', [FrontAuthController::class, 'postotp_verification'])->name('front.post.otp_verification');
+    Route::post('/password/forgot', [FrontAuthController::class, 'postforgotpassword'])->name('front.post.forgotpassword');
+    Route::post('/password/reset', [FrontAuthController::class, 'passwordResetSave'])->name('front.reset.password.post');
 
 
     Route::group(['middleware' => 'is_auth'], function () {
         Route::post('/logout', [FrontAuthController::class, 'logout'])->name('front.post.logout');
-        Route::get('/profile', [FrontProfileController::class, 'profilepage'])->name('front.profilepage');
-        Route::post('/profile', [FrontProfileController::class, 'postprofilepage'])->name('front.post.profilepage');
-        Route::post('/profile/changepassword', [FrontProfileController::class, 'postprofilechangepassword'])->name('front.post.profile.changepassword');
+        Route::get('/profile/setting', [FrontProfileController::class, 'profilepage'])->name('front.profilepage');
+        Route::post('/profile/setting/save', [FrontProfileController::class, 'postprofilepage'])->name('front.post.profilepage');
+        Route::post('/profile/changepassword/save', [FrontProfileController::class, 'postprofilechangepassword'])->name('front.post.profile.changepassword');
     });
 });
 // front route end

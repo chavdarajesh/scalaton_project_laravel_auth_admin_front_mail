@@ -5,7 +5,7 @@
      <div class="container">
          <div class="row gy-4">
              <div class="col-lg-5 col-md-12 footer-info">
-                 <a href="{{ route('front.homepage') }}" class="logo d-flex align-items-center">
+                 <a href="{{ route('front.home') }}" class="logo d-flex align-items-center">
                      <span>{{ env('APP_NAME', 'Laravel App') }}</span>
                  </a>
                  <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies
@@ -21,11 +21,11 @@
              <div class="col-lg-2 col-6 footer-links">
                  <h4>Useful Links</h4>
                  <ul>
-                     <li><a href="{{ route('front.faqspage') }}">Faqs</a></li>
-                     <li><a href="{{ route('front.aboutpage') }}">About us</a></li>
-                     <li><a href="{{ route('front.servicespage') }}">Services</a></li>
-                     <li><a href="{{ route('front.term_and_conditionpage') }}">Terms of service</a></li>
-                     <li><a href="{{ route('front.privacy_policypage') }}">Privacy policy</a></li>
+                     <li><a href="{{ route('front.faqs') }}">Faqs</a></li>
+                     <li><a href="{{ route('front.about') }}">About us</a></li>
+                     <li><a href="{{ route('front.services') }}">Services</a></li>
+                     <li><a href="{{ route('front.term_and_condition') }}">Terms of service</a></li>
+                     <li><a href="{{ route('front.privacy_policy') }}">Privacy policy</a></li>
                  </ul>
              </div>
 

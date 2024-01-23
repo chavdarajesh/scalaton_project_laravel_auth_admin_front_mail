@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Models\Admin\Faqs;
+use App\Models\Faqs;
 
 
 use Illuminate\Database\Seeder;

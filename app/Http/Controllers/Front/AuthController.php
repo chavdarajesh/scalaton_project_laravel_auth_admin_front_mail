@@ -23,7 +23,7 @@ class AuthController extends Controller
         if (!Auth::check()) {
             return view('front.auth.login');
         } else {
-            return redirect()->route('front.homepage')->with('message', 'User Login Successfully');
+            return redirect()->route('front.home')->with('message', 'User Login Successfully');
         }
     }
     public function register()
@@ -31,7 +31,7 @@ class AuthController extends Controller
         if (!Auth::check()) {
             return view('front.auth.register');
         } else {
-            return redirect()->route('front.homepage')->with('message', 'User Login Successfully');
+            return redirect()->route('front.home')->with('message', 'User Login Successfully');
         }
     }
 
@@ -50,7 +50,7 @@ class AuthController extends Controller
             'accept_t_c' => 'required',
             'referral_code' => 'exists:users',
             'password' => 'required|min:6',
-            'confirmpasswod' => 'required|same:password|min:6'
+            'confirmpassword' => 'required|same:password|min:6'
         ]);
 
         $user = new User();
@@ -73,12 +73,12 @@ class AuthController extends Controller
             ];
             $user_id = encrypt($user->id);
             Mail::to($request->email)->send(new OTPVerification($data));
-            return redirect()->route('front.otp_verification.get', ['id' => $user_id])->with('message', 'Otp Send To Your Email. Please Enter OTP To Verify Your Account..');
+            return redirect()->route('front.otp.verification.get', ['id' => $user_id])->with('message', 'Otp Send To Your Email. Please Enter OTP To Verify Your Account..');
         } else {
             return redirect()->back()->with('error', 'Somthing Went Wrong..');
         }
     }
-    public function showotp_verificationFormget($id)
+    public function otpVerificationGet($id)
     {
         $id = decrypt($id);
         if ($id) {
@@ -91,7 +91,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'user_id' => 'required',
-            'email' => 'required|email|exists:users',
+            'email' => 'required|email|exists:users,email,status,1',
             'otp' => 'required|min:6|max:6',
         ]);
 
@@ -103,7 +103,7 @@ class AuthController extends Controller
                 User::where('id', '=', $request->user_id)->where('email', '=', $request->email)->update(['is_verified' => 1]);
                 User::where('id', '=', $request->user_id)->where('email', '=', $request->email)->update(['email_verified_at' =>  Carbon::now('Asia/Kolkata')]);
                 // if (Auth::attempt(['email' => $request->email, 'password' => $request->otp, 'is_verified' => 1, 'status' => 1])) {
-                //     return redirect()->route('front.homepage')->with('message', 'Account Created Successfully..');
+                //     return redirect()->route('front.home')->with('message', 'Account Created Successfully..');
                 // } else {
                 //     return redirect()->back()->with('error', 'Somthing Went Wrong..');
                 // }
@@ -121,7 +121,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => [
                 'required',
-                Rule::exists('users')->where(function ($query) use ($request) {
+                Rule::exists('users')->where('status', 1)->where(function ($query) use ($request) {
                     $query->where('email', $request->input('email'))
                         ->orWhere('username', $request->input('email'));
                 }),
@@ -131,9 +131,18 @@ class AuthController extends Controller
             'email.required' => 'The email or username field is required.',
             'email.exists' => 'The provided email or username does not exist.',
         ]);
+        $user = User::where('email', $request->email)->where('is_verified', 0)->whereNotNull('otp')->first();
+        if ($user) {
+            $data = [
+                'otp' => $user->otp
+            ];
+            $user_id = encrypt($user->id);
+            Mail::to($request->email)->send(new OTPVerification($data));
+            return redirect()->route('front.otp.verification.get', ['id' => $user_id])->with('message', 'Otp Send To Your Email. Please Enter OTP To Verify Your Account..');
+        }
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_verified' => 1, 'status' => 1]) || Auth::attempt(['username' => $request->email, 'password' => $request->password, 'is_verified' => 1, 'status' => 1])) {
             if (Auth::user()->email_verified_at != null && Auth::user()->otp == null) {
-                return redirect()->route('front.homepage')->with('message', 'User Login Successfully');
+                return redirect()->route('front.home')->with('message', 'User Login Successfully');
             } else {
                 Auth::logout();
                 $request->session()->flush();
@@ -147,11 +156,11 @@ class AuthController extends Controller
     {
         Auth::logout();
         $request->session()->flush();
-        return redirect()->route('front.homepage')->with('message', 'User Logout Successfully');;
+        return redirect()->route('front.home')->with('message', 'User Logout Successfully');;
     }
 
 
-    public function forgotpasswordget()
+    public function passwordForgotGet()
     {
         return view('front.auth.forget_password');
     }
@@ -159,7 +168,7 @@ class AuthController extends Controller
     public function postforgotpassword(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users'
+            'email' => 'required|email|exists:users,email,is_admin,0,status,1,is_verified,1',
         ]);
         $user = User::where('email', $request->email)->where('status', 1)->where('is_verified', 1)->first();
         if ($user) {
@@ -180,16 +189,16 @@ class AuthController extends Controller
         }
     }
 
-    public function ResetPasswordGet($token)
+    public function passwordResetGet($token)
     {
         return view('front.auth.showresetpasswordform', ['token' => $token]);
     }
 
-    public function ResetPasswordPost(Request $request)
+    public function passwordResetSave(Request $request)
     {
         $request->validate([
             'newpassword' => 'required|min:6',
-            'confirmnewpasswod' => 'required|same:newpassword|min:6'
+            'confirmnewpassword' => 'required|same:newpassword|min:6'
         ]);
 
         $updatePassword = DB::table('password_resets')->where('token', $request->token)->first();

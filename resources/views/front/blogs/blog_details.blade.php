@@ -21,8 +21,8 @@
             <nav>
                 <div class="container">
                     <ol>
-                        <li><a href="{{ route('front.homepage') }}">Home</a></li>
-                        <li><a href="{{ route('front.blogpage') }}">Blogs</a></li>
+                        <li><a href="{{ route('front.home') }}">Home</a></li>
+                        <li><a href="{{ route('front.blog') }}">Blogs</a></li>
                         <li>Blogs Details</li>
                     </ol>
                 </div>

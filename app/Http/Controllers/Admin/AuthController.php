@@ -21,13 +21,13 @@ class AuthController extends Controller
             if (Auth::user()->is_admin == 1) {
                 return redirect()->route('admin.dashboard')->with('message', 'Admin Login Successfully');
             } else {
-                return redirect()->route('front.homepage')->with('error', 'User Not Access To Admin Site..!');
+                return redirect()->route('front.home')->with('error', 'User Not Access To Admin Site..!');
             }
         } else {
             return view('admin.auth.login');
         }
     }
-    public function loginPost(Request $request)
+    public function loginSave(Request $request)
     {
         $request->validate([
             'email' => 'required|email|exists:users,email,is_admin,1,status,1,is_verified,1',
@@ -47,7 +47,7 @@ class AuthController extends Controller
             if (Auth::user()->is_admin == 1) {
                 return redirect()->route('admin.dashboard')->with('message', 'Admin Login Successfully');
             } else {
-                return redirect()->route('front.homepage')->with('error', 'User Not Access To Admin Site..!');
+                return redirect()->route('front.home')->with('error', 'User Not Access To Admin Site..!');
             }
         }
     }
@@ -59,11 +59,11 @@ class AuthController extends Controller
         return redirect()->route('admin.login.get')->with('message', 'Admin Logout Successfully');;
     }
 
-    public function forgotPasswordGet()
+    public function passwordForgotGet()
     {
         return view('admin.auth.forgot-password');
     }
-    public function forgotPasswordPost(Request $request)
+    public function passwordForgotSave(Request $request)
     {
         $request->validate([
             'email' => 'required|email|exists:users,email,is_admin,1,status,1,is_verified,1'
@@ -81,7 +81,7 @@ class AuthController extends Controller
         return redirect()->route('admin.login.get')->with('message', 'Password Reset Link send Successfully To Your Email..');
     }
 
-    public function ResetPasswordGet($token)
+    public function passwordResetGet($token)
     {
         if (isset($token) && $token != '') {
             return view('admin.auth.showresetpasswordform', ['token' => $token]);
@@ -89,11 +89,11 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Somthing Went Wrong..');
         }
     }
-    public function ResetPasswordPost(Request $request)
+    public function passwordResetSave(Request $request)
     {
         $request->validate([
             'newpassword' => 'required|min:6',
-            'confirmnewpasswod' => 'required|same:newpassword|min:6'
+            'confirmnewpassword' => 'required|same:newpassword|min:6'
         ]);
         if (!isset($request->token) || $request->token == '') {
             return redirect()->back()->with('error', 'Somthing Went Wrong..');
@@ -104,7 +104,7 @@ class AuthController extends Controller
             return back()->withInput()->with('error', 'Invalid token!');
         }
         $user = User::where('email', $updatePassword->email)
-            ->update(['password' => Hash::make($request->newpasswod)]);
+            ->update(['password' => Hash::make($request->newpassword)]);
         DB::table('password_resets')->where(['email' => $updatePassword->email])->delete();
         if ($user) {
             return redirect()->route('admin.login.get')->with('message', 'Your Password Has Been Updated!');

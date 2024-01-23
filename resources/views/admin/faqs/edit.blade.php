@@ -28,7 +28,7 @@
                                     <label for="title" class="form-label">Title</label>
                                     <input class="form-control" type="text" id="title" name="title"
                                         value="{{ $Faq['title'] }}" autofocus />
-                                        <div id="title_error" class="text-danger"> @error('title')
+                                    <div id="title_error" class="text-danger"> @error('title')
                                             {{ $message }}
                                         @enderror
                                     </div>
@@ -37,9 +37,9 @@
                                     <label for="description" class="form-label">Description</label>
                                     <textarea class="form-control" rows="5" type="text" id="description" name="description" value="">{{ $Faq['description'] }}</textarea>
                                     <div id="description_error" class="text-danger"> @error('description')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="mt-2">
                                     <button type="submit" class="btn btn-primary me-2">Save changes</button>

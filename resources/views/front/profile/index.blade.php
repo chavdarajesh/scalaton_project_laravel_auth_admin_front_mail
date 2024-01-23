@@ -60,6 +60,11 @@
         .copy-click.is-copied:after {
             content: attr(data-tooltip-text-copied);
         }
+
+        .open_eye,
+        .open_eye_c {
+            display: none;
+        }
     </style>
     @error('oldpassword')
         <style>
@@ -83,7 +88,7 @@
             }
         </style>
     @enderror
-    @error('confirmnewpasswod')
+    @error('confirmnewpassword')
         <style>
             .password_setting {
                 display: block;
@@ -117,7 +122,7 @@
             <nav>
                 <div class="container">
                     <ol>
-                        <li><a href="{{ route('front.homepage') }}">Home</a></li>
+                        <li><a href="{{ route('front.home') }}">Home</a></li>
                         <li>Profile And Password</li>
                     </ol>
                 </div>
@@ -132,13 +137,13 @@
                         <div class="card-body">
                             <!-- Logo -->
                             <form action="{{ route('front.post.profilepage') }}" method="post"
-                                enctype="multipart/form-data">
+                                enctype="multipart/form-data" id="profileForm">
                                 <!-- /Logo -->
                                 @csrf
-                                <input type="hidden" name="old_profileimage" value="{{Auth::user()->profileimage}}">
+                                <input type="hidden" name="old_profileimage" value="{{ Auth::user()->profileimage }}">
                                 <div class="row p-3 border-bottom shadow-lg p-3 mb-5 bg-white rounded ">
                                     <div class="col-lg-3 p-2">
-                                        <img src="{{ Auth::user()->profileimage ? asset(Auth::user()->profileimage) : asset('assets/admin/img/avatars/1.png') }}"
+                                        <img src="{{ Auth::user()->profileimage ? asset(Auth::user()->profileimage) : asset('assets/front/img/avatars/1.png') }}"
                                             alt="user-avatar" class="d-block rounded" width="200px" height="200px"
                                             id="uploadedAvatar" />
                                     </div>
@@ -167,12 +172,15 @@
                                             <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                                 <span class="d-sm-block">Upload new photo</span>
                                                 <i class="bx bx-upload d-block d-sm-none"></i>
-                                                <input type="file" id="upload" class="account-file-input"
-                                                    hidden accept="image/*" name="profileimage"
-                                                    onchange="readURL(this)" />
+                                                <input type="file" id="upload" class="account-file-input" hidden
+                                                    accept="image/*" name="profileimage" onchange="readURL(this)" />
                                             </label>
                                             <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 4Mb</p>
                                         </div>
+                                    </div>
+                                    <div id="profileimage_error" class="text-danger"> @error('profileimage')
+                                            {{ $message }}
+                                        @enderror
                                     </div>
                                 </div>
                                 <hr>
@@ -182,40 +190,48 @@
                                         <label for="name" class="form-label">Name</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror "
                                             id="name" value="{{ Auth::user()->name }}" name="name">
-                                        @error('name')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Username</label>
-                                        <input type="text" class="form-control @error('username') is-invalid @enderror "
-                                            id="username" value="{{ Auth::user()->username }}" name="username">
-                                        @error('username')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="name_error" class="text-danger"> @error('name')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control @error('email') is-invalid @enderror "
                                             id="email" value="{{ Auth::user()->email }}" name="email">
-                                        @error('email')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="email_error" class="text-danger"> @error('email')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
+
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" class="form-control @error('username') is-invalid @enderror "
+                                            id="username" value="{{ Auth::user()->username }}" name="username">
+                                        <div id="username_error" class="text-danger"> @error('username')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+
                                     <div class="mb-3">
                                         <label for="phone" class="form-label">Phone</label>
                                         <input type="tel" class="form-control @error('phone') is-invalid @enderror "
-                                            id="phone" maxlength="10" value="{{ Auth::user()->phone }}" name="phone">
-                                        @error('phone')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                            id="phone" maxlength="10" value="{{ Auth::user()->phone }}"
+                                            name="phone">
+                                        <div id="phone_error" class="text-danger"> @error('phone')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="address" class="form-label">Address</label>
                                         <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror" rows="3">{{ Auth::user()->address }}</textarea>
-                                        @error('address')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="address_error" class="text-danger"> @error('address')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="dateofbirth" class="form-label">Date Of Birth</label>
@@ -223,46 +239,64 @@
                                             class="form-control @error('dateofbirth') is-invalid @enderror "
                                             value="{{ Auth::user()->dateofbirth }}" id="dateofbirth" name="dateofbirth"
                                             max="2022-06-16">
-                                        @error('dateofbirth')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="dateofbirth_error" class="text-danger"> @error('dateofbirth')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <button class="btn btn-primary d-grid " type="submit">Save Changes</button>
                                     </div>
                                 </div>
                             </form>
-                            <form action="{{ route('front.post.profile.changepassword') }}" method="post">
+                            <form action="{{ route('front.post.profile.changepassword') }}" method="post"
+                                id="passwordForm">
                                 @csrf
                                 <div class="row password_setting">
                                     <h3 class="my-3">Password Setting</h3>
                                     <div class="mb-3">
                                         <label for="oldpassword" class="form-label">Old Password</label>
-                                        <input type="text"
-                                            class="form-control @error('oldpassword') is-invalid @enderror"
-                                            id="oldpassword" value="{{ old('oldpassword') }}" name="oldpassword">
-                                        @error('oldpassword')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div class="input-group  input-group-merge">
+                                            <input type="password" id="oldpassword" value="{{ old('oldpassword') }}"
+                                                class="form-control " name="oldpassword"
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                aria-describedby="oldpassword">
+                                            <span class="input-group-text toggle_password" id="basic-addon2"><i
+                                                    class="fa fa-eye-slash close_eye" aria-hidden="true"></i><i
+                                                    class="fa fa-eye open_eye" aria-hidden="true"></i></span>
+                                        </div>
+                                        <div id="oldpassword_error" class="text-danger"> @error('oldpassword')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="newpassword" class="form-label">New Password</label>
                                         <input type="text"
                                             class="form-control @error('newpassword') is-invalid @enderror"
                                             id="newpassword" value="{{ old('newpassword') }}" name="newpassword">
-                                        @error('newpassword')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="newpassword_error" class="text-danger"> @error('newpassword')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="confirmnewpasswod" class="form-label">Confirm New Password</label>
-                                        <input type="text"
-                                            class="form-control @error('confirmnewpasswod') is-invalid @enderror"
-                                            id="confirmnewpasswod" value="{{ old('confirmnewpasswod') }}"
-                                            name="confirmnewpasswod">
-                                        @error('confirmnewpasswod')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <label for="confirmnewpassword" class="form-label">Confirm New Password</label>
+                                        <div class="input-group  input-group-merge">
+                                            <input type="password" id="confirmnewpassword"
+                                                value="{{ old('confirmnewpassword') }}" class="form-control "
+                                                name="confirmnewpassword"
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                aria-describedby="confirmnewpassword">
+                                            <span class="input-group-text toggle_password_c" id="basic-addon2"><i
+                                                    class="fa fa-eye-slash close_eye_c" aria-hidden="true"></i><i
+                                                    class="fa fa-eye open_eye_c" aria-hidden="true"></i></span>
+                                        </div>
+                                        <div id="confirmnewpassword_error" class="text-danger">
+                                            @error('confirmnewpassword')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <button class="btn btn-primary d-grid " type="submit">Save Changes</button>
@@ -292,19 +326,24 @@
 
 @stop
 @section('js')
+    <script src="{{ asset('assets/front/js/jquery.validate.min.js') }}"></script>
     <script>
         function readURL(input) {
             if (input.files && input.files[0]) {
-
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.querySelector("#uploadedAvatar").setAttribute("src", e.target.result);
-                };
-
-                reader.readAsDataURL(input.files[0]);
+                if (input.files[0].type.startsWith('image/')) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector("#uploadedAvatar").setAttribute("src", e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    $('#profileimage_error').html('Allowed JPG, GIF or PNG.')
+                    $('#upload').val('');
+                }
             }
         }
         dateofbirth.max = new Date().toISOString().split("T")[0];
+
         $('.click_here_profile').click(function(event) {
             event.preventDefault();
             $('.profile_setting').slideUp();
@@ -316,7 +355,20 @@
             $('.password_setting').slideUp();
         });
 
-
+        $('.toggle_password').click(function() {
+            $('#oldpassword').attr('type', function(index, attr) {
+                return attr == 'password' ? 'text' : 'password';
+            });
+            $('.open_eye').toggle();
+            $('.close_eye').toggle();
+        })
+        $('.toggle_password_c').click(function() {
+            $('#confirmnewpassword').attr('type', function(index, attr) {
+                return attr == 'password' ? 'text' : 'password';
+            });
+            $('.open_eye_c').toggle();
+            $('.close_eye_c').toggle();
+        })
 
 
         const links = document.querySelectorAll('.copy-click');
@@ -355,6 +407,116 @@
             link.addEventListener('mouseleave', e => {
                 if (!e.target.classList.contains(cls.copied)) {
                     e.target.classList.remove(cls.hover);
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#profileForm').validate({
+                rules: {
+                    name: {
+                        required: true,
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    phone: {
+                        required: true,
+                        minlength: 10,
+                    },
+                    username: {
+                        required: true,
+                    },
+                    address: {
+                        required: true,
+                    },
+                    dateofbirth: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    name: {
+                        required: 'This field is required',
+                    },
+                    email: {
+                        required: 'This field is required',
+                        email: 'Enter a valid email',
+                    },
+                    phone: {
+                        required: 'This field is required',
+                        minlength: 'Phone must be at least 10 characters long'
+                    },
+                    username: {
+                        required: 'This field is required',
+                    },
+                    address: {
+                        required: 'This field is required',
+                    },
+                    dateofbirth: {
+                        required: 'This field is required',
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    $('#' + element.attr('name') + '_error').html(error)
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+
+            $('#passwordForm').validate({
+                rules: {
+                    oldpassword: {
+                        required: true,
+                        minlength: 6,
+                    },
+                    newpassword: {
+                        required: true,
+                        minlength: 6,
+                    },
+                    confirmnewpassword: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#newpassword"
+                    }
+                },
+                messages: {
+                    password: {
+                        required: 'This field is required',
+                        minlength: 'Old Password must be at least 6 characters long'
+                    },
+                    newpassword: {
+                        required: 'This field is required',
+                        minlength: 'New Password must be at least 6 characters long'
+                    },
+                    confirmnewpassword: {
+                        required: 'This field is required',
+                        minlength: 'Confirm Password must be at least 6 characters long',
+                        equalTo: 'Confirm password and New Password is not same'
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    $('#' + element.attr('name') + '_error').html(error)
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function(form) {
+                    form.submit();
                 }
             });
         });

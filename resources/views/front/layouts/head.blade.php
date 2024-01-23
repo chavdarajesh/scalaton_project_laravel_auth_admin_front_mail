@@ -19,7 +19,7 @@
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('assets/front/css/main.css') }}" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/toastr.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/front/css/toastr.min.css') }}">
 
   @yield('css')
   <style>

@@ -2,7 +2,7 @@
 @section('title', 'Home')
 @section('content')
     @php
-        use App\Models\Admin\Faqs;
+        use App\Models\Faqs;
         $Faqs = Faqs::get_all_faqs();
     @endphp
     <!-- ======= Hero Section ======= -->

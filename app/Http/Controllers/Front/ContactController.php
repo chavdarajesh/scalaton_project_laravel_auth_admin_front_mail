@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Front;
+
 use App\Http\Controllers\Controller;
 use App\Models\Front\ContactMessage;
 use Illuminate\Http\Request;
@@ -9,12 +10,12 @@ use App\Models\Admin\ContactSetting;
 class ContactController extends Controller
 {
     //
-    public function contactpage()
+    public function contact()
     {
         $ContactSetting = ContactSetting::where('static_id', 1)->where('status', 1)->first();
-        return view('front.pages.contact',['ContactSetting'=>$ContactSetting]);
+        return view('front.pages.contact', ['ContactSetting' => $ContactSetting]);
     }
-    public function postcontact(Request $request)
+    public function contactMessageSave(Request $request)
     {
         $request->validate([
             'name' => 'required|max:40',
@@ -31,7 +32,7 @@ class ContactController extends Controller
         $ContactMessage->save();
 
         if ($ContactMessage) {
-                return redirect()->route('front.contactpage')->with('message', 'Your message has been sent. Thank you!..');
+            return redirect()->route('front.contact')->with('message', 'Your message has been sent. Thank you!..');
         } else {
             return redirect()->back()->with('error', 'Somthing Went Wrong..');
         }

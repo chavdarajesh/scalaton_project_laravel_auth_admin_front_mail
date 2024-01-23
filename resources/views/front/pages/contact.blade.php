@@ -37,7 +37,7 @@
             <nav>
                 <div class="container">
                     <ol>
-                        <li><a href="{{ route('front.homepage') }}">Home</a></li>
+                        <li><a href="{{ route('front.home') }}">Home</a></li>
                         <li>Contact Us</li>
                     </ol>
                 </div>
@@ -113,8 +113,8 @@
                     </div>
 
                     <div class="col-lg-8">
-                        <form action="{{ route('front.post.contact') }}" method="post" role="form"
-                            class="php-email-form">
+                        <form action="{{ route('front.contact.message.save') }}" method="post" role="form"
+                            class="php-email-form" id="form">
                             @csrf
                             <div class="row">
                                 <h4 class="text-center">Send Message To US</h4>
@@ -124,34 +124,38 @@
                                         class="form-control  @error('name') border border-danger @enderror" id="name"
                                         placeholder="Your Name"
                                         value="{{ Auth::check() ? Auth::user()->name : old('name') }}" autofocus>
-                                    @error('name')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div id="name_error" class="text-danger"> @error('name')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="col-md-6 form-group mt-3 mt-md-0">
                                     <input type="email"
                                         class="form-control  @error('email') border border-danger @enderror" name="email"
                                         id="email" placeholder="Your Email"
                                         value="{{ Auth::check() ? Auth::user()->email : old('email') }}">
-                                    @error('email')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div id="email_error" class="text-danger"> @error('email')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
                                 <input type="text" class="form-control  @error('subject') border border-danger @enderror"
                                     name="subject" id="subject" placeholder="Subject" value="{{ old('subject') }}">
                             </div>
-                            @error('subject')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <div id="subject_error" class="text-danger"> @error('subject')
+                                    {{ $message }}
+                                @enderror
+                            </div>
                             <div class="form-group mt-3">
                                 <textarea class="form-control   @error('message') border border-danger @enderror" name="message" rows="6"
                                     placeholder="Message">{{ old('message') }}</textarea>
                             </div>
-                            @error('message')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <div id="message_error" class="text-danger"> @error('message')
+                                    {{ $message }}
+                                @enderror
+                            </div>
                             <div class="my-3">
                                 <div class="loading">Loading</div>
                                 <div class="error-message"></div>
@@ -171,4 +175,56 @@
     </main>
 
 
+@stop
+@section('js')
+    <script src="{{ asset('assets/front/js/jquery.validate.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#form').validate({
+                rules: {
+                    name: {
+                        required: true,
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    subject: {
+                        required: true,
+                    },
+                    message: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    name: {
+                        required: 'This field is required',
+                    },
+                    email: {
+                        required: 'This field is required',
+                        email: 'Enter a valid email',
+                    },
+                    subject: {
+                        required: 'This field is required',
+                    },
+                    message: {
+                        required: 'This field is required',
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    $('#' + element.attr('name') + '_error').html(error)
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
 @stop

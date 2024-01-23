@@ -19,7 +19,7 @@
                     <!-- Account -->
                     <hr class="my-0" />
                     <div class="card-body">
-                        <form id="form" method="POST" action="{{ route('admin.faqs.create') }}">
+                        <form id="form" method="POST" action="{{ route('admin.faqs.save') }}">
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-12">

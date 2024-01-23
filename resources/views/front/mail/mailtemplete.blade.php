@@ -11,9 +11,6 @@
         }
     </style>
 </head>
-@php
-    $base_url = URL::to('/');
-@endphp
 
 <body marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #f2f3f8;" leftmargin="0">
     <!--100% body table-->
@@ -28,7 +25,7 @@
                     </tr>
                     <tr>
                         <td style="text-align:center;">
-                            <a href="{{ $base_url }}" target="_blank" title="logo" target="_blank">
+                            <a href="{{ route('front.home') }}" target="_blank" title="logo" target="_blank">
                                 {{ env('APP_NAME', 'Laravel App') }}
                             </a>
                         </td>
@@ -56,8 +53,7 @@
                                             password has been generated for you. To reset your password, click the
                                             following link and follow the instructions.
                                         </p>
-                                        <a target="_blank"
-                                            href="{{ $base_url }}/reset-password/{{ $data['token'] }}"
+                                        <a target="_blank" href="{{ route('front.reset.password.get', $data['token']) }}"
                                             style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Reset
                                             Password</a>
                                     </td>

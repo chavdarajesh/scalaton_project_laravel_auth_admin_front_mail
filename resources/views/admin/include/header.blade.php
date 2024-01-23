@@ -64,7 +64,7 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a target="_blank" class="dropdown-item" href="{{ route('front.homepage') }}">
+                        <a target="_blank" class="dropdown-item" href="{{ route('front.home') }}">
                             <i class='bx bx-desktop  me-2'></i>
                             <span class="align-middle">Front Panel</span>
                         </a>

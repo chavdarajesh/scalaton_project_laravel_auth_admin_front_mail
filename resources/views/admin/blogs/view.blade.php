@@ -9,7 +9,8 @@
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.blogs.index') }}"><i class='bx bx-list-ul me-1'></i> All
+                        <a class="nav-link active" href="{{ route('admin.blogs.index') }}"><i class='bx bx-list-ul me-1'></i>
+                            All
                             Blogs</a>
                     </li>
 

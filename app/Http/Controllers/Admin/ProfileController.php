@@ -18,15 +18,15 @@ class ProfileController extends Controller
     {
         $request->validate([
             'oldpassword' => 'required|min:6',
-            'newpasswod' => 'required|min:6',
-            'confirmnewpasswod' => 'required_with:newpasswod|same:newpasswod|min:6'
+            'newpassword' => 'required|min:6',
+            'confirmnewpassword' => 'required_with:newpassword|same:newpassword|min:6'
         ]);
 
         $user = Auth::user();
         if (!Hash::check($request->oldpassword, $user->password)) {
             return redirect()->back()->with('error', 'Current Password Does Not Match!');
         }
-        $user->password = Hash::make($request->newpasswod);
+        $user->password = Hash::make($request->newpassword);
         $user->save();
         Auth::logout();
         $request->session()->flush();

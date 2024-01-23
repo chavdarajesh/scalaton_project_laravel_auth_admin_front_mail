@@ -95,9 +95,9 @@ class BlogController extends Controller
                         </div>
                     </div>';
                 $data_arr[] = array(
-                    "id" => '<strong>'.$row->id .'</strong>',
+                    "id" => '<strong>' . $row->id . '</strong>',
                     "title" => strlen($row->title) > 25 ? substr($row->title, 0, 25) . '..' : $row->title,
-                    "description" => strlen($row->description) > 25 ? substr($row->description, 0, 25) . '..' : $row->description,
+                    "description" => strlen($row->description) > 25 ? substr(strip_tags($row->description), 0, 25) . '..' : strip_tags($row->description),
                     "status" => ' <div class="d-flex justify-content-center align-items-center form-check form-switch"><input data-id="' . $row->id . '" style="width: 60px;height: 25px;" class="form-check-input status-toggle" type="checkbox" id="flexSwitchCheckDefault" ' . ($row->status ? "checked" : "") . '  ></div>',
                     "created_at" => $row->created_at ? Carbon::parse($row->created_at)->setTimezone('Asia/Kolkata')->toDateTimeString() : '',
                     "actions" => $html,

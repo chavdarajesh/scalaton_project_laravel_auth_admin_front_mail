@@ -89,7 +89,7 @@
                         <h4 class="mb-2">Forgot Password? 🔒</h4>
                         <p class="mb-4">Enter your email and we'll send you instructions to reset your
                             password</p>
-                        <form id="form" class="mb-3" action="{{ route('admin.forgot.password.get.post') }}"
+                        <form id="form" class="mb-3" action="{{ route('admin.password.forgot.save') }}"
                             method="POST">
                             @csrf
                             <div class="mb-3">

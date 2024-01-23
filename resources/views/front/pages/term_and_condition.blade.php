@@ -21,7 +21,7 @@
             <nav>
                 <div class="container">
                     <ol>
-                        <li><a href="{{ route('front.homepage') }}">Home</a></li>
+                        <li><a href="{{ route('front.home') }}">Home</a></li>
                         <li>Terms and Conditions</li>
                     </ol>
                 </div>

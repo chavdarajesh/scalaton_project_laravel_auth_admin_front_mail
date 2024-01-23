@@ -11,9 +11,6 @@
         }
     </style>
 </head>
-@php
-    $base_url = URL::to('/');
-@endphp
 
 <body marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #f2f3f8;" leftmargin="0">
     <!--100% body table-->
@@ -28,7 +25,7 @@
                     </tr>
                     <tr>
                         <td style="text-align:center;">
-                            <a href="{{ $base_url }}" target="_blank" title="logo" target="_blank">
+                            <a href="{{ route('front.home') }}" target="_blank" title="logo" target="_blank">
                                 {{ env('APP_NAME', 'Laravel App') }}
                             </a>
                         </td>

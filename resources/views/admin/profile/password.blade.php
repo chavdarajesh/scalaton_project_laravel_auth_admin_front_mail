@@ -24,17 +24,16 @@
 
                     <hr class="my-0" />
                     <div class="card-body">
-                        <form id="form" method="POST"
-                            action="{{ route('admin.profile.settings.password.save') }}">
+                        <form id="form" method="POST" action="{{ route('admin.profile.settings.password.save') }}">
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-12 form-password-toggle">
                                     <label for="oldpassword" class="form-label">Old Password</label>
                                     <div class="input-group input-group-merge">
                                         <input name="oldpassword" type="password"
-                                            class="form-control @error('oldpassword') is-invalid @enderror"
-                                            id="oldpassword" placeholder="············"
-                                            aria-describedby="basic-default-password" value="{{ old('oldpassword') }}">
+                                            class="form-control @error('oldpassword') is-invalid @enderror" id="oldpassword"
+                                            placeholder="············" aria-describedby="basic-default-password"
+                                            value="{{ old('oldpassword') }}">
                                         <span class="input-group-text cursor-pointer" id="basic-default-password"><i
                                                 class="bx bx-hide"></i></span>
                                     </div>
@@ -45,33 +44,33 @@
                                 </div>
 
                                 <div class="mb-3 col-md-12 form-password-toggle">
-                                    <label for="newpasswod" class="form-label">New Password</label>
+                                    <label for="newpassword" class="form-label">New Password</label>
                                     <div class="input-group input-group-merge">
-                                        <input name="newpasswod" type="password"
-                                            class="form-control @error('newpasswod') is-invalid @enderror"
-                                            id="newpasswod" placeholder="············"
-                                            aria-describedby="basic-default-password" value="{{ old('newpasswod') }}">
+                                        <input name="newpassword" type="text"
+                                            class="form-control @error('newpassword') is-invalid @enderror" id="newpassword"
+                                            placeholder="············" aria-describedby="basic-default-password"
+                                            value="{{ old('newpassword') }}">
                                         <span class="input-group-text cursor-pointer" id="basic-default-password"><i
                                                 class="bx bx-hide"></i></span>
                                     </div>
-                                    <div id="newpasswod_error" class="text-danger"> @error('newpasswod')
+                                    <div id="newpassword_error" class="text-danger"> @error('newpassword')
                                             {{ $message }}
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="mb-3 col-md-12 form-password-toggle">
-                                    <label class="form-label" for="confirmnewpasswod">Confirm New Password</label>
+                                    <label class="form-label" for="confirmnewpassword">Confirm New Password</label>
                                     <div class="input-group input-group-merge">
-                                        <input name="confirmnewpasswod" type="password"
-                                            class="form-control @error('confirmnewpasswod') is-invalid @enderror"
-                                            id="confirmnewpasswod" placeholder="············"
+                                        <input name="confirmnewpassword" type="password"
+                                            class="form-control @error('confirmnewpassword') is-invalid @enderror"
+                                            id="confirmnewpassword" placeholder="············"
                                             aria-describedby="basic-default-password"
-                                            value="{{ old('confirmnewpasswod') }}">
+                                            value="{{ old('confirmnewpassword') }}">
                                         <span class="input-group-text cursor-pointer" id="basic-default-password"><i
                                                 class="bx bx-hide"></i></span>
                                     </div>
-                                    <div id="confirmnewpasswod_error" class="text-danger">
-                                        @error('confirmnewpasswod')
+                                    <div id="confirmnewpassword_error" class="text-danger">
+                                        @error('confirmnewpassword')
                                             {{ $message }}
                                         @enderror
                                     </div>
@@ -100,14 +99,14 @@
                         required: true,
                         minlength: 6,
                     },
-                    newpasswod: {
+                    newpassword: {
                         required: true,
                         minlength: 6,
                     },
-                    confirmnewpasswod: {
+                    confirmnewpassword: {
                         required: true,
                         minlength: 6,
-                        equalTo: "#newpasswod"
+                        equalTo: "#newpassword"
                     }
                 },
                 messages: {
@@ -115,11 +114,11 @@
                         required: 'This field is required',
                         minlength: 'Old Password must be at least 6 characters long'
                     },
-                    newpasswod: {
+                    newpassword: {
                         required: 'This field is required',
                         minlength: 'New Password must be at least 6 characters long'
                     },
-                    confirmnewpasswod: {
+                    confirmnewpassword: {
                         required: 'This field is required',
                         minlength: 'Confirm Password must be at least 6 characters long',
                         equalTo: 'Confirm password and New Password is not same'

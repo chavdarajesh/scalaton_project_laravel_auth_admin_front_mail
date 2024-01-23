@@ -77,11 +77,11 @@
                                         <input type="text" id="phone" name="phone"
                                             class="form-control @error('phone') is-invalid @enderror"
                                             value="{{ old('phone') ? old('phone') : $User->phone }}" />
-                                        </div>
-                                        <div id="phone_error" class="text-danger"> @error('phone')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
+                                    </div>
+                                    <div id="phone_error" class="text-danger"> @error('phone')
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="username" class="form-label">User Name</label>

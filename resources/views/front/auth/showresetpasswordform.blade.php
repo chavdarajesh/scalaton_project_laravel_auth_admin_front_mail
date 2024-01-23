@@ -31,7 +31,7 @@
             <nav>
                 <div class="container">
                     <ol>
-                        <li><a href="{{ route('front.homepage') }}">Home</a></li>
+                        <li><a href="{{ route('front.home') }}">Home</a></li>
                         <li>Forgot Password</li>
                     </ol>
                 </div>
@@ -50,14 +50,14 @@
                                 <h4 class="mb-2">Reset Password!</h4>
                                 <p class="mb-4">Enter New Password and Confirm Password to Continue!..</p>
 
-                                <form id="form" class="mb-3"
-                                    action="{{ route('front.reset.password.post') }}" method="POST">
+                                <form id="form" class="mb-3" action="{{ route('front.reset.password.post') }}"
+                                    method="POST">
                                     @csrf
                                     <input type="hidden" name="token" value="{{ $token }}">
                                     <div class="mb-3 form-password-toggle">
                                         <label for="newpassword" class="form-label">New Password</label>
                                         <div class="input-group input-group-merge">
-                                            <input type="password" id="newpassword"
+                                            <input type="text" id="newpassword"
                                                 class="form-control @error('newpassword') is-invalid @enderror"
                                                 name="newpassword"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -66,25 +66,29 @@
                                                     class="fa fa-eye-slash close_eye" aria-hidden="true"></i><i
                                                     class="fa fa-eye open_eye" aria-hidden="true"></i></span>
                                         </div>
-                                        @error('newpassword')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="newpassword_error" class="text-danger">
+                                            @error('newpassword')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3 form-password-toggle">
-                                        <label for="confirmnewpasswod" class="form-label">New Conform Password</label>
+                                        <label for="confirmnewpassword" class="form-label">New Conform Password</label>
                                         <div class="input-group input-group-merge">
-                                            <input type="password" id="confirmnewpasswod"
-                                                class="form-control @error('confirmnewpasswod') is-invalid @enderror"
-                                                name="confirmnewpasswod"
+                                            <input type="password" id="confirmnewpassword"
+                                                class="form-control @error('confirmnewpassword') is-invalid @enderror"
+                                                name="confirmnewpassword"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                aria-describedby="password" value="{{ old('confirmnewpasswod') }}" />
+                                                aria-describedby="password" value="{{ old('confirmnewpassword') }}" />
                                             <span class="input-group-text toggle_password_c" id="basic-addon2"><i
                                                     class="fa fa-eye-slash close_eye_c" aria-hidden="true"></i><i
                                                     class="fa fa-eye open_eye_c" aria-hidden="true"></i></span>
                                         </div>
-                                        @error('confirmnewpasswod')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="confirmnewpassword_error" class="text-danger">
+                                            @error('confirmnewpassword')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <div class="mb-3">
@@ -115,6 +119,8 @@
     </main>
 @stop
 @section('js')
+    <script src="{{ asset('assets/front/js/jquery.validate.min.js') }}"></script>
+
     <script>
         $('.toggle_password').click(function() {
             $('#newpassword').attr('type', function(index, attr) {
@@ -124,11 +130,52 @@
             $('.close_eye').toggle();
         })
         $('.toggle_password_c').click(function() {
-            $('#confirmnewpasswod').attr('type', function(index, attr) {
+            $('#confirmnewpassword').attr('type', function(index, attr) {
                 return attr == 'password' ? 'text' : 'password';
             });
             $('.open_eye_c').toggle();
             $('.close_eye_c').toggle();
         })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#form').validate({
+                rules: {
+                    newpassword: {
+                        required: true,
+                        minlength: 6,
+                    },
+                    confirmnewpassword: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#newpassword"
+                    }
+                },
+                messages: {
+                    newpassword: {
+                        required: 'This field is required',
+                        minlength: 'Password must be at least 6 characters long'
+                    },
+                    confirmnewpassword: {
+                        required: 'This field is required',
+                        minlength: 'Confirm password must be at least 6 characters long',
+                        equalTo: 'Confirm password and Password is not same'
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    $('#' + element.attr('name') + '_error').html(error)
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
     </script>
 @stop

@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -56,25 +56,23 @@ class User extends Authenticatable
 
     static public function get_user_by_id($id)
     {
-        $User=[];
-        $user=User::find($id);
-        if($user){
-            $User=$user;
-        }
-        else{
-            $User['name']='User Deleted';
+        $User = [];
+        $user = User::find($id);
+        if ($user) {
+            $User = $user;
+        } else {
+            $User['name'] = 'User Deleted';
         }
         return $User;
     }
     static public function get_total_use_referral_user_by_id($id)
     {
-        $user=User::find($id);
-        if($user){
-            $user_referral_code=$user->referral_code;
-            $user_other_referral_code=User::where('other_referral_code',$user_referral_code)->count();
+        $user = User::find($id);
+        if ($user) {
+            $user_referral_code = $user->referral_code;
+            $user_other_referral_code = User::where('other_referral_code', $user_referral_code)->count();
             return $user_other_referral_code;
-        }
-        else{
+        } else {
             return 0;
         }
     }

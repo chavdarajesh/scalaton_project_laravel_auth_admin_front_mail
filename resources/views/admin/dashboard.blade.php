@@ -188,7 +188,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <span class="fw-semibold d-block mb-1">Total Block Users</span>
+                                <span class="fw-semibold d-block mb-1">Total InActive Users</span>
                                 <h3 class="card-title mb-2"> <i class='bx bxs-user-x'></i> <span
                                         class="badge badge-center bg-danger">{{ $data['Total_Not_Active_Users'] }}</span>
                                 </h3>
@@ -246,7 +246,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <span class="fw-semibold d-block mb-1">Total In Active Blogs</span>
+                                <span class="fw-semibold d-block mb-1">Total InActive Blogs</span>
                                 <h3 class="card-title mb-2"> <i class='bx bxs-credit-card-front'></i> <span
                                         class="badge badge-center bg-danger">{{ $data['Total_In_Active_Blogs'] }}</span>
                                 </h3>

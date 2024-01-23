@@ -89,12 +89,12 @@
                         <h4 class="mb-2">Welcome to {{ env('APP_NAME', 'Laravel App') }} 👋</h4>
                         <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
-                        <form id="form" class="mb-3" action="{{ route('admin.login.post') }}" method="POST">
+                        <form id="form" class="mb-3" action="{{ route('admin.login.save') }}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control  @error('email') is-invalid @enderror" id="email" name="email"
-                                    placeholder="Enter your email" autofocus />
+                                <input type="text" class="form-control  @error('email') is-invalid @enderror"
+                                    id="email" name="email" placeholder="Enter your email" autofocus />
                                 <div id="email_error" class="text-danger">
                                     @error('email')
                                         {{ $message }}
@@ -104,12 +104,13 @@
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
                                     <label class="form-label" for="password">Password</label>
-                                    <a href="{{ route('admin.forgot.password.get') }}">
+                                    <a href="{{ route('admin.password.forgot.get') }}">
                                         <small>Forgot Password?</small>
                                     </a>
                                 </div>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control  @error('password') is-invalid @enderror" name="password"
+                                    <input type="password" id="password"
+                                        class="form-control  @error('password') is-invalid @enderror" name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                         aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
@@ -126,7 +127,7 @@
 
                         <p class="text-center">
                             <span>Go to Front platform?</span>
-                            <a href="{{ route('front.homepage') }}">
+                            <a href="{{ route('front.home') }}">
                                 <span>Click Here.</span>
                             </a>
                         </p>

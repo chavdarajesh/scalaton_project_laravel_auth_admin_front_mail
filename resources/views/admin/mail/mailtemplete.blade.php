@@ -4,11 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanace App Admin | Reset Password</title>
+    <title>{{ env('APP_NAME', 'Laravel App') }} Admin | Reset Password</title>
 </head>
-@php
-    $base_url = URL::to('/');
-@endphp
 
 <body
     style="padding:0 !important; margin:0 !important; display:block !important; min-width:100% !important; width:100% !important; -webkit-text-size-adjust:none">
@@ -39,17 +36,7 @@
                                                                                     <tr>
                                                                                         <td style="line-height:0">
                                                                                             <a style="text-decoration:none"
-                                                                                                href="#"><img
-                                                                                                    src=""
-                                                                                                    border="0"
-                                                                                                    style="font:bold 12px/12px Arial,Helvetica,sans-serif;color:#fff"
-                                                                                                    align="center"
-                                                                                                    vspace="0"
-                                                                                                    hspace="0"
-                                                                                                    width="186"
-                                                                                                    height="75"
-                                                                                                    alt="Logo"
-                                                                                                    class="CToWUd"></a>
+                                                                                                href="{{route('front.home')}}">{{ env('APP_NAME', 'Laravel App') }}</a>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -89,7 +76,7 @@
                                                                             account.<br><br>
                                                                             <div
                                                                                 style="text-align: center; margin-top: 15px">
-                                                                                <a href="{{ $base_url }}/admin/reset-password/{{ $data['token'] }}"
+                                                                                <a href="{{ route('admin.password.reset.get', $data['token']) }}"
                                                                                     style="height:40px;background-color:#009e13;border:2px solid #009e13;border-radius:50px;color:#ffffff;display:block;font-family:verdana,helvetica,sans-serif;font-size:18px;line-height:40px;text-align:center;text-decoration:none;width:185px;margin: 0 auto"
                                                                                     target="_blank">Reset Password</a>
                                                                             </div>

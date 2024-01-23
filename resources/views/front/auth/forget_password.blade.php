@@ -20,7 +20,7 @@
             <nav>
                 <div class="container">
                     <ol>
-                        <li><a href="{{ route('front.homepage') }}">Home</a></li>
+                        <li><a href="{{ route('front.home') }}">Home</a></li>
                         <li>Forgot Password</li>
                     </ol>
                 </div>
@@ -40,17 +40,18 @@
                                 <p class="mb-4">Enter your email and we'll send you instructions to reset your
                                     password</p>
 
-                                <form id="form" class="mb-3"
-                                    action="{{ route('front.post.forgotpassword') }}" method="POST">
+                                <form id="form" class="mb-3" action="{{ route('front.post.forgotpassword') }}"
+                                    method="POST">
                                     @csrf
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="text" class="form-control @error('email') is-invalid @enderror"
                                             id="email" name="email" placeholder="Enter your email" autofocus
                                             value="{{ old('email') }}" />
-                                        @error('email')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div id="email_error" class="text-danger"> @error('email')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                     <button class="btn btn-primary d-grid w-100">Send Reset Link</button>
                                 </form>
@@ -76,4 +77,39 @@
         </section>
 
     </main>
+@stop
+
+@section('js')
+    <script src="{{ asset('assets/front/js/jquery.validate.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#form').validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true,
+                    }
+                },
+                messages: {
+                    email: {
+                        required: 'This field is required',
+                        email: 'Enter a valid email',
+                    },
+                },
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    $('#' + element.attr('name') + '_error').html(error)
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
 @stop

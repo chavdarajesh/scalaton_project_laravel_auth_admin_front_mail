@@ -9,7 +9,8 @@
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.blogs.index') }}"><i class='bx bx-list-ul me-1'></i> All
+                        <a class="nav-link active" href="{{ route('admin.blogs.index') }}"><i class='bx bx-list-ul me-1'></i>
+                            All
                             Blogs</a>
                     </li>
 
@@ -50,8 +51,8 @@
                             <div class="row">
                                 <div class="mb-3 col-md-12">
                                     <label for="title" class="form-label">Title</label>
-                                    <input class="form-control @error('title') is-invalid @enderror" type="text" id="title" name="title"
-                                        value="{{ $Blog['title'] }}" autofocus />
+                                    <input class="form-control @error('title') is-invalid @enderror" type="text"
+                                        id="title" name="title" value="{{ $Blog['title'] }}" autofocus />
                                     <div id="title_error" class="text-danger"> @error('title')
                                             {{ $message }}
                                         @enderror
@@ -79,7 +80,8 @@
                                 </div>
                                 <div class="mb-3 col-md-12">
                                     <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" rows="5" type="text" id="description" name="description" value="">{{ $Blog['description'] }}</textarea>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" rows="5" type="text" id="description"
+                                        name="description" value="">{{ $Blog['description'] }}</textarea>
                                     <div id="description_error" class="text-danger"> @error('description')
                                             {{ $message }}
                                         @enderror

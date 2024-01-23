@@ -8,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title> Finanace App Admin | Forget Password</title>
+    <title> {{ env('APP_NAME', 'Laravel App') }} App Admin | Forget Password</title>
 
     <meta name="description" content="" />
 
@@ -82,21 +82,21 @@
                                         </g>
                                     </svg>
                                 </span>
-                                <span class="app-brand-text demo text-body fw-bolder">FINANCIAL ADVISOR</span>
+                                <span class="app-brand-text demo text-body fw-bolder">{{ env('APP_NAME', 'Laravel App') }}</span>
                             </a>
                         </div>
                         <!-- /Logo -->
                         <h4 class="mb-2">Reset Password!</h4>
                         <p class="mb-4">Enter New Password and Confirm Password to Continue!..</p>
 
-                        <form id="form" class="mb-3" action="{{ route('admin.reset.password.post') }}"
+                        <form id="form" class="mb-3" action="{{ route('admin.password.reset.save') }}"
                             method="POST">
                             @csrf
                             <input type="hidden" name="token" value="{{ $token }}">
                             <div class="mb-3 form-password-toggle">
                                 <label for="newpassword" class="form-label">New Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="newpassword"
+                                    <input type="text" id="newpassword"
                                         class="form-control  @error('newpassword') is-invalid @enderror"
                                         name="newpassword"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -111,17 +111,17 @@
 
                             </div>
                             <div class="mb-3 form-password-toggle">
-                                <label for="confirmnewpasswod" class="form-label">New Conform Password</label>
+                                <label for="confirmnewpassword" class="form-label">New Conform Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="confirmnewpasswod"
-                                        class="form-control  @error('confirmnewpasswod') is-invalid @enderror"
-                                        name="confirmnewpasswod"
+                                    <input type="password" id="confirmnewpassword"
+                                        class="form-control  @error('confirmnewpassword') is-invalid @enderror"
+                                        name="confirmnewpassword"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" value="{{ old('confirmnewpasswod') }}" />
+                                        aria-describedby="password" value="{{ old('confirmnewpassword') }}" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
-                                <div id="confirmnewpasswod_error" class="text-danger">
-                                    @error('confirmnewpasswod')
+                                <div id="confirmnewpassword_error" class="text-danger">
+                                    @error('confirmnewpassword')
                                         {{ $message }}
                                     @enderror
                                 </div>
@@ -154,7 +154,7 @@
                         required: true,
                         minlength: 6,
                     },
-                    confirmnewpasswod: {
+                    confirmnewpassword: {
                         required: true,
                         minlength: 6,
                         equalTo: "#newpassword"
@@ -165,7 +165,7 @@
                         required: 'This field is required',
                         minlength: 'Password must be at least 6 characters long'
                     },
-                    confirmnewpasswod: {
+                    confirmnewpassword: {
                         required: 'This field is required',
                         minlength: 'Confirm password must be at least 6 characters long',
                         equalTo: 'Confirm password and Password is not same'

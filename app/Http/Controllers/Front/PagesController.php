@@ -3,43 +3,42 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Faqs;
+use App\Models\Faqs;
 use App\Models\Blog;
-use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
     //
 
-    public function homepage()
+    public function home()
     {
         return view('front.pages.home');
     }
-    public function aboutpage()
+    public function about()
     {
         return view('front.pages.about');
     }
-    public function servicespage()
+    public function services()
     {
         return view('front.pages.services');
     }
-    public function term_and_conditionpage()
+    public function term_and_condition()
     {
         return view('front.pages.term_and_condition');
     }
-    public function privacy_policypage()
+    public function privacy_policy()
     {
         return view('front.pages.privacy_policy');
     }
-    public function faqspage()
+    public function faqs()
     {
-        $Faqs=Faqs::where('status',1)->get();
-        return view('front.faqs.view',['Faqs'=>$Faqs]);
+        $Faqs = Faqs::where('status', 1)->get();
+        return view('front.faqs.view', ['Faqs' => $Faqs]);
     }
-    public function blogpage()
+    public function blog()
     {
-        $Blogs=Blog::where('status',1)->get();
-        return view('front.blogs.blogs_list',['Blogs'=>$Blogs]);
+        $Blogs = Blog::where('status', 1)->get();
+        return view('front.blogs.blogs_list', ['Blogs' => $Blogs]);
     }
 
     public function blog_details($id)
@@ -47,7 +46,7 @@ class PagesController extends Controller
         if ($id) {
             $Blog = Blog::find($id);
             if ($Blog) {
-                return view('front.blogs.blog_details',['Blog'=>$Blog]);
+                return view('front.blogs.blog_details', ['Blog' => $Blog]);
             } else {
                 return redirect()->back()->with('error', 'Somthing Went Wrong..!');
             }

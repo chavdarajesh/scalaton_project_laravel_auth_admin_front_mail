@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Models\Admin;
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,6 @@ class Faqs extends Model
 
     static public function get_all_faqs()
     {
-        return Faqs::where('status',1)->get();
+        return Faqs::where('status', 1)->get();
     }
 }

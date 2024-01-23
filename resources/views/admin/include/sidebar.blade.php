@@ -94,7 +94,8 @@
             </a>
 
             <ul class="menu-sub">
-                <li class="menu-item {{ $current_route_name == 'admin.contact.messages.index' || $current_route_name == 'admin.contact.messages.view' ? 'active' : '' }}">
+                <li
+                    class="menu-item {{ $current_route_name == 'admin.contact.messages.index' || $current_route_name == 'admin.contact.messages.view' ? 'active' : '' }}">
                     <a href="{{ route('admin.contact.messages.index') }}" class="menu-link">
                         <div data-i18n="Without menu">Contact Messages</div>
                     </a>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Faqs;
+use App\Models\Faqs;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -93,7 +93,7 @@ class FaqsController extends Controller
                         </div>
                     </div>';
                 $data_arr[] = array(
-                    "id" => '<strong>'.$row->id .'</strong>',
+                    "id" => '<strong>' . $row->id . '</strong>',
                     "title" => strlen($row->title) > 25 ? substr($row->title, 0, 25) . '..' : $row->title,
                     "description" => strlen($row->description) > 25 ? substr($row->description, 0, 25) . '..' : $row->description,
                     "status" => ' <div class="d-flex justify-content-center align-items-center form-check form-switch"><input data-id="' . $row->id . '" style="width: 60px;height: 25px;" class="form-check-input status-toggle" type="checkbox" id="flexSwitchCheckDefault" ' . ($row->status ? "checked" : "") . '  ></div>',

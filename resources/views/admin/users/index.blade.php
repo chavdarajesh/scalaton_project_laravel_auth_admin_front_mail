@@ -51,95 +51,95 @@
     <script src="{{ asset('assets/admin/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/dataTables.bootstrap5.min.js') }}"></script>
 
-<script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $(document).ready(function() {
-        $('#datatable').DataTable({
-            processing: true,
-            serverSide: true,
-            order: [0, 'DESC'],
-            pageLength: 10,
-            searching: true,
-            ajax: "{{ route('admin.users.index') }}",
-            columns: [{
-                    data: 'id',
-                    className: "text-center",
-                },
-                {
-                    data: 'referCount',
-                    className: "text-center",
-                },
-                {
-                    data: 'name'
-                },
-                {
-                    data: 'email'
-                },
-                {
-                    data: 'status',
-                    className: "text-center",
-                },
-                {
-                    data: 'verify',
-                    className: "text-center",
-                },
-                {
-                    data: 'actions',
-                    className: "text-center",
-                    orderable: false,
-                    searchable: false
-                },
-            ]
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
+        $(document).ready(function() {
+            $('#datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                order: [0, 'DESC'],
+                pageLength: 10,
+                searching: true,
+                ajax: "{{ route('admin.users.index') }}",
+                columns: [{
+                        data: 'id',
+                        className: "text-center",
+                    },
+                    {
+                        data: 'referCount',
+                        className: "text-center",
+                    },
+                    {
+                        data: 'name'
+                    },
+                    {
+                        data: 'email'
+                    },
+                    {
+                        data: 'status',
+                        className: "text-center",
+                    },
+                    {
+                        data: 'verify',
+                        className: "text-center",
+                    },
+                    {
+                        data: 'actions',
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
 
-    });
-    $(function() {
-        $(document).on('change', '.status-toggle', function() {
-            var status = $(this).prop('checked') == true ? 1 : 0;
-            var id = $(this).data('id');
-            $.ajax({
-                type: "POST",
-                url: '{{ route('admin.users.status.toggle') }}',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'status': status,
-                    'id': id
-                },
-                success: function(data) {
-                    if (data.success) {
-                        toastr.success(data.success);
+        });
+        $(function() {
+            $(document).on('change', '.status-toggle', function() {
+                var status = $(this).prop('checked') == true ? 1 : 0;
+                var id = $(this).data('id');
+                $.ajax({
+                    type: "POST",
+                    url: '{{ route('admin.users.status.toggle') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'status': status,
+                        'id': id
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            toastr.success(data.success);
+                        }
+                        if (data.error) {
+                            toastr.error(data.error);
+                        }
                     }
-                    if (data.error) {
-                        toastr.error(data.error);
+                });
+            })
+            $(document).on('change', '.verify-toggle', function() {
+                var verify = $(this).prop('checked') == true ? 1 : 0;
+                var id = $(this).data('id');
+                $.ajax({
+                    type: "POST",
+                    url: '{{ route('admin.users.verify.toggle') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'is_verified': verify,
+                        'id': id
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            toastr.success(data.success);
+                        }
+                        if (data.error) {
+                            toastr.error(data.error);
+                        }
                     }
-                }
-            });
+                });
+            })
         })
-        $(document).on('change', '.verify-toggle', function() {
-            var verify = $(this).prop('checked') == true ? 1 : 0;
-            var id = $(this).data('id');
-            $.ajax({
-                type: "POST",
-                url: '{{ route('admin.users.verify.toggle') }}',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'is_verified': verify,
-                    'id': id
-                },
-                success: function(data) {
-                    if (data.success) {
-                        toastr.success(data.success);
-                    }
-                    if (data.error) {
-                        toastr.error(data.error);
-                    }
-                }
-            });
-        })
-    })
-</script>
+    </script>
 @stop
