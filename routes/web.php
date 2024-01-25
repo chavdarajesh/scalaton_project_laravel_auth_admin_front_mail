@@ -33,10 +33,10 @@ Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Admin Auth Route start
-Route::get('/admin/login/get', [AdminAuthController::class, 'loginGet'])->name('admin.login.get');
+Route::get('/admin/login', [AdminAuthController::class, 'loginGet'])->name('admin.login.get');
 Route::post('/admin/login/save', [AdminAuthController::class, 'loginSave'])->name('admin.login.save');
 
-Route::get('/admin/password/forgot/get', [AdminAuthController::class, 'passwordForgotGet'])->name('admin.password.forgot.get');
+Route::get('/admin/password/forgot', [AdminAuthController::class, 'passwordForgotGet'])->name('admin.password.forgot.get');
 Route::post('admin/password/forgot/save', [AdminAuthController::class, 'passwordForgotSave'])->name('admin.password.forgot.save');
 
 Route::get('/admin/password/reset/{token}', [AdminAuthController::class, 'passwordResetGet'])->name('admin.password.reset.get');
@@ -113,7 +113,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'is_a
 // front route start
 Route::group(['namespace' => 'Front'], function () {
 
-    Route::get('/', [FrontPagesController::class, 'homepage'])->name('front.home');
+    Route::get('/', [FrontPagesController::class, 'home'])->name('front.home');
     Route::get('/about', [FrontPagesController::class, 'about'])->name('front.about');
     Route::get('/services', [FrontPagesController::class, 'services'])->name('front.services');
     Route::get('/blogs', [FrontPagesController::class, 'blog'])->name('front.blog');
